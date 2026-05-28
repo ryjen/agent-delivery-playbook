@@ -1,0 +1,25 @@
+flowchart LR
+    Intake[Task intake] --> Classify[Risk classification]
+    Classify --> Contract[Task contract]
+    Contract --> Context[Curated context]
+    Context --> Sandbox[Sandboxed agent execution]
+    Sandbox --> Diff[Proposed diff]
+    Diff --> Evidence[Tests, scans, and evidence]
+    Evidence --> Review[Human review]
+    Review --> Gates[SDLC gates]
+    Gates --> Release{Release?}
+    Release -->|Yes| Deploy[Controlled release]
+    Release -->|No| Revise[Revise or reject]
+    Deploy --> Monitor[Monitor]
+    Monitor --> Rollback{Rollback needed?}
+    Rollback -->|Yes| Recover[Rollback or disable]
+    Rollback -->|No| Done[Done]
+    Revise --> Contract
+
+    Secrets[(Secrets)] -. not exposed by default .-> Sandbox
+    Policy[Security invariants] --> Contract
+    Policy --> Review
+    CI[CI/CD] --> Gates
+    Audit[Audit trail] --- Contract
+    Audit --- Evidence
+    Audit --- Review
