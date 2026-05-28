@@ -4,100 +4,98 @@ Use this file to define how agent-assisted changes move toward release.
 
 ## Baseline rule
 
-Agents may assist with release preparation, but release authority remains with humans and the normal delivery system.
+Agent-assisted changes must follow the same release controls as human-authored changes. Agents may help prepare release notes, verification steps, and rollback plans, but they should not bypass human approval or protected release systems.
 
-## Release-sensitive areas
+## Release risk classification
 
-Treat changes as high risk when they touch:
+| Change type | Release risk | Notes |
+| --- | --- | --- |
+| Documentation only | Low | No runtime impact |
+| Test-only change | Low | Confirm no production files changed |
+| Internal refactor | Medium | Confirm behavior did not change |
+| User-facing feature | Medium | Require product/owner approval where applicable |
+| Dependency update | Medium/High | Depends on runtime, native, and transitive impact |
+| Auth/security/privacy change | High | Requires security review |
+| CI/CD or deployment change | High | Requires platform/release review |
+| Mobile signing, entitlements, permissions, or store config | High | Requires mobile release owner review |
+| Production credential or destructive data operation | Restricted | Human-led only |
 
-- CI/CD workflow files
-- Deployment scripts
-- Infrastructure configuration
-- Package publishing
-- Feature flags or runtime config
-- Database migrations
-- Mobile signing
-- Store release metadata
-- Versioning
-- Rollback tooling
-- Secret or environment variable wiring
+## Pre-release checklist
 
-## Required release evidence
+- [ ] Scope matches the approved task
+- [ ] Required tests passed
+- [ ] Security invariants preserved
+- [ ] Dependency changes reviewed
+- [ ] CI/CD changes reviewed by platform owner
+- [ ] Mobile config/signing/privacy changes reviewed by mobile owner
+- [ ] Rollback path documented for medium/high-risk changes
+- [ ] Monitoring or validation plan exists for risky changes
+- [ ] Release notes mention relevant user-facing or operational impact
 
-For release-sensitive changes, require:
+## Evidence required
 
-- Summary of release impact
-- CI/build evidence
-- Rollback plan
-- Owner review
-- Environment impact notes
-- Any manual steps required
-- Verification plan after deployment
+For each release candidate, capture:
 
-## Rollback plan template
+- Commit or PR reference
+- Tests and builds run
+- CI results
+- Manual verification notes
+- Security review notes where applicable
+- Dependency scan results where applicable
+- Known risks
+- Rollback procedure
 
-```md
-## Rollback Plan
+## Rollback patterns
 
-- Change being released:
-- Rollback trigger:
-- Rollback method:
-- Expected time to rollback:
-- Data/schema compatibility concerns:
-- Feature flag/config fallback:
-- Owner:
-- Verification after rollback:
-```
+Prefer rollback mechanisms that are boring and rehearsed:
 
-## Mobile release notes
+- Revert commit
+- Disable feature flag
+- Roll back deployment artifact
+- Re-pin dependency
+- Disable config remotely
+- Halt phased mobile rollout
+- Ship hotfix build only when necessary
 
-Mobile releases have slower rollback paths than server releases. Treat these as high risk:
+## Mobile release considerations
 
-- iOS entitlements
-- Android permissions
-- Signing configuration
-- Store metadata/privacy disclosures
-- Native SDK updates
-- Deep link behavior
-- Push notification behavior
-- Analytics/crash reporting SDK changes
+React Native:
 
-Recommended controls:
+- Confirm whether the change ships over app release, OTA update, or both
+- Review native dependency changes separately from JS changes
+- Avoid OTA delivery for changes that assume native code not present in installed builds
 
-- Phased rollout where available
-- Server-side feature flags for risky behavior
-- Backward-compatible API changes
-- Version-aware backend behavior
-- Store review impact note
-- Release halt criteria
+IOS:
 
-## Agent restrictions
+- Review provisioning, entitlements, privacy manifests, and App Store disclosure impact
+- Confirm release build signs with approved credentials
+- Consider phased release and halt strategy
 
-Agents should not:
+Android:
 
-- Publish packages
-- Deploy to production
-- Submit mobile apps to stores
-- Rotate production secrets
-- Modify signing material
-- Approve their own release changes
-- Disable CI/CD gates
+- Review manifest permissions, exported components, Play Integrity, signing config, and Play Store disclosure impact
+- Confirm release build uses approved signing flow
+- Consider staged rollout and halt strategy
+
+Kotlin Multiplatform:
+
+- Verify platform-specific artifacts where shared code changes behavior
+- Confirm persistence/serialization compatibility before release
+
+## Agent boundaries
 
 Agents may:
 
 - Draft release notes
 - Draft rollback plans
-- Summarize diffs
-- Prepare verification checklists
-- Identify release-sensitive files
-- Suggest phased rollout strategies
+- Summarize verification evidence
+- Identify changed release-sensitive files
+- Prepare checklists for human execution
 
-## Release review questions
+Agents should not:
 
-- What user-visible behavior changes?
-- What operational behavior changes?
-- What credentials or environments are involved?
-- How would this be rolled back?
-- What monitoring confirms success or failure?
-- Does the change require coordinated backend/mobile release timing?
-- Are older clients or older server versions still compatible?
+- Submit production releases without explicit human approval
+- Access signing keys or store credentials by default
+- Rotate production secrets
+- Modify protected release workflows as part of unrelated tasks
+- Self-certify release readiness
