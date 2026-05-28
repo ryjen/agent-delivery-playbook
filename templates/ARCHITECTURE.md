@@ -1,141 +1,97 @@
 # Architecture Notes
 
-Use this file to give agents and reviewers enough system context to make safe changes without reading the entire repository.
+This file gives agents and reviewers the architectural context needed to make safe, local changes without inventing new system behavior.
 
 ## System purpose
 
-Describe what the system does, who uses it, and what correctness means.
+Describe what this repository does, who uses it, and what must remain true for the system to be considered healthy.
 
-## Key boundaries
+## Major components
 
-Document important boundaries:
-
-- User interface
-- API layer
-- Domain logic
-- Persistence
-- Background jobs
-- Third-party integrations
-- Authentication and authorization
-- Payment, privacy, or compliance-sensitive paths
-- Build and release systems
+| Component | Responsibility | Owner | Notes |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
 ## Trust boundaries
 
-Describe where data or control crosses trust boundaries.
+Document important boundaries:
 
-Examples:
+- User/client boundary
+- API boundary
+- Persistence boundary
+- Third-party service boundary
+- Build/release boundary
+- Admin/internal tooling boundary
+- Mobile/native bridge boundary where applicable
 
-- Client to backend
-- Public API to internal service
-- App to native platform API
-- CI to deployment environment
-- Build system to package registry
-- Agent sandbox to repository
+## Data flows
 
-## Data model
+```mermaid
+flowchart LR
+    User[User] --> Client[Client]
+    Client --> API[API]
+    API --> Store[(Data store)]
+    API --> ThirdParty[Third-party service]
+```
 
-Sketch the core data model, ownership, and sensitivity level.
+## Security-sensitive areas
 
-| Entity | Owner | Sensitivity | Notes |
-| --- | --- | --- | --- |
-| ExampleUser | Auth/domain | PII | Do not log raw identifiers |
+List code paths that require extra review:
 
-## Runtime model
-
-Document:
-
-- Deployment topology
-- Process boundaries
-- Background workers
-- Queues/events
-- Caches
-- Offline behavior
-- Failure/retry behavior
-
-## Security model
-
-Document:
-
-- Authentication mechanism
-- Authorization model
-- Secret storage
-- Token/session lifecycle
-- Data protection requirements
-- Audit/logging strategy
-- Platform-specific security controls
-
-## Mobile/client architecture
-
-For client repositories, document:
-
-- Supported platforms
-- Shared versus platform-specific code
-- Navigation/state management
-- Persistence/offline model
-- Networking stack
-- Secure storage
-- Analytics/crash reporting
-- Native modules
-- Signing/release flow
-
-React Native notes:
-
-- JS/native boundary
-- Native module ownership
-- Platform-specific code conventions
-
-IOS notes:
-
-- Keychain usage
-- Entitlements
-- Privacy manifests
-- Background modes
-
-Android notes:
-
-- Manifest permissions
-- Exported components
-- Network Security Config
-- Keystore/signing assumptions
-
-Kotlin Multiplatform notes:
-
-- Source set structure
-- `expect`/`actual` boundaries
-- Platform-specific persistence/networking
+- Authentication
+- Authorization
+- Token handling
+- Secrets
+- Cryptography
+- Payment or billing
+- User data export/deletion
+- Logging and telemetry
+- Mobile permissions, entitlements, and signing
 
 ## Extension points
 
-Document where new behavior should be added and where it should not.
+Document approved ways to extend the system:
 
-Good agent guidance:
+- New feature modules
+- New API endpoints
+- New background jobs
+- New mobile screens
+- New integrations
+- New build/release steps
 
-- Add new API clients under `src/integrations/`
-- Add domain validation in `src/domain/validation/`
-- Do not add business logic to controllers
-- Do not change release workflows as part of feature work
+## Constraints for agents
 
-## Known constraints
+Agents should:
 
-Examples:
+- Follow existing module boundaries
+- Avoid cross-cutting rewrites without explicit approval
+- Preserve public contracts unless the task explicitly changes them
+- Add ADRs for intentional architecture changes
+- Keep generated code isolated when generation is required
 
-- Legacy module must remain compatible until migration is complete
-- API schema is consumed by mobile clients on older versions
-- Database migration must support rollback window
-- Mobile release cadence is slower than backend release cadence
-- Some tests are flaky and should not be weakened without investigation
+Agents should not:
 
-## Architecture decision process
+- Move security-sensitive logic to weaker trust boundaries
+- Introduce hidden global state
+- Add new service dependencies without review
+- Change persistence schemas without migration and rollback notes
+- Modify release architecture as part of unrelated work
 
-Agents should not introduce architecture changes opportunistically.
+## Mobile/client architecture notes
 
-Require human review or ADR when a change:
+React Native:
 
-- Adds a framework
-- Adds a runtime dependency
-- Changes public API contracts
-- Changes persistence or migration strategy
-- Changes authentication, authorization, or privacy behavior
-- Changes mobile platform permissions, entitlements, or signing
-- Changes CI/CD or release flow
+- Document JS/native ownership boundaries
+- Document native modules and platform-specific behavior
+
+IOS:
+
+- Document keychain, networking, entitlements, and privacy-sensitive flows
+
+Android:
+
+- Document permissions, exported components, secure storage, and background work
+
+Kotlin Multiplatform:
+
+- Document shared source sets, `expect`/`actual` boundaries, persistence, and networking differences
