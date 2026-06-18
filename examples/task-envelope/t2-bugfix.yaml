@@ -1,0 +1,54 @@
+task:
+  id: T-0002
+  title: Fix localized null handling crash
+  objective: Resolve a localized crash without changing public behavior or API contracts.
+  owner: rj
+
+classification:
+  type: bugfix
+  risk_tier: T2
+
+context:
+  repositories:
+    - example/app
+  references:
+    - issue: APP-1234
+
+constraints:
+  allowed:
+    - inspect affected module
+    - add regression test
+    - patch localized null handling
+  prohibited:
+    - changing public API contracts
+    - changing dependencies
+    - changing CI workflows
+    - broad refactoring
+
+execution:
+  tools:
+    - repo_read
+    - repo_write
+    - shell_tests
+  actions:
+    - inspect
+    - patch
+    - test
+    - summarize
+
+evidence:
+  required_level: E2
+  tests:
+    - targeted unit test
+    - regression test
+  artifacts:
+    - test output
+    - PR diff
+
+review:
+  required: true
+  approvers:
+    - code_owner
+  notes: Localized runtime change requires human review.
+
+status: proposed
