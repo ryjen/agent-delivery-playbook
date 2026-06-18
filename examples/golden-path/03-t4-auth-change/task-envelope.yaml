@@ -31,7 +31,10 @@ execution:
     - test
     - summarize
 evidence:
-  required_level: E4
+  required_levels:
+    - E2
+    - E3
+    - E4
   tests:
     - unit tests
     - negative checks
