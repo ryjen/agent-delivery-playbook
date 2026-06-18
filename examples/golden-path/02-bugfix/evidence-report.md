@@ -38,5 +38,5 @@ Review test quality and confirm the patch does not broaden scope.
 
 - Task id: GP-0002
 - Risk tier: T2
-- Required evidence level: E2
+- Required evidence levels: E2
 - Prohibited actions checked: yes
