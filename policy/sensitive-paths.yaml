@@ -12,15 +12,15 @@ default_rule:
 evidence_levels:
   T1: [E1]
   T2: [E2]
-  T3: [E3]
-  T4: [E4]
+  T3: [E2, E3]
+  T4: [E2, E3, E4]
 
 rules:
   - id: github-workflows
     patterns:
       - .github/workflows/**
     minimum_tier: T4
-    required_evidence: [E4]
+    required_evidence_levels: [E2, E3, E4]
     required_review: CI/security owner
     mode: escalation_prompt
     reason: Workflow changes can alter delivery authority.
@@ -29,7 +29,7 @@ rules:
     patterns:
       - .github/actions/**
     minimum_tier: T4
-    required_evidence: [E4]
+    required_evidence_levels: [E2, E3, E4]
     required_review: CI/security owner
     mode: escalation_prompt
     reason: Reusable actions can affect repository automation and credentials.
@@ -40,7 +40,7 @@ rules:
       - "**/*authorization*"
       - "**/*permission*"
     minimum_tier: T4
-    required_evidence: [E4]
+    required_evidence_levels: [E2, E3, E4]
     required_review: security owner
     mode: review_prompt
     reason: Broad name-based patterns are useful risk signals but need human confirmation.
@@ -50,7 +50,7 @@ rules:
       - "**/*secret*"
       - "**/.env*"
     minimum_tier: T4
-    required_evidence: [E4]
+    required_evidence_levels: [E2, E3, E4]
     required_review: security owner
     mode: escalation_prompt
     reason: Secret-adjacent files require review before agent-assisted work proceeds.
@@ -60,7 +60,7 @@ rules:
       - "**/Dockerfile"
       - docker-compose*.yml
     minimum_tier: T3
-    required_evidence: [E3]
+    required_evidence_levels: [E2, E3]
     required_review: runtime owner
     mode: review_prompt
     reason: Container changes can alter runtime behavior, build context, or exposed services.
@@ -72,7 +72,7 @@ rules:
       - kubernetes/**
       - helm/**
     minimum_tier: T4
-    required_evidence: [E4]
+    required_evidence_levels: [E2, E3, E4]
     required_review: infra owner
     mode: escalation_prompt
     reason: Infrastructure paths can alter deployed systems or operational authority.
@@ -81,7 +81,7 @@ rules:
     patterns:
       - migrations/**
     minimum_tier: T3
-    required_evidence: [E3]
+    required_evidence_levels: [E2, E3]
     required_review: data owner
     mode: review_prompt
     reason: Data migration changes can be hard to reverse.
@@ -90,7 +90,7 @@ rules:
     patterns:
       - schemas/**
     minimum_tier: T2
-    required_evidence: [E2]
+    required_evidence_levels: [E2]
     required_review: code owner
     mode: review_prompt
     reason: Schema changes can affect validation, compatibility, or downstream consumers.
@@ -106,7 +106,7 @@ rules:
       - go.mod
       - go.sum
     minimum_tier: T3
-    required_evidence: [E3]
+    required_evidence_levels: [E2, E3]
     required_review: code owner
     mode: review_prompt
     reason: Dependency changes affect supply-chain and license surface.
