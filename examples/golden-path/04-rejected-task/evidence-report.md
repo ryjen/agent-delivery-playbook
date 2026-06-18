@@ -38,5 +38,5 @@ Confirm refusal/escalation was the correct outcome.
 
 - Task id: GP-0004
 - Risk tier: T4
-- Required evidence level: E4
+- Required evidence levels: E2, E3, E4
 - Prohibited actions checked: yes
