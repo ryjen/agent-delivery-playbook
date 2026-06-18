@@ -135,6 +135,11 @@ def parse_list(
                 items.append(nested)
             continue
 
+        if is_quoted(item):
+            items.append(coerce_scalar(strip_quotes(item)))
+            index += 1
+            continue
+
         if ":" in item:
             key, value = split_scalar(item, path, line_number)
             entry: dict[str, Any] = {key: coerce_scalar(value) if value else {}}
@@ -161,12 +166,20 @@ def split_scalar(line: str, path: Path, line_number: int) -> tuple[str, str]:
     return key.strip(), value.strip()
 
 
+def is_quoted(value: str) -> bool:
+    return len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}
+
+
+def strip_quotes(value: str) -> str:
+    return value[1:-1] if is_quoted(value) else value
+
+
 def coerce_scalar(value: str) -> str | bool:
     if value == "true":
         return True
     if value == "false":
         return False
-    return value
+    return strip_quotes(value)
 
 
 def fail(path: Path, line_number: int, message: str) -> None:
@@ -187,6 +200,39 @@ def schema_evidence_field() -> str:
     raise ValueError("schema evidence section must require required_level or required_levels")
 
 
+def require_mapping(value: Any, name: str, errors: list[str]) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    errors.append(f"{name} must be a section")
+    return {}
+
+
+def require_list_of_strings(section: dict[str, Any], key: str, name: str, errors: list[str], required: bool = False) -> list[str]:
+    value = section.get(key)
+    if value is None:
+        if required:
+            errors.append(f"{name} is required")
+        return []
+    if not isinstance(value, list):
+        errors.append(f"{name} must be a list")
+        return []
+    invalid = [item for item in value if not isinstance(item, str)]
+    if invalid:
+        errors.append(f"{name} must contain only strings; quote values like 'issue: APP-1234' if needed")
+    return [item for item in value if isinstance(item, str)]
+
+
+def require_list_of_mappings(section: dict[str, Any], key: str, name: str, errors: list[str]) -> list[dict[str, Any]]:
+    value = section.get(key, [])
+    if not isinstance(value, list):
+        errors.append(f"{name} must be a list")
+        return []
+    invalid = [item for item in value if not isinstance(item, dict)]
+    if invalid:
+        errors.append(f"{name} must contain only mappings")
+    return [item for item in value if isinstance(item, dict)]
+
+
 def validate(path: Path, evidence_field: str) -> list[str]:
     errors: list[str] = []
     try:
@@ -198,29 +244,57 @@ def validate(path: Path, evidence_field: str) -> list[str]:
         if key not in envelope:
             errors.append(f"missing top-level section: {key}")
 
-    classification = envelope.get("classification", {})
-    if isinstance(classification, dict):
-        tier = classification.get("risk_tier")
-        if tier not in VALID_TIERS:
-            errors.append(f"invalid classification.risk_tier: {tier!r}")
-    else:
-        errors.append("classification must be a section")
+    classification = require_mapping(envelope.get("classification", {}), "classification", errors)
+    tier = classification.get("risk_tier")
+    if tier not in VALID_TIERS:
+        errors.append(f"invalid classification.risk_tier: {tier!r}")
 
-    evidence = envelope.get("evidence", {})
-    if isinstance(evidence, dict):
-        value = evidence.get(evidence_field)
-        if evidence_field == "required_levels":
-            if not isinstance(value, list) or not value:
-                errors.append("evidence.required_levels must be a non-empty list")
-            else:
-                invalid = [level for level in value if level not in VALID_LEVELS]
-                if invalid:
-                    errors.append(f"invalid evidence.required_levels: {invalid!r}")
-        else:
-            if value not in VALID_LEVELS:
-                errors.append(f"invalid evidence.required_level: {value!r}")
+    context = require_mapping(envelope.get("context", {}), "context", errors)
+    require_list_of_strings(context, "repositories", "context.repositories", errors, required=True)
+    require_list_of_strings(context, "references", "context.references", errors)
+    provenance = context.get("provenance")
+    if provenance is not None:
+        provenance_mapping = require_mapping(provenance, "context.provenance", errors)
+        for key in ["approved_sources", "included", "summarized", "deferred", "stale_context_caveats"]:
+            require_list_of_strings(provenance_mapping, key, f"context.provenance.{key}", errors)
+        for item in require_list_of_mappings(provenance_mapping, "excluded", "context.provenance.excluded", errors):
+            if not isinstance(item.get("path"), str):
+                errors.append("context.provenance.excluded[].path must be a string")
+            if not isinstance(item.get("reason"), str):
+                errors.append("context.provenance.excluded[].reason must be a string")
+        for item in require_list_of_mappings(provenance_mapping, "escalations", "context.provenance.escalations", errors):
+            if not isinstance(item.get("source"), str):
+                errors.append("context.provenance.escalations[].source must be a string")
+            if not isinstance(item.get("reason"), str):
+                errors.append("context.provenance.escalations[].reason must be a string")
+            if item.get("status") not in {"not_requested", "requested", "approved", "denied"}:
+                errors.append(f"invalid context.provenance.escalations[].status: {item.get('status')!r}")
+
+    constraints = require_mapping(envelope.get("constraints", {}), "constraints", errors)
+    require_list_of_strings(constraints, "allowed", "constraints.allowed", errors, required=True)
+    require_list_of_strings(constraints, "prohibited", "constraints.prohibited", errors, required=True)
+
+    execution = require_mapping(envelope.get("execution", {}), "execution", errors)
+    require_list_of_strings(execution, "tools", "execution.tools", errors, required=True)
+    require_list_of_strings(execution, "actions", "execution.actions", errors, required=True)
+
+    evidence = require_mapping(envelope.get("evidence", {}), "evidence", errors)
+    if evidence_field == "required_levels":
+        levels = require_list_of_strings(evidence, "required_levels", "evidence.required_levels", errors, required=True)
+        invalid = [level for level in levels if level not in VALID_LEVELS]
+        if invalid:
+            errors.append(f"invalid evidence.required_levels: {invalid!r}")
     else:
-        errors.append("evidence must be a section")
+        value = evidence.get("required_level")
+        if value not in VALID_LEVELS:
+            errors.append(f"invalid evidence.required_level: {value!r}")
+    require_list_of_strings(evidence, "tests", "evidence.tests", errors)
+    require_list_of_strings(evidence, "artifacts", "evidence.artifacts", errors)
+
+    review = require_mapping(envelope.get("review", {}), "review", errors)
+    if not isinstance(review.get("required"), bool):
+        errors.append("review.required must be true or false")
+    require_list_of_strings(review, "approvers", "review.approvers", errors)
 
     return errors
 
