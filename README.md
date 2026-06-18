@@ -70,6 +70,7 @@ The repo's operating assumption is simple:
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
 | `docs/mobile-agent-safe-checklist.md` | Mobile/client-specific guardrails |
+| `policy/` | Machine-readable policy artifacts for future validation |
 | `templates/` | Drop-in repo templates for agent instructions and review controls |
 | `examples/` | Example task and PR contracts |
 | `diagrams/secure-agent-workflow.mmd` | Mermaid workflow diagram |

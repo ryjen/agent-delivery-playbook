@@ -1,0 +1,125 @@
+version: 1
+name: sensitive-path-policy
+summary: >
+  Structured companion to docs/policy/sensitive-paths.md. This file is policy input
+  for future validation; it does not enforce rules by itself.
+
+default_rule:
+  when_multiple_rules_match: use_highest_minimum_tier
+  broad_patterns_are: review_prompts
+  downgrade_requires_human_review: true
+
+evidence_levels:
+  T1: [E1]
+  T2: [E2]
+  T3: [E2, E3]
+  T4: [E2, E3, E4]
+
+rules:
+  - id: github-workflows
+    patterns:
+      - .github/workflows/**
+    minimum_tier: T4
+    required_evidence_levels: [E2, E3, E4]
+    required_review: CI/security owner
+    mode: escalation_prompt
+    reason: Workflow changes can alter delivery authority.
+
+  - id: github-actions
+    patterns:
+      - .github/actions/**
+    minimum_tier: T4
+    required_evidence_levels: [E2, E3, E4]
+    required_review: CI/security owner
+    mode: escalation_prompt
+    reason: Reusable actions can affect repository automation and credentials.
+
+  - id: access-control-keywords
+    patterns:
+      - "**/*auth*"
+      - "**/*authorization*"
+      - "**/*permission*"
+    minimum_tier: T4
+    required_evidence_levels: [E2, E3, E4]
+    required_review: security owner
+    mode: review_prompt
+    reason: Broad name-based patterns are useful risk signals but need human confirmation.
+
+  - id: secrets
+    patterns:
+      - "**/*secret*"
+      - "**/.env*"
+    minimum_tier: T4
+    required_evidence_levels: [E2, E3, E4]
+    required_review: security owner
+    mode: escalation_prompt
+    reason: Secret-adjacent files require review before agent-assisted work proceeds.
+
+  - id: container-runtime
+    patterns:
+      - "**/Dockerfile"
+      - docker-compose*.yml
+    minimum_tier: T3
+    required_evidence_levels: [E2, E3]
+    required_review: runtime owner
+    mode: review_prompt
+    reason: Container changes can alter runtime behavior, build context, or exposed services.
+
+  - id: infrastructure
+    patterns:
+      - infra/**
+      - terraform/**
+      - kubernetes/**
+      - helm/**
+    minimum_tier: T4
+    required_evidence_levels: [E2, E3, E4]
+    required_review: infra owner
+    mode: escalation_prompt
+    reason: Infrastructure paths can alter deployed systems or operational authority.
+
+  - id: migrations
+    patterns:
+      - migrations/**
+    minimum_tier: T3
+    required_evidence_levels: [E2, E3]
+    required_review: data owner
+    mode: review_prompt
+    reason: Data migration changes can be hard to reverse.
+
+  - id: schemas
+    patterns:
+      - schemas/**
+    minimum_tier: T2
+    required_evidence_levels: [E2]
+    required_review: code owner
+    mode: review_prompt
+    reason: Schema changes can affect validation, compatibility, or downstream consumers.
+
+  - id: dependencies
+    patterns:
+      - package.json
+      - package-lock.json
+      - pnpm-lock.yaml
+      - yarn.lock
+      - Cargo.toml
+      - Cargo.lock
+      - go.mod
+      - go.sum
+    minimum_tier: T3
+    required_evidence_levels: [E2, E3]
+    required_review: code owner
+    mode: review_prompt
+    reason: Dependency changes affect supply-chain and license surface.
+
+downgrade_policy:
+  allowed: true
+  mode: human_documented_exception
+  requirements:
+    - diff is clearly non-semantic
+    - reviewer documents why the minimum tier does not apply
+    - no workflow, runtime, permission, or security behavior changes
+    - downgrade is visible in the PR evidence
+  examples:
+    - comment-only typo in a workflow file
+    - schema documentation note with no schema behavior change
+    - formatting-only lockfile normalization with reproducible evidence
