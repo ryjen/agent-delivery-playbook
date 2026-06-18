@@ -10,7 +10,7 @@ context:
   repositories:
     - example/app
   references:
-    - issue: APP-1234
+    - "issue: APP-1234"
 constraints:
   allowed:
     - inspect affected module
