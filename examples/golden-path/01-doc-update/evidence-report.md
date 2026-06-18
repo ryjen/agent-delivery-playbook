@@ -37,5 +37,5 @@ Check that the diff is documentation-only and does not alter commands.
 
 - Task id: GP-0001
 - Risk tier: T1
-- Required evidence level: E1
+- Required evidence levels: E1
 - Prohibited actions checked: yes
