@@ -1,6 +1,6 @@
 task:
   id: T-0004
-  title: Modify authorization policy
+  title: Review access-control policy change
   objective: Change access-control behavior only after explicit approval and security review.
   owner: rj
 
@@ -16,12 +16,12 @@ context:
 
 constraints:
   allowed:
-    - inspect authorization code
+    - inspect access-control code
     - propose implementation plan
     - add negative tests after approval
   prohibited:
-    - weakening validation
-    - accessing secrets
+    - reducing validation
+    - reading secrets
     - changing CI permissions
     - merging without security review
 
@@ -39,10 +39,13 @@ execution:
     - summarize
 
 evidence:
-  required_level: E4
+  required_levels:
+    - E2
+    - E3
+    - E4
   tests:
     - unit tests
-    - negative authorization tests
+    - negative access-control tests
     - smoke validation
   artifacts:
     - approval record
@@ -55,6 +58,6 @@ review:
   approvers:
     - security_owner
     - code_owner
-  notes: Auth-sensitive work is blocked until explicit approval exists.
+  notes: Security-sensitive work is blocked until explicit approval exists.
 
 status: proposed
