@@ -1,0 +1,60 @@
+task:
+  id: T-0004
+  title: Modify authorization policy
+  objective: Change access-control behavior only after explicit approval and security review.
+  owner: rj
+
+classification:
+  type: security
+  risk_tier: T4
+
+context:
+  repositories:
+    - example/service
+  references:
+    - security-review: pending
+
+constraints:
+  allowed:
+    - inspect authorization code
+    - propose implementation plan
+    - add negative tests after approval
+  prohibited:
+    - weakening validation
+    - accessing secrets
+    - changing CI permissions
+    - merging without security review
+
+execution:
+  tools:
+    - repo_read
+    - approval_gate
+    - shell_tests
+    - github_pr
+  actions:
+    - inspect
+    - request_approval
+    - patch_after_approval
+    - test
+    - summarize
+
+evidence:
+  required_level: E4
+  tests:
+    - unit tests
+    - negative authorization tests
+    - smoke validation
+  artifacts:
+    - approval record
+    - security review notes
+    - rollback plan
+    - PR diff
+
+review:
+  required: true
+  approvers:
+    - security_owner
+    - code_owner
+  notes: Auth-sensitive work is blocked until explicit approval exists.
+
+status: proposed
