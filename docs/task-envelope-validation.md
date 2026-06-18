@@ -14,6 +14,8 @@ The validator checks envelope examples in `examples/task-envelope/` and golden-p
 - `classification.risk_tier` is one of `T1`, `T2`, `T3`, or `T4`;
 - the schema declares either `evidence.required_level` or `evidence.required_levels`;
 - evidence levels are one of `E1`, `E2`, `E3`, or `E4`;
+- schema-compatible scalar lists contain only strings;
+- keyed-looking scalar values such as `"issue: APP-1234"` are quoted instead of parsed as YAML objects;
 - the schema `$id` does not use the `example.com` placeholder;
 - nested context/provenance examples can be parsed by the repository's supported YAML subset;
 - malformed example structure fails with a path and reason.
@@ -33,6 +35,7 @@ Validation should fail when an example:
 - uses an unknown evidence level;
 - has malformed YAML in the subset used by the examples;
 - drifts from the schema's expected evidence field;
+- places an object in a scalar-only list;
 - adds a nested envelope shape the local validator cannot parse.
 
 ## CI Posture
