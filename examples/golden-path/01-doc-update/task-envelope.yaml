@@ -26,7 +26,8 @@ execution:
     - patch
     - summarize
 evidence:
-  required_level: E1
+  required_levels:
+    - E1
   tests:
     - markdown review
   artifacts:
