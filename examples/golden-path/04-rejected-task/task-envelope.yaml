@@ -28,7 +28,10 @@ execution:
     - reject
     - propose_safe_path
 evidence:
-  required_level: E4
+  required_levels:
+    - E2
+    - E3
+    - E4
   tests: []
   artifacts:
     - policy reason
