@@ -2,196 +2,36 @@
 
 Golden paths show how AI-assisted work should move from request to reviewable delivery evidence.
 
-These examples are intentionally small. They are meant to become executable examples later.
+These examples are intentionally small. The full task bundles live under `examples/golden-path/`.
+
+## Full Task Bundles
+
+| Bundle | Risk | Purpose |
+| --- | --- | --- |
+| `examples/golden-path/01-doc-update/` | T1 | Lightweight documentation-only flow |
+| `examples/golden-path/02-bugfix/` | T2 | Localized bugfix with targeted test evidence |
+| `examples/golden-path/03-t4-auth-change/` | T4 | Controlled sensitive change blocked until approval and review |
+| `examples/golden-path/04-rejected-task/` | T4 | Unsafe request where refusal/escalation is the correct outcome |
+
+Each bundle includes:
+
+- `task-envelope.yaml`
+- `evidence-report.md`
+- `reviewer-note.md`
+- `outcome.md`
 
 ## Path 1: Documentation Update
 
-### Task
-
-Update a README section for clarity.
-
-### Risk Assessment
-
-- Tier: T1
-- Reason: documentation-only change
-- Evidence: E1
-
-### Agent Plan
-
-- inspect README
-- make localized edit
-- ensure links still resolve syntactically
-- summarize changes
-
-### Execution Constraints
-
-- no code changes
-- no workflow changes
-- no dependency changes
-
-### Evidence
-
-- diff only touches Markdown
-- Markdown formatting reviewed
-
-### Review
-
-Lightweight review or auto-merge is acceptable if repository policy allows it.
-
-### Outcome
-
-Mergeable when the diff matches the envelope.
+Documentation-only changes should stay lightweight. The task envelope can be brief when the diff is clearly T1 and no sensitive paths are touched.
 
 ## Path 2: Local Bug Fix
 
-### Task
+Localized runtime changes need targeted test evidence and human review. The example bundle shows regression coverage without broad refactoring.
 
-Fix a localized null handling crash.
+## Path 3: Sensitive Change
 
-### Risk Assessment
+Sensitive control-surface changes are not fast paths. The example bundle shows approval, owner review, negative checks, and rollback expectations before completion.
 
-- Tier: T2
-- Reason: localized runtime behavior change
-- Evidence: E2
+## Path 4: Rejected Task
 
-### Agent Plan
-
-- reproduce or identify failing path
-- add regression test
-- patch minimal logic
-- run targeted tests
-
-### Execution Constraints
-
-- no API contract changes
-- no dependency additions
-- no broad refactor
-
-### Evidence
-
-- targeted regression test added
-- relevant unit test command included
-- assumptions documented if full suite is unavailable
-
-### Review
-
-Human review required.
-
-### Outcome
-
-Mergeable when tests and review support the change.
-
-## Path 3: Cross-Cutting Feature
-
-### Task
-
-Add a feature touching API, storage, and UI behavior.
-
-### Risk Assessment
-
-- Tier: T3
-- Reason: cross-cutting runtime behavior
-- Evidence: E2 + E3
-
-### Agent Plan
-
-- identify affected contracts
-- define migration or compatibility approach
-- implement incrementally
-- add tests at seams
-- document rollout and rollback
-
-### Execution Constraints
-
-- no auth semantics changes
-- no production data access
-- no CI permission changes
-
-### Evidence
-
-- unit or integration tests
-- smoke test plan
-- migration or compatibility notes
-- rollback path
-
-### Review
-
-Human review plus owner review for affected subsystem.
-
-### Outcome
-
-Mergeable when implementation, tests, and operational evidence agree.
-
-## Path 4: Authentication or Authorization Change
-
-### Task
-
-Modify access-control behavior.
-
-### Risk Assessment
-
-- Tier: T4
-- Reason: auth-sensitive change
-- Evidence: E2 + E3 + E4
-
-### Agent Plan
-
-- stop until explicit approval is recorded
-- identify security invariants
-- add negative tests
-- validate rollback
-- request security review
-
-### Execution Constraints
-
-- no weakening validation
-- no scope expansion without approval
-- no secret access
-- no workflow bypass
-
-### Evidence
-
-- approval record
-- negative tests
-- smoke validation
-- rollback plan
-- security review notes
-
-### Review
-
-Security review required.
-
-### Outcome
-
-Blocked until approval and evidence are complete.
-
-## Path 5: Rejected Task
-
-### Task
-
-Disable authentication validation to make tests pass.
-
-### Risk Assessment
-
-- Tier: T4
-- Reason: explicit security control removal
-
-### Agent Decision
-
-Reject the requested implementation path.
-
-### Safer Alternative
-
-- fix test fixture
-- mock identity provider correctly
-- document why validation must remain enabled
-
-### Evidence
-
-- original unsafe request
-- policy reason for rejection
-- proposed safe path
-
-### Outcome
-
-No code execution until a safe task envelope exists.
+Some tasks should not be implemented. The rejected-task bundle shows how to stop, record the policy reason, and propose a safer bounded task instead.
