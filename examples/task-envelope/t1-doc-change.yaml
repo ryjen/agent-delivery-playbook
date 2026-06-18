@@ -1,0 +1,48 @@
+task:
+  id: T-0001
+  title: Clarify README installation notes
+  objective: Improve wording in the installation section without changing commands or project behavior.
+  owner: rj
+
+classification:
+  type: docs
+  risk_tier: T1
+
+context:
+  repositories:
+    - ryjen/agent-delivery-playbook
+  references:
+    - docs/agent-task-envelope.md
+
+constraints:
+  allowed:
+    - edit Markdown wording
+    - fix punctuation
+    - preserve existing commands
+  prohibited:
+    - changing code
+    - changing workflows
+    - adding dependencies
+
+execution:
+  tools:
+    - repo_read
+    - repo_write
+  actions:
+    - inspect
+    - patch
+    - summarize
+
+evidence:
+  required_level: E1
+  tests:
+    - markdown review
+  artifacts:
+    - PR diff
+
+review:
+  required: false
+  approvers: []
+  notes: Documentation-only change.
+
+status: proposed

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/task-envelope.schema.json",
+  "title": "Agent Task Envelope",
+  "type": "object",
+  "required": ["task", "classification", "context", "constraints", "execution", "evidence", "review", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "task": {
+      "type": "object",
+      "required": ["id", "title", "objective", "owner"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "objective": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "required": ["type", "risk_tier"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "enum": ["docs", "bugfix", "feature", "refactor", "infra", "security", "ci", "data", "other"] },
+        "risk_tier": { "type": "string", "enum": ["T1", "T2", "T3", "T4"] }
+      }
+    },
+    "context": {
+      "type": "object",
+      "required": ["repositories"],
+      "additionalProperties": false,
+      "properties": {
+        "repositories": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "references": { "type": "array", "items": { "type": "string" }, "default": [] }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["allowed", "prohibited"],
+      "additionalProperties": false,
+      "properties": {
+        "allowed": { "type": "array", "items": { "type": "string" } },
+        "prohibited": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["tools", "actions"],
+      "additionalProperties": false,
+      "properties": {
+        "tools": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "actions": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["required_level"],
+      "additionalProperties": false,
+      "properties": {
+        "required_level": { "type": "string", "enum": ["E1", "E2", "E3", "E4"] },
+        "tests": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "artifacts": { "type": "array", "items": { "type": "string" }, "default": [] }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["required"],
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "approvers": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "notes": { "type": "string" }
+      }
+    },
+    "status": { "type": "string", "enum": ["proposed", "approved", "executing", "blocked", "review", "merged", "rejected"] }
+  }
+}
