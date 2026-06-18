@@ -1,0 +1,72 @@
+task:
+  id: CTX-001
+  title: Update setup documentation
+  objective: Update README setup commands using only approved repository context.
+  owner: repo-maintainer
+
+classification:
+  type: docs
+  risk_tier: T1
+
+context:
+  repositories:
+    - example-app
+  references:
+    - README.md
+    - package.json
+  provenance:
+    approved_sources:
+      - README.md
+      - package.json
+    included:
+      - README setup section
+      - package.json scripts
+    summarized:
+      - none
+    excluded:
+      - path: .github/workflows/
+        reason: CI changes are outside this T1 task.
+    deferred:
+      - docs/deployment.md
+    escalations:
+      - source: .github/workflows/ci.yml
+        reason: Would require CI-scope reclassification.
+        status: not_requested
+    model_context_assumption: Small documentation task; no large-context retrieval required.
+    stale_context_caveats:
+      - README may be stale; package.json is treated as the source of truth for scripts.
+
+constraints:
+  allowed:
+    - inspect README.md
+    - inspect package.json scripts
+    - update setup instructions
+  prohibited:
+    - changing package scripts
+    - editing CI workflows
+    - adding dependencies
+
+execution:
+  tools:
+    - repo_read
+    - editor
+  actions:
+    - inspect
+    - patch
+    - summarize
+
+evidence:
+  required_levels:
+    - E1
+  tests:
+    - manual diff review
+  artifacts:
+    - PR diff
+
+review:
+  required: true
+  approvers:
+    - human-maintainer
+  notes: Context expansion into CI files would require reclassification.
+
+status: proposed
