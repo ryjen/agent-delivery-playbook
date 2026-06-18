@@ -44,6 +44,7 @@ Agents can accelerate work, but they also introduce new failure modes: over-broa
 
 | Path | Purpose |
 | --- | --- |
+| `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
 | `docs/secure-coding-agent-workflow.md` | End-to-end secure agent workflow |
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
@@ -58,8 +59,9 @@ Agents can accelerate work, but they also introduce new failure modes: over-broa
 2. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
 3. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
 4. Require `examples/agent-task-contract.md` for medium/high-risk agent work
-5. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
-6. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
+5. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
+6. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
+7. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
 
 ## Good first use cases
 
