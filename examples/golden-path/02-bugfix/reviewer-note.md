@@ -4,7 +4,7 @@ Reviewed against:
 
 - Task envelope: `task-envelope.yaml`
 - Risk tier: T2
-- Evidence level: E2
+- Evidence levels: E2
 - Sensitive paths: none
 - Tool authority: shell test execution and repository writes
 
