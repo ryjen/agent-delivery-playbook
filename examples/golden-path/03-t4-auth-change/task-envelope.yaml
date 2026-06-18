@@ -1,0 +1,49 @@
+task:
+  id: GP-0003
+  title: Review access-control change
+  objective: Prepare a controlled change to access-control behavior only after explicit owner approval.
+  owner: example-owner
+classification:
+  type: security
+  risk_tier: T4
+context:
+  repositories:
+    - example/service
+  references:
+    - approval: required
+constraints:
+  allowed:
+    - inspect relevant code
+    - draft plan
+    - add negative tests after approval
+  prohibited:
+    - reading secrets
+    - changing CI permissions
+    - completing without owner review
+execution:
+  tools:
+    - repo_read
+    - approval_gate
+    - shell_tests
+  actions:
+    - inspect
+    - request_approval
+    - test
+    - summarize
+evidence:
+  required_level: E4
+  tests:
+    - unit tests
+    - negative checks
+    - smoke validation
+  artifacts:
+    - approval record
+    - owner review notes
+    - rollback plan
+review:
+  required: true
+  approvers:
+    - security_owner
+    - code_owner
+  notes: T4 work is blocked until approval and review are complete.
+status: proposed
