@@ -50,6 +50,8 @@ The `context` section is part of the authority boundary. It records what the age
 
 For small T1/T2 tasks, `repositories` and `references` may be enough. For medium/high-risk work or any sensitive-path-adjacent task, add `context.provenance`.
 
+`context.references` values are strings. Quote values that look like YAML mappings, such as `"issue: APP-1234"`, so examples remain compatible with the JSON Schema.
+
 Recommended provenance fields:
 
 | Field | Purpose |
@@ -82,7 +84,7 @@ context:
   repositories:
     - mobile-app
   references:
-    - issue: APP-1234
+    - "issue: APP-1234"
   provenance:
     approved_sources:
       - src/auth/session-refresh.kt
