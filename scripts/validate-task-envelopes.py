@@ -10,10 +10,14 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "schemas" / "task-envelope.schema.json"
-EXAMPLES = ROOT / "examples" / "task-envelope"
+EXAMPLE_DIRS = [
+    ROOT / "examples" / "task-envelope",
+    ROOT / "examples" / "golden-path",
+]
 
 VALID_TIERS = {"T1", "T2", "T3", "T4"}
 VALID_LEVELS = {"E1", "E2", "E3", "E4"}
@@ -29,58 +33,125 @@ REQUIRED_TOP_LEVEL = [
 ]
 
 
-def parse_subset_yaml(path: Path) -> dict[str, dict[str, object] | str]:
-    """Parse the simple mapping/list subset used by task envelope examples."""
-    root: dict[str, dict[str, object] | str] = {}
-    current_section: str | None = None
-    current_key: str | None = None
+def parse_subset_yaml(path: Path) -> dict[str, Any]:
+    """Parse the small mapping/list YAML subset used by examples.
 
-    for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
+    Supported forms:
+    - nested mappings using indentation;
+    - scalar values;
+    - lists of scalars;
+    - lists of small mappings.
+    """
+    lines = [
+        (indent_of(raw), raw.strip(), line_number)
+        for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1)
+        if raw.strip() and not raw.lstrip().startswith("#")
+    ]
+    value, index = parse_block(lines, 0, 0, path)
+    if index != len(lines):
+        _, _, line_number = lines[index]
+        fail(path, line_number, "unexpected trailing content")
+    if not isinstance(value, dict):
+        raise ValueError(f"{path}:1: envelope root must be a mapping")
+    return value
 
-        if not raw.startswith(" "):
-            if not raw.endswith(":"):
-                key, value = split_scalar(raw, path, line_number)
-                root[key] = value
-                current_section = None
-                current_key = None
-                continue
-            current_section = raw[:-1]
-            root[current_section] = {}
-            current_key = None
-            continue
 
-        if current_section is None or not isinstance(root.get(current_section), dict):
-            fail(path, line_number, "nested value without a section")
+def parse_block(
+    lines: list[tuple[int, str, int]],
+    index: int,
+    indent: int,
+    path: Path,
+) -> tuple[Any, int]:
+    if index >= len(lines):
+        return {}, index
 
-        stripped = raw.strip()
-        section = root[current_section]
-        assert isinstance(section, dict)
+    current_indent, content, line_number = lines[index]
+    if current_indent < indent:
+        return {}, index
+    if current_indent > indent:
+        fail(path, line_number, f"unexpected indentation; expected {indent} spaces")
 
-        if stripped.startswith("- "):
-            if current_key is None:
-                fail(path, line_number, "list item without a key")
-            section.setdefault(current_key, [])
-            value = stripped[2:]
-            existing = section[current_key]
-            if not isinstance(existing, list):
-                fail(path, line_number, f"key {current_key!r} is not a list")
-            existing.append(value)
-            continue
+    if content.startswith("- "):
+        return parse_list(lines, index, indent, path)
+    return parse_mapping(lines, index, indent, path)
 
-        key, value = split_scalar(stripped, path, line_number)
+
+def parse_mapping(
+    lines: list[tuple[int, str, int]],
+    index: int,
+    indent: int,
+    path: Path,
+) -> tuple[dict[str, Any], int]:
+    mapping: dict[str, Any] = {}
+
+    while index < len(lines):
+        current_indent, content, line_number = lines[index]
+        if current_indent < indent:
+            break
+        if current_indent > indent:
+            fail(path, line_number, f"unexpected nested mapping item: {content}")
+        if content.startswith("- "):
+            break
+
+        key, value = split_scalar(content, path, line_number)
         if value == "":
-            section[key] = []
-            current_key = key
-        elif value in {"true", "false"}:
-            section[key] = value == "true"
-            current_key = None
+            if index + 1 < len(lines) and lines[index + 1][0] > current_indent:
+                nested, index = parse_block(lines, index + 1, lines[index + 1][0], path)
+                mapping[key] = nested
+            else:
+                mapping[key] = []
+                index += 1
         else:
-            section[key] = value
-            current_key = None
+            mapping[key] = coerce_scalar(value)
+            index += 1
 
-    return root
+    return mapping, index
+
+
+def parse_list(
+    lines: list[tuple[int, str, int]],
+    index: int,
+    indent: int,
+    path: Path,
+) -> tuple[list[Any], int]:
+    items: list[Any] = []
+
+    while index < len(lines):
+        current_indent, content, line_number = lines[index]
+        if current_indent < indent:
+            break
+        if current_indent > indent:
+            fail(path, line_number, "unexpected list indentation")
+        if not content.startswith("- "):
+            break
+
+        item = content[2:]
+        if item == "":
+            if index + 1 >= len(lines) or lines[index + 1][0] <= current_indent:
+                items.append({})
+                index += 1
+            else:
+                nested, index = parse_block(lines, index + 1, lines[index + 1][0], path)
+                items.append(nested)
+            continue
+
+        if ":" in item:
+            key, value = split_scalar(item, path, line_number)
+            entry: dict[str, Any] = {key: coerce_scalar(value) if value else {}}
+            index += 1
+            if index < len(lines) and lines[index][0] > current_indent:
+                nested, index = parse_mapping(lines, index, lines[index][0], path)
+                entry.update(nested)
+            items.append(entry)
+        else:
+            items.append(coerce_scalar(item))
+            index += 1
+
+    return items, index
+
+
+def indent_of(raw: str) -> int:
+    return len(raw) - len(raw.lstrip(" "))
 
 
 def split_scalar(line: str, path: Path, line_number: int) -> tuple[str, str]:
@@ -90,12 +161,24 @@ def split_scalar(line: str, path: Path, line_number: int) -> tuple[str, str]:
     return key.strip(), value.strip()
 
 
+def coerce_scalar(value: str) -> str | bool:
+    if value == "true":
+        return True
+    if value == "false":
+        return False
+    return value
+
+
 def fail(path: Path, line_number: int, message: str) -> None:
     raise ValueError(f"{path}:{line_number}: {message}")
 
 
 def schema_evidence_field() -> str:
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+    schema_id = schema.get("$id", "")
+    if "example.com" in schema_id:
+        raise ValueError("schema $id must not use the example.com placeholder")
+
     required = schema["properties"]["evidence"].get("required", [])
     if "required_levels" in required:
         return "required_levels"
@@ -142,9 +225,19 @@ def validate(path: Path, evidence_field: str) -> list[str]:
     return errors
 
 
+def example_files() -> list[Path]:
+    files: list[Path] = []
+    for directory in EXAMPLE_DIRS:
+        if directory.exists():
+            files.extend(directory.rglob("task-envelope.yaml"))
+            if directory.name == "task-envelope":
+                files.extend(directory.glob("*.yaml"))
+    return sorted(set(files))
+
+
 def main() -> int:
     evidence_field = schema_evidence_field()
-    files = sorted(EXAMPLES.glob("*.yaml"))
+    files = example_files()
     if not files:
         print("No task envelope examples found", file=sys.stderr)
         return 1
