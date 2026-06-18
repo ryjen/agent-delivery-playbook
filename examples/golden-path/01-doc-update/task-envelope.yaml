@@ -1,0 +1,39 @@
+task:
+  id: GP-0001
+  title: Clarify README wording
+  objective: Improve one documentation section without changing commands or behavior.
+  owner: example-owner
+classification:
+  type: docs
+  risk_tier: T1
+context:
+  repositories:
+    - example/repo
+  references:
+    - README.md
+constraints:
+  allowed:
+    - edit Markdown wording
+  prohibited:
+    - changing code
+    - changing workflows
+execution:
+  tools:
+    - repo_read
+    - repo_write
+  actions:
+    - inspect
+    - patch
+    - summarize
+evidence:
+  required_levels:
+    - E1
+  tests:
+    - markdown review
+  artifacts:
+    - PR diff
+review:
+  required: false
+  approvers: []
+  notes: T1 fast path is acceptable when policy allows it.
+status: proposed

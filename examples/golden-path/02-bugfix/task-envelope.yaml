@@ -1,0 +1,47 @@
+task:
+  id: GP-0002
+  title: Fix localized null handling bug
+  objective: Fix one bounded bug and add regression coverage without changing contracts.
+  owner: example-owner
+classification:
+  type: bugfix
+  risk_tier: T2
+context:
+  repositories:
+    - example/app
+  references:
+    - issue: APP-1234
+constraints:
+  allowed:
+    - inspect affected module
+    - add regression test
+    - patch localized logic
+  prohibited:
+    - changing public API contracts
+    - adding dependencies
+    - broad refactoring
+execution:
+  tools:
+    - repo_read
+    - repo_write
+    - shell_tests
+  actions:
+    - inspect
+    - patch
+    - test
+    - summarize
+evidence:
+  required_levels:
+    - E2
+  tests:
+    - targeted unit test
+    - regression test
+  artifacts:
+    - test output
+    - PR diff
+review:
+  required: true
+  approvers:
+    - code_owner
+  notes: Localized runtime change requires human review.
+status: proposed
