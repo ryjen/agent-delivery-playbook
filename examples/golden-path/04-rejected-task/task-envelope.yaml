@@ -10,7 +10,7 @@ context:
   repositories:
     - example/service
   references:
-    - unsafe-request: original prompt
+    - "unsafe-request: original prompt"
 constraints:
   allowed:
     - explain policy reason
