@@ -31,7 +31,8 @@ execution:
     - test
     - summarize
 evidence:
-  required_level: E2
+  required_levels:
+    - E2
   tests:
     - targeted unit test
     - regression test
