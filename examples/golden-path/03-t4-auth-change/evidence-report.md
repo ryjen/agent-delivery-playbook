@@ -38,5 +38,5 @@ Inspect approval, negative checks, and rollback first.
 
 - Task id: GP-0003
 - Risk tier: T4
-- Required evidence level: E4
+- Required evidence levels: E2, E3, E4
 - Prohibited actions checked: yes
