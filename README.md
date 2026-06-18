@@ -4,6 +4,21 @@ Practical patterns, templates, and threat models for secure AI-assisted software
 
 This repository treats AI coding agents as semi-autonomous delivery participants, not smarter autocomplete. The goal is to help senior engineers, platform teams, AppSec teams, and mobile/client teams adopt coding agents without weakening delivery controls.
 
+## Project goals
+
+- Codify repeatable, bounded agent delivery workflows for software engineering teams.
+- Make AI-assisted delivery safer, more consistent, and easier to review.
+- Provide practical controls for task scoping, context curation, sandboxing, credentials, evidence, and rollback.
+- Bridge agent workflows into normal engineering systems such as GitHub, CI/CD, local development environments, and review gates.
+- Move from ad hoc chat prompts to durable workflow definitions with clear inputs, outputs, controls, and ownership.
+
+## Non-goals
+
+- Career workflows, resume tailoring, recruiter replies, or application tracking.
+- Replacing Hermes, n8n, GitHub Actions, CI/CD platforms, or existing SDLC governance.
+- Becoming a generic prompt dump, chatbot recipe collection, or agent framework.
+- Encouraging autonomous merge, release, credential, or production access without human accountability.
+
 ## Who this is for
 
 - Senior, staff, and principal engineers introducing agent-assisted delivery
