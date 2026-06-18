@@ -38,14 +38,35 @@ A secure agent workflow is a constrained delivery loop:
 5. Apply normal SDLC gates
 6. Preserve audit trails and rollback paths
 
-Agents can accelerate work, but they also introduce new failure modes: over-broad changes, hidden dependency updates, credential exposure, generated code that bypasses architectural constraints, fabricated evidence, and insecure defaults. This repository gives teams reusable controls rather than generic advice.
+Agents can accelerate work, but they also introduce new failure modes: over-broad changes, hidden dependency updates, credential exposure, generated code that bypasses architectural constraints, fabricated evidence, insecure defaults, stale context decisions, and approval collapse. This repository gives teams reusable controls rather than generic advice.
+
+## AI-native SDLC concern
+
+AI-assisted delivery changes the SDLC because the delivery artifact is no longer only source code.
+
+Teams also need to govern:
+
+- Prompts and task contracts
+- Context supplied to agents
+- Tool invocations
+- Agent-generated plans and evidence
+- Model/runtime metadata where practical
+- Human approval records
+- Audit and rollback paths
+
+The repo's operating assumption is simple:
+
+> Agents may propose, modify, test, and explain changes. Humans remain accountable for approval, merge, and release decisions.
 
 ## Repository map
 
 | Path | Purpose |
 | --- | --- |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
+| `docs/ai-native-sdlc.md` | Governance concern for AI-native software delivery |
 | `docs/secure-coding-agent-workflow.md` | End-to-end secure agent workflow |
+| `docs/trust-model.md` | Identity, authority, and separation-of-duties model for agents and humans |
+| `docs/delivery-evidence-standard.md` | Evidence standard for agent-assisted pull requests and workflows |
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
 | `docs/mobile-agent-safe-checklist.md` | Mobile/client-specific guardrails |
@@ -55,13 +76,16 @@ Agents can accelerate work, but they also introduce new failure modes: over-broa
 
 ## Recommended adoption path
 
-1. Copy `templates/AGENTS.md` into the target repository root
-2. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
-3. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
-4. Require `examples/agent-task-contract.md` for medium/high-risk agent work
-5. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
-6. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
-7. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
+1. Read `docs/ai-native-sdlc.md` to establish the governance concern
+2. Copy `templates/AGENTS.md` into the target repository root
+3. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
+4. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
+5. Require `examples/agent-task-contract.md` for medium/high-risk agent work
+6. Use `docs/delivery-evidence-standard.md` for PR evidence expectations
+7. Apply `docs/trust-model.md` when granting tool, repository, or CI access
+8. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
+9. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
+10. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
 
 ## Good first use cases
 
@@ -88,6 +112,7 @@ Agents can accelerate work, but they also introduce new failure modes: over-broa
 - Never expose production secrets to the agent runtime
 - Treat agent output as untrusted until reviewed and tested
 - Require evidence, not claims
+- Separate generation from approval and release authority
 - Make rollback boring
 - Keep humans accountable for merge and release decisions
 
