@@ -66,31 +66,39 @@ For navigation by reader intent, see `docs/index.md`.
 | --- | --- |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
 | `docs/index.md` | Documentation index and adoption map |
+| `docs/adoption/quickstart.md` | First 30-60 minute adoption path for one existing repo |
 | `docs/ai-native-sdlc.md` | Governance concern for AI-native software delivery |
 | `docs/secure-coding-agent-workflow.md` | End-to-end secure agent workflow |
 | `docs/trust-model.md` | Identity, authority, and separation-of-duties model for agents and humans |
+| `docs/agent-capability-catalog.md` | Guidance for documenting durable agent/tool authority |
+| `docs/context-budget-and-provenance.md` | Context selection and provenance ledger guidance |
+| `docs/replayable-evidence-envelope.md` | Replayable evidence envelope for agent-assisted PRs |
 | `docs/delivery-evidence-standard.md` | Evidence standard for agent-assisted pull requests and workflows |
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
+| `docs/governance-lifecycle.md` | Lifecycle rules for policies, templates, schemas, and examples |
 | `docs/mobile-agent-safe-checklist.md` | Mobile/client-specific guardrails |
 | `policy/` | Machine-readable policy artifacts for future validation |
 | `templates/` | Drop-in repo templates for agent instructions and review controls |
+| `templates/AGENT_CAPABILITY_CATALOG.md` | Drop-in template for agent/tool authority inventory |
 | `examples/` | Example task and PR contracts |
 | `diagrams/secure-agent-workflow.mmd` | Mermaid workflow diagram |
 
 ## Recommended adoption path
 
-1. Start with `docs/index.md` to choose a reading path
-2. Read `docs/ai-native-sdlc.md` to establish the governance concern
-3. Copy `templates/AGENTS.md` into the target repository root
-4. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
-5. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
-6. Require `examples/agent-task-contract.md` for medium/high-risk agent work
-7. Use `docs/delivery-evidence-standard.md` for PR evidence expectations
-8. Apply `docs/trust-model.md` when granting tool, repository, or CI access
-9. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
-10. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
-11. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
+1. Start with `docs/adoption/quickstart.md` for the first manual adoption loop
+2. Use `docs/index.md` to choose deeper reading paths
+3. Read `docs/ai-native-sdlc.md` to establish the governance concern
+4. Copy `templates/AGENTS.md` into the target repository root
+5. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
+6. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
+7. Require `examples/agent-task-contract.md` for medium/high-risk agent work
+8. Use `docs/context-budget-and-provenance.md` for context expansion decisions
+9. Use `docs/delivery-evidence-standard.md` and `docs/replayable-evidence-envelope.md` for PR evidence expectations
+10. Apply `docs/trust-model.md` and `docs/agent-capability-catalog.md` when granting tool, repository, or CI access
+11. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
+12. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
+13. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates only after the manual path stabilizes
 
 ## Good first use cases
 
