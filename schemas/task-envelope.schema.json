@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/task-envelope.schema.json",
+  "$id": "https://github.com/ryjen/agent-delivery-playbook/schemas/task-envelope.schema.json",
   "title": "Agent Task Envelope",
   "type": "object",
   "required": ["task", "classification", "context", "constraints", "execution", "evidence", "review", "status"],
@@ -32,7 +32,46 @@
       "additionalProperties": false,
       "properties": {
         "repositories": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-        "references": { "type": "array", "items": { "type": "string" }, "default": [] }
+        "references": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "approved_sources": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "included": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "summarized": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "excluded": {
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "object",
+                "required": ["path", "reason"],
+                "additionalProperties": false,
+                "properties": {
+                  "path": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 }
+                }
+              }
+            },
+            "deferred": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "escalations": {
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "object",
+                "required": ["source", "reason", "status"],
+                "additionalProperties": false,
+                "properties": {
+                  "source": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "enum": ["not_requested", "requested", "approved", "denied"] }
+                }
+              }
+            },
+            "model_context_assumption": { "type": "string" },
+            "stale_context_caveats": { "type": "array", "items": { "type": "string" }, "default": [] }
+          }
+        }
       }
     },
     "constraints": {

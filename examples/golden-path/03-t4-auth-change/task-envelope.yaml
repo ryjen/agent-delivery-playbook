@@ -10,7 +10,7 @@ context:
   repositories:
     - example/service
   references:
-    - approval: required
+    - "approval: required"
 constraints:
   allowed:
     - inspect relevant code

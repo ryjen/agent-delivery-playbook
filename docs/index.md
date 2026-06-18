@@ -18,7 +18,8 @@ flowchart LR
 
 | Document | Type | Purpose |
 | --- | --- | --- |
-| `README.md` | guidance | Project overview and quick adoption path |
+| `README.md` | guidance | Project overview and adoption path |
+| `docs/adoption/quickstart.md` | guidance | First 30-60 minute adoption path for one existing repo |
 | `docs/ai-native-sdlc.md` | guidance | Why AI-native delivery needs extra SDLC controls |
 | `docs/secure-coding-agent-workflow.md` | guidance | End-to-end workflow from task to review |
 | `docs/ai-delivery-maturity-model.md` | guidance | Maturity path from assisted delivery to auditable autonomy |
@@ -29,6 +30,7 @@ flowchart LR
 | Document | Type | Purpose |
 | --- | --- | --- |
 | `docs/agent-task-envelope.md` | normative policy | Canonical task envelope model |
+| `docs/context-budget-and-provenance.md` | guidance | Context budget and provenance ledger guidance |
 | `schemas/task-envelope.schema.json` | normative policy | Machine-readable envelope shape |
 | `examples/task-envelope/` | example | Minimal envelope examples by risk tier |
 | `examples/agent-task-contract.md` | template | Human-readable task contract |
@@ -39,6 +41,7 @@ flowchart LR
 | --- | --- | --- |
 | `docs/task-risk-matrix.md` | normative policy | Risk tier definitions and required controls |
 | `docs/delivery-evidence-standard.md` | normative policy | Evidence levels and evidence quality rules |
+| `docs/replayable-evidence-envelope.md` | guidance | Replayable PR evidence envelope for audit and review |
 | `docs/policy/minimum-controls.md` | normative policy | Minimum controls by risk tier |
 | `docs/policy/sensitive-paths.md` | normative policy | Sensitive path escalation policy |
 
@@ -50,6 +53,7 @@ flowchart LR
 | `docs/threat-model.md` | guidance | Threat model for AI-assisted delivery |
 | `docs/security/attack-catalog.md` | guidance | Attack patterns reviewers should consider |
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
+| `docs/agent-capability-catalog.md` | guidance | Agent/tool authority catalog guidance |
 | `docs/tool-call-decision-records.md` | normative policy | Records for material tool authority decisions |
 | `docs/mobile-agent-safe-checklist.md` | guidance | Mobile/client-specific guardrails |
 
@@ -59,12 +63,23 @@ flowchart LR
 | --- | --- | --- |
 | `.github/PULL_REQUEST_TEMPLATE.md` | template | Active governed PR template |
 | `templates/` | template | Reusable controls for target repositories |
+| `templates/AGENT_CAPABILITY_CATALOG.md` | template | Agent/tool capability and authority inventory |
 | `examples/` | example | Task envelopes and delivery examples |
+| `examples/replayable-evidence-report.md` | example | Replayable evidence report example |
+| `examples/agent-capability-catalog.md` | example | Filled capability catalog example |
 | `docs/golden-path-examples.md` | guidance | Summary of example flows |
+| `docs/task-envelope-validation.md` | guidance | Local validation command for envelope examples |
+
+## Maintain the Playbook
+
+| Document | Type | Purpose |
+| --- | --- | --- |
+| `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for docs, schemas, templates, and examples |
 
 ## Reading Paths
 
-- **New adopter:** README -> AI-native SDLC -> workflow -> task risk matrix -> PR template.
-- **Reviewer:** reviewer checklist -> evidence standard -> sensitive paths -> attack catalog.
-- **Platform/AppSec owner:** minimum controls -> trust model -> tool call decision records -> maturity model.
+- **New adopter:** quickstart -> README -> AI-native SDLC -> workflow -> task risk matrix -> PR template.
+- **Reviewer:** reviewer checklist -> evidence standard -> replayable evidence envelope -> sensitive paths -> attack catalog.
+- **Platform/AppSec owner:** minimum controls -> trust model -> agent capability catalog -> tool call decision records -> maturity model.
 - **Example-first reader:** golden path examples -> task envelope examples -> evidence report template.
+- **Maintainer:** governance lifecycle -> task envelope validation -> docs index.

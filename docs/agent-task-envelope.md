@@ -44,6 +44,29 @@ Use `evidence.required_levels` as an ordered array. This preserves composite req
 
 Legacy examples may refer to singular `required_level`; new envelopes SHOULD use `required_levels`.
 
+## Context and Provenance
+
+The `context` section is part of the authority boundary. It records what the agent may inspect and, when needed, why other context was excluded, summarized, deferred, or escalated.
+
+For small T1/T2 tasks, `repositories` and `references` may be enough. For medium/high-risk work or any sensitive-path-adjacent task, add `context.provenance`.
+
+`context.references` values are strings. Quote values that look like YAML mappings, such as `"issue: APP-1234"`, so examples remain compatible with the JSON Schema.
+
+Recommended provenance fields:
+
+| Field | Purpose |
+| --- | --- |
+| `approved_sources` | Sources authorized before execution |
+| `included` | Sources actually supplied or inspected |
+| `summarized` | Sources summarized instead of supplied raw |
+| `excluded` | Sources intentionally not supplied, with reason |
+| `deferred` | Sources held back unless execution blocks |
+| `escalations` | Context expansion requests and approval status |
+| `model_context_assumption` | Practical context-size/model assumption, where known |
+| `stale_context_caveats` | Known freshness risks in supplied context |
+
+Context expansion requires reclassification or approval when it crosses repositories, sensitive paths, credential boundaries, production data, or the original risk tier.
+
 ## Minimal Envelope
 
 ```yaml
@@ -61,7 +84,28 @@ context:
   repositories:
     - mobile-app
   references:
-    - issue: APP-1234
+    - "issue: APP-1234"
+  provenance:
+    approved_sources:
+      - src/auth/session-refresh.kt
+      - tests/session-refresh-test.kt
+    included:
+      - failing stack trace
+      - affected module
+    summarized:
+      - none
+    excluded:
+      - path: signing/
+        reason: Signing material is unrelated and sensitive.
+    deferred:
+      - docs/auth-architecture.md
+    escalations:
+      - source: CI workflow
+        reason: CI edits would require reclassification.
+        status: not_requested
+    model_context_assumption: Localized bugfix; no large-context retrieval required.
+    stale_context_caveats:
+      - Issue report may not reflect latest main branch.
 
 constraints:
   allowed:

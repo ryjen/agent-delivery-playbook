@@ -26,6 +26,21 @@ For T1 documentation-only work, a short inline envelope is enough when the scope
 - [ ] No hidden dependency, workflow, secret, or permission changes were introduced.
 - [ ] Any scope expansion was explicitly reclassified before proceeding.
 
+## Replayable Evidence
+
+Required for medium/high-risk work; optional but encouraged for small T1 changes.
+
+- Task envelope reference:
+- Changed paths:
+- Agent/tool identity, where known:
+- Credential/authority boundary:
+- Context included:
+- Context excluded/deferred/escalated:
+- Known nondeterminism or missing checks:
+- Unverified claims:
+
+Unsupported claims must be marked as unverified rather than omitted.
+
 ## Evidence
 
 ```text
