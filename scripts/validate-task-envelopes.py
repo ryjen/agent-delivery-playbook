@@ -8,7 +8,6 @@ becoming a general-purpose YAML or JSON Schema implementation.
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
