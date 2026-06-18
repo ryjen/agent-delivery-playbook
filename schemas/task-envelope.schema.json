@@ -55,10 +55,15 @@
     },
     "evidence": {
       "type": "object",
-      "required": ["required_level"],
+      "required": ["required_levels"],
       "additionalProperties": false,
       "properties": {
-        "required_level": { "type": "string", "enum": ["E1", "E2", "E3", "E4"] },
+        "required_levels": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["E1", "E2", "E3", "E4"] },
+          "minItems": 1,
+          "uniqueItems": true
+        },
         "tests": { "type": "array", "items": { "type": "string" }, "default": [] },
         "artifacts": { "type": "array", "items": { "type": "string" }, "default": [] }
       }

@@ -38,6 +38,12 @@ Every envelope MUST include:
 | T3 | Cross-cutting runtime, data, or workflow change | Human review plus operational evidence |
 | T4 | Security, auth, infra, secrets, CI/CD, production data | Explicit approval gate and security review |
 
+## Evidence Levels
+
+Use `evidence.required_levels` as an ordered array. This preserves composite requirements from the Delivery Evidence Standard, such as `E2 + E3` for T3 work and `E2 + E3 + E4` for T4 work.
+
+Legacy examples may refer to singular `required_level`; new envelopes SHOULD use `required_levels`.
+
 ## Minimal Envelope
 
 ```yaml
@@ -79,7 +85,8 @@ execution:
     - summarize
 
 evidence:
-  required_level: E2
+  required_levels:
+    - E2
   tests:
     - unit
     - regression

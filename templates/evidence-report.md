@@ -42,5 +42,5 @@ What should reviewers inspect first?
 
 - Task id:
 - Risk tier:
-- Required evidence level:
+- Required evidence levels:
 - Prohibited actions checked:

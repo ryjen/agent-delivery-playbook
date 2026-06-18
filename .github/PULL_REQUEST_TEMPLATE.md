@@ -6,7 +6,7 @@ Briefly describe what changed and why.
 
 - Task id or link/path:
 - Risk tier: T1 / T2 / T3 / T4
-- Required evidence: E1 / E2 / E3 / E4, or combination such as E2 + E3
+- Required evidence levels: E1 / E2 / E3 / E4, or combination such as E2 + E3
 - Sensitive paths checked: yes / no / not applicable
 
 For T1 documentation-only work, a short inline envelope is enough when the scope, evidence, and rollback notes below are clear.
