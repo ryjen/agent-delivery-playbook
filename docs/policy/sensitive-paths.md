@@ -24,31 +24,31 @@ If multiple rules match, use the highest tier.
 
 ## Policy Map
 
-| Path Pattern | Minimum Tier | Required Evidence | Review |
+| Path Pattern | Minimum Tier | Required Evidence Levels | Review |
 | --- | --- | --- | --- |
-| `.github/workflows/**` | T4 | E4 | CI/security owner |
-| `.github/actions/**` | T4 | E4 | CI/security owner |
-| `**/*auth*` | T4 | E4 | security owner |
-| `**/*authorization*` | T4 | E4 | security owner |
-| `**/*permission*` | T4 | E4 | security owner |
-| `**/*secret*` | T4 | E4 | security owner |
-| `**/.env*` | T4 | E4 | security owner |
-| `**/Dockerfile` | T3 | E3 | runtime owner |
-| `docker-compose*.yml` | T3 | E3 | runtime owner |
-| `infra/**` | T4 | E4 | infra owner |
-| `terraform/**` | T4 | E4 | infra owner |
-| `kubernetes/**` | T4 | E4 | infra owner |
-| `helm/**` | T4 | E4 | infra owner |
-| `migrations/**` | T3 | E3 | data owner |
+| `.github/workflows/**` | T4 | E2, E3, E4 | CI/security owner |
+| `.github/actions/**` | T4 | E2, E3, E4 | CI/security owner |
+| `**/*auth*` | T4 | E2, E3, E4 | security owner |
+| `**/*authorization*` | T4 | E2, E3, E4 | security owner |
+| `**/*permission*` | T4 | E2, E3, E4 | security owner |
+| `**/*secret*` | T4 | E2, E3, E4 | security owner |
+| `**/.env*` | T4 | E2, E3, E4 | security owner |
+| `**/Dockerfile` | T3 | E2, E3 | runtime owner |
+| `docker-compose*.yml` | T3 | E2, E3 | runtime owner |
+| `infra/**` | T4 | E2, E3, E4 | infra owner |
+| `terraform/**` | T4 | E2, E3, E4 | infra owner |
+| `kubernetes/**` | T4 | E2, E3, E4 | infra owner |
+| `helm/**` | T4 | E2, E3, E4 | infra owner |
+| `migrations/**` | T3 | E2, E3 | data owner |
 | `schemas/**` | T2 | E2 | code owner |
-| `package.json` | T3 | E3 | code owner |
-| `package-lock.json` | T3 | E3 | code owner |
-| `pnpm-lock.yaml` | T3 | E3 | code owner |
-| `yarn.lock` | T3 | E3 | code owner |
-| `Cargo.toml` | T3 | E3 | code owner |
-| `Cargo.lock` | T3 | E3 | code owner |
-| `go.mod` | T3 | E3 | code owner |
-| `go.sum` | T3 | E3 | code owner |
+| `package.json` | T3 | E2, E3 | code owner |
+| `package-lock.json` | T3 | E2, E3 | code owner |
+| `pnpm-lock.yaml` | T3 | E2, E3 | code owner |
+| `yarn.lock` | T3 | E2, E3 | code owner |
+| `Cargo.toml` | T3 | E2, E3 | code owner |
+| `Cargo.lock` | T3 | E2, E3 | code owner |
+| `go.mod` | T3 | E2, E3 | code owner |
+| `go.sum` | T3 | E2, E3 | code owner |
 
 ## T4 Examples
 
