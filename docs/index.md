@@ -40,8 +40,7 @@ flowchart LR
 | `docs/task-risk-matrix.md` | normative policy | Risk tier definitions and required controls |
 | `docs/delivery-evidence-standard.md` | normative policy | Evidence levels and evidence quality rules |
 | `docs/policy/minimum-controls.md` | normative policy | Minimum controls by risk tier |
-| `docs/policy/sensitive-paths.md` | normative policy | Human-readable sensitive path escalation policy |
-| `policy/sensitive-paths.yaml` | normative policy | Machine-readable sensitive path policy companion |
+| `docs/policy/sensitive-paths.md` | normative policy | Sensitive path escalation policy |
 
 ## Review and Secure Changes
 
@@ -52,14 +51,7 @@ flowchart LR
 | `docs/security/attack-catalog.md` | guidance | Attack patterns reviewers should consider |
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
 | `docs/tool-call-decision-records.md` | normative policy | Records for material tool authority decisions |
-
-## Validate and Enforce
-
-| Document | Type | Purpose |
-| --- | --- | --- |
-| `docs/task-envelope-validation.md` | guidance | Local task envelope validation command |
-| `scripts/validate-task-envelopes.py` | tool | Lightweight example validator |
-| `docs/policy/ci-enforcement-strategy.md` | guidance | Incremental policy-to-CI roadmap |
+| `docs/mobile-agent-safe-checklist.md` | guidance | Mobile/client-specific guardrails |
 
 ## Use Templates and Examples
 
@@ -67,12 +59,12 @@ flowchart LR
 | --- | --- | --- |
 | `.github/PULL_REQUEST_TEMPLATE.md` | template | Active governed PR template |
 | `templates/` | template | Reusable controls for target repositories |
-| `examples/golden-path/` | example | End-to-end delivery bundles |
+| `examples/` | example | Task envelopes and delivery examples |
 | `docs/golden-path-examples.md` | guidance | Summary of example flows |
 
 ## Reading Paths
 
 - **New adopter:** README -> AI-native SDLC -> workflow -> task risk matrix -> PR template.
 - **Reviewer:** reviewer checklist -> evidence standard -> sensitive paths -> attack catalog.
-- **Platform/AppSec owner:** minimum controls -> trust model -> tool call decision records -> CI enforcement strategy.
+- **Platform/AppSec owner:** minimum controls -> trust model -> tool call decision records -> maturity model.
 - **Example-first reader:** golden path examples -> task envelope examples -> evidence report template.
