@@ -60,9 +60,12 @@ The repo's operating assumption is simple:
 
 ## Repository map
 
+For navigation by reader intent, see `docs/index.md`.
+
 | Path | Purpose |
 | --- | --- |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
+| `docs/index.md` | Documentation index and adoption map |
 | `docs/ai-native-sdlc.md` | Governance concern for AI-native software delivery |
 | `docs/secure-coding-agent-workflow.md` | End-to-end secure agent workflow |
 | `docs/trust-model.md` | Identity, authority, and separation-of-duties model for agents and humans |
@@ -77,16 +80,17 @@ The repo's operating assumption is simple:
 
 ## Recommended adoption path
 
-1. Read `docs/ai-native-sdlc.md` to establish the governance concern
-2. Copy `templates/AGENTS.md` into the target repository root
-3. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
-4. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
-5. Require `examples/agent-task-contract.md` for medium/high-risk agent work
-6. Use `docs/delivery-evidence-standard.md` for PR evidence expectations
-7. Apply `docs/trust-model.md` when granting tool, repository, or CI access
-8. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
-9. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
-10. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
+1. Start with `docs/index.md` to choose a reading path
+2. Read `docs/ai-native-sdlc.md` to establish the governance concern
+3. Copy `templates/AGENTS.md` into the target repository root
+4. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
+5. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
+6. Require `examples/agent-task-contract.md` for medium/high-risk agent work
+7. Use `docs/delivery-evidence-standard.md` for PR evidence expectations
+8. Apply `docs/trust-model.md` when granting tool, repository, or CI access
+9. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
+10. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
+11. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates
 
 ## Good first use cases
 
