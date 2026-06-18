@@ -1,0 +1,12 @@
+tool_call_decision:
+  id: TCDR-0000
+  task_id: T-0000
+  requested_tool: replace-me
+  requested_action: replace-me
+  decision: approved # approved | denied | escalated | deferred
+  reason: replace-me
+  constraints:
+    - replace-me
+  evidence:
+    - replace-me
+  decided_by: replace-me
