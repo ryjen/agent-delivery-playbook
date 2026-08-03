@@ -1,11 +1,20 @@
+[tasks.install-validation]
+description = "Install pinned standards-based validation dependencies"
+run = "python3 -m pip install --requirement requirements-validation.txt"
+
 [tasks.test]
-description = "Run dependency-free validator unit tests"
+description = "Run validator unit tests"
 run = "python3 -m unittest discover -s tests -p 'test_*.py' -v"
 
+[tasks.validate-standard]
+description = "Run standards-based YAML and JSON Schema validation"
+run = "python3 scripts/validate-task-envelopes-standard.py"
+
 [tasks.validate]
-description = "Run all dependency-free repository validation checks"
+description = "Run all repository validation checks"
 run = [
   "python3 -m unittest discover -s tests -p 'test_*.py' -v",
   "python3 scripts/validate-repository.py",
   "python3 scripts/validate-task-envelopes.py",
+  "python3 scripts/validate-task-envelopes-standard.py",
 ]
