@@ -1,0 +1,6 @@
+[tasks.validate]
+description = "Run all dependency-free repository validation checks"
+run = [
+  "python3 scripts/validate-repository.py",
+  "python3 scripts/validate-task-envelopes.py",
+]
