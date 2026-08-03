@@ -1,112 +1,81 @@
 # Task Envelope Validation
 
-This repository includes a lightweight validator for task envelope examples.
+The repository uses two independent validation paths:
 
-Run the complete dependency-free validation baseline with:
+1. a dependency-free smoke validator for the intentionally small checked-in YAML subset;
+2. a standards-based validator using PyYAML and JSON Schema draft 2020-12.
+
+## Local Commands
+
+Install the pinned standards-validation dependencies once:
+
+```bash
+mise run install-validation
+```
+
+Run all validation:
 
 ```bash
 mise run validate
 ```
 
-Run only the validator unit tests with:
+Run focused checks with:
 
 ```bash
 mise run test
+mise run validate-standard
 ```
 
-The equivalent commands are:
+## Lightweight Validator
 
-```bash
-python3 -m unittest discover -s tests -p 'test_*.py' -v
-python3 scripts/validate-repository.py
-python3 scripts/validate-task-envelopes.py
-```
-
-The task-envelope validator checks examples in `examples/task-envelope/` and golden-path bundle envelopes under `examples/golden-path/**/task-envelope.yaml` against the structural expectations in `schemas/task-envelope.schema.json`.
-
-## Supported YAML Subset
-
-The dependency-free parser deliberately supports only the structures used by the checked-in examples:
+`scripts/validate-task-envelopes.py` checks the checked-in examples without external dependencies. It supports only:
 
 - indentation-based mappings;
-- scalar values;
-- booleans `true` and `false`;
+- scalar values and booleans;
 - inline empty lists and mappings (`[]` and `{}`);
-- lists of scalars;
-- lists of small mappings;
-- single- or double-quoted scalar values;
+- lists of scalars or small mappings;
+- quoted scalar values;
 - comments on otherwise empty lines.
 
-It rejects duplicate mapping keys, empty keys, unexpected indentation, and structures outside this subset. Values containing a colon must be quoted when they are intended to remain strings.
+It rejects duplicate or empty mapping keys, unexpected indentation, ambiguous scalar-list mappings, unknown risk/evidence levels, and malformed provenance fields.
 
-## What It Checks
+This parser is intentionally not a general YAML implementation.
 
-- required top-level sections exist;
-- `classification.risk_tier` is one of `T1`, `T2`, `T3`, or `T4`;
-- the schema declares either `evidence.required_level` or `evidence.required_levels`;
-- evidence levels are one of `E1`, `E2`, `E3`, or `E4`;
-- schema-compatible scalar lists contain only strings;
-- keyed-looking scalar values such as `"issue: APP-1234"` are quoted instead of parsed as YAML objects;
-- the schema `$id` does not use the `example.com` placeholder;
-- nested context/provenance examples can be parsed by the repository's supported YAML subset;
-- malformed example structure fails with a path and reason.
+## Standards-Based Validator
 
-The unit test suite covers parser behavior, semantic validation, schema-field alignment, and example discovery using positive and negative fixtures generated in temporary directories.
+`scripts/validate-task-envelopes-standard.py`:
 
-The repository-integrity validator additionally checks:
+- parses every example as real YAML using `yaml.SafeLoader` with duplicate-key rejection;
+- verifies that the schema declares JSON Schema draft 2020-12;
+- validates the schema itself with `Draft202012Validator.check_schema`;
+- validates every envelope against `schemas/task-envelope.schema.json`;
+- fails closed on unknown fields through the schema's `additionalProperties: false` rules;
+- compares the standards-based parsed value with the lightweight parser output;
+- reports parser drift when both paths interpret the same file differently.
 
-- JSON files parse successfully;
-- local Markdown links remain inside the repository and resolve to existing paths;
-- Markdown files containing Mermaid fences do not have unbalanced fenced code blocks.
+The standards dependencies are pinned in `requirements-validation.txt`. Dependency updates should be isolated, reviewed, and validated in CI.
 
-## What It Does Not Check
+## What Validation Does Not Decide
 
-The task-envelope script is intentionally not a full YAML parser, JSON Schema implementation, or policy engine.
-
-The dependency-free baseline does not infer semantic risk, decide whether evidence is sufficient, validate external links, or replace reviewer judgment. Standards-based YAML and JSON Schema validation are tracked separately.
-
-## Expected Failure Modes
-
-Validation should fail when an example:
-
-- omits a required section;
-- uses an unknown risk tier;
-- uses an unknown evidence level;
-- has malformed YAML in the subset used by the examples;
-- repeats a mapping key;
-- drifts from the schema's expected evidence field;
-- places an object in a scalar-only list;
-- adds a nested envelope shape the local validator cannot parse.
-
-Repository-integrity validation should fail when:
-
-- a JSON file cannot be parsed;
-- a local Markdown link points outside the repository or to a missing path;
-- a Markdown document has unbalanced code fences around Mermaid content.
+Neither path infers semantic risk, determines whether evidence is sufficient, approves authority expansion, or replaces reviewer judgment.
 
 ## CI Posture
 
-`.github/workflows/validate.yml` runs the validator unit tests and both dependency-free validators for pull requests and pushes to `main`.
+`.github/workflows/validate.yml` runs for pull requests and pushes to `main`. The `Task envelopes` job:
 
-The workflow:
+- installs pinned validation dependencies;
+- runs all validator unit tests;
+- runs both lightweight and standards-based validators.
 
-- declares read-only repository permissions;
-- disables persisted checkout credentials;
-- pins actions to immutable commit SHAs;
-- cancels superseded runs for the same pull request or ref;
-- uses stable `Repository integrity` and `Task envelopes` job names suitable for branch protection.
-
-Subjective policy interpretation remains a human review responsibility.
+The workflow remains read-only, uses `pull_request` rather than `pull_request_target`, disables persisted checkout credentials, and SHA-pins third-party actions.
 
 ## Contributor Rule
 
 Run `mise run validate` after changing:
 
-- `scripts/validate-task-envelopes.py`;
-- `tests/test_validate_task_envelopes.py`;
+- either task-envelope validator;
+- validator tests;
+- `requirements-validation.txt`;
 - `schemas/task-envelope.schema.json`;
-- `examples/task-envelope/*.yaml`;
-- `examples/golden-path/**/task-envelope.yaml`;
-- context/provenance ledger fields;
-- Markdown links or diagrams;
-- JSON policy or schema artifacts.
+- task-envelope or golden-path examples;
+- context/provenance fields.

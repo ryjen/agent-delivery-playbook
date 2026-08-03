@@ -32,6 +32,8 @@ jobs:
     name: Task envelopes
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
 
     steps:
       - name: Check out repository
@@ -39,8 +41,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Test task-envelope validator
+      - name: Install pinned validation dependencies
+        run: python3 -m pip install --requirement requirements-validation.txt
+
+      - name: Test task-envelope validators
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Validate task envelopes
-        run: python3 scripts/validate-task-envelopes.py
+        run: |
+          python3 scripts/validate-task-envelopes.py
+          python3 scripts/validate-task-envelopes-standard.py
