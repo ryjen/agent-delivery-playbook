@@ -12,7 +12,7 @@ context:
   repositories:
     - example/service
   references:
-    - security-review: pending
+    - "security-review: pending"
 
 constraints:
   allowed:
