@@ -1,6 +1,11 @@
+[tasks.test]
+description = "Run dependency-free validator unit tests"
+run = "python3 -m unittest discover -s tests -p 'test_*.py' -v"
+
 [tasks.validate]
 description = "Run all dependency-free repository validation checks"
 run = [
+  "python3 -m unittest discover -s tests -p 'test_*.py' -v",
   "python3 scripts/validate-repository.py",
   "python3 scripts/validate-task-envelopes.py",
 ]
