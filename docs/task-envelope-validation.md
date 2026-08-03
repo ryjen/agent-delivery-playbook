@@ -1,12 +1,21 @@
 # Task Envelope Validation
 
-This repository includes a lightweight local validator for task envelope examples:
+This repository includes a lightweight validator for task envelope examples.
+
+Run the complete dependency-free validation baseline with:
 
 ```bash
+mise run validate
+```
+
+The equivalent commands are:
+
+```bash
+python3 scripts/validate-repository.py
 python3 scripts/validate-task-envelopes.py
 ```
 
-The validator checks envelope examples in `examples/task-envelope/` and golden-path bundle envelopes under `examples/golden-path/**/task-envelope.yaml` against the structural expectations in `schemas/task-envelope.schema.json`.
+The task-envelope validator checks examples in `examples/task-envelope/` and golden-path bundle envelopes under `examples/golden-path/**/task-envelope.yaml` against the structural expectations in `schemas/task-envelope.schema.json`.
 
 ## What It Checks
 
@@ -20,11 +29,17 @@ The validator checks envelope examples in `examples/task-envelope/` and golden-p
 - nested context/provenance examples can be parsed by the repository's supported YAML subset;
 - malformed example structure fails with a path and reason.
 
+The repository-integrity validator additionally checks:
+
+- JSON files parse successfully;
+- local Markdown links remain inside the repository and resolve to existing paths;
+- Markdown files containing Mermaid fences do not have unbalanced fenced code blocks.
+
 ## What It Does Not Check
 
-This script is intentionally not a full YAML parser, JSON Schema implementation, or policy engine.
+The task-envelope script is intentionally not a full YAML parser, JSON Schema implementation, or policy engine.
 
-It does not infer semantic risk, decide whether evidence is sufficient, or replace reviewer judgment.
+The dependency-free baseline does not infer semantic risk, decide whether evidence is sufficient, validate external links, or replace reviewer judgment. Standards-based YAML and JSON Schema validation are tracked separately.
 
 ## Expected Failure Modes
 
@@ -38,15 +53,33 @@ Validation should fail when an example:
 - places an object in a scalar-only list;
 - adds a nested envelope shape the local validator cannot parse.
 
+Repository-integrity validation should fail when:
+
+- a JSON file cannot be parsed;
+- a local Markdown link points outside the repository or to a missing path;
+- a Markdown document has unbalanced code fences around Mermaid content.
+
 ## CI Posture
 
-Validation is documented as a local/manual command for now. Making it advisory or blocking in CI should be handled by the policy-to-CI enforcement strategy.
+`.github/workflows/validate.yml` runs both dependency-free validators for pull requests and pushes to `main`.
 
-## Contributor rule
+The workflow:
 
-Run the validator after changing:
+- declares read-only repository permissions;
+- disables persisted checkout credentials;
+- pins actions to immutable commit SHAs;
+- cancels superseded runs for the same pull request or ref;
+- uses stable `Repository integrity` and `Task envelopes` job names suitable for branch protection.
+
+Subjective policy interpretation remains a human review responsibility.
+
+## Contributor Rule
+
+Run `mise run validate` after changing:
 
 - `schemas/task-envelope.schema.json`;
 - `examples/task-envelope/*.yaml`;
 - `examples/golden-path/**/task-envelope.yaml`;
-- context/provenance ledger fields.
+- context/provenance ledger fields;
+- Markdown links or diagrams;
+- JSON policy or schema artifacts.
