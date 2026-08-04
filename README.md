@@ -64,6 +64,8 @@ For navigation by reader intent, see `docs/index.md`.
 
 | Path | Purpose |
 | --- | --- |
+| `CONTRIBUTING.md` | Contribution boundaries, validation requirements, and review expectations |
+| `SECURITY.md` | Vulnerability scope, private reporting guidance, and disclosure process |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
 | `docs/index.md` | Documentation index and adoption map |
 | `docs/adoption/quickstart.md` | First 30-60 minute adoption path for one existing repo |
