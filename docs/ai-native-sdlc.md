@@ -8,7 +8,7 @@ This document defines the additional SDLC concern introduced when AI agents beco
 
 The [AI Native Project AI Software Development Lifecycle](https://theainativeproject.org/ai-software-development-lifecycle/) and its handbook are useful external reference models for plan-first execution, structured context, lifecycle-wide AI participation, quality gates, governance, and engineering memory.
 
-This playbook does **not** import that framework as a second normative lifecycle. Its concepts map onto the existing task-envelope, risk, evidence, trust, Compound-learning, and governed-actuation contracts.
+This playbook does **not** import that framework as a second normative lifecycle. Its concepts map onto the existing task-envelope, risk, evidence, trust, learning-promotion, and governed-delivery contracts.
 
 In particular:
 
