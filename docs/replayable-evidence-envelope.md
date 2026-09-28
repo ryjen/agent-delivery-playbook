@@ -125,3 +125,8 @@ Unsupported claims must be marked as unverified. Do not hide them by omission.
 ## Non-goals
 
 This is not an immutable audit log, external evidence store, or runtime trace format. It is a lightweight PR evidence shape that can later be promoted into stronger tooling.
+
+## Examples
+
+- [T1 documentation evidence](../examples/replayable-evidence-report.md) shows the difference between an agent claim and a manual observation with intentionally weak subject binding.
+- [T3 CI evidence](../examples/replayable-evidence-report-t3-ci.md) shows self-produced output, exact-subject trusted-runner evidence, and independent review as distinct properties.
