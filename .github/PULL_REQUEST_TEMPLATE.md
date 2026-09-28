@@ -31,6 +31,9 @@ For T1 documentation-only work, a short inline envelope is enough when the scope
 Required for medium/high-risk work; optional but encouraged for small T1 changes.
 
 - Task envelope reference:
+- Repository / exact subject:
+- Ref / exact commit:
+- Artifact/result digest, if applicable:
 - Changed paths:
 - Agent/tool identity, where known:
 - Credential/authority boundary:
@@ -43,10 +46,19 @@ Unsupported claims must be marked as unverified rather than omitted.
 
 ## Evidence
 
+For each required check, identify both **coverage** (E1-E4) and the evidence's **source/binding**. An agent/executor claim is not independent evidence merely because it is written here.
+
 ```text
+coverage level:
 command/check:
-result:
 scope:
+result:
+evidence source / producer:
+subject binding (repo + exact commit/artifact digest):
+environment / runner:
+run id / timestamp, where relevant:
+trust/binding properties (claim / captured / subject-bound / trusted-runner / attested / independent):
+integrity/attestation reference, if required:
 ```
 
 - [ ] Diff reviewed

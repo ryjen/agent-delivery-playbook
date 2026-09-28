@@ -9,7 +9,10 @@
 ## Change Reference
 
 - PR: example documentation PR
-- Branch/commit: `feature/readme-setup-docs`
+- Repository: `example/app`
+- Ref: `feature/readme-setup-docs`
+- Exact commit: not recorded in this static example
+- Artifact/result digest: not applicable
 - Changed paths:
   - `README.md`
 
@@ -42,11 +45,12 @@
 
 ## Checks and Artifacts
 
-| Check | Command or artifact | Scope | Result |
-| --- | --- | --- | --- |
-| Static review | manual diff review | README setup section | Commands match `package.json` script names |
-| Tests | not run | documentation-only | Not applicable; no runtime changes |
-| CI | not available in example | n/a | Unverified |
+| Check | Command/artifact | Evidence source / producer | Subject binding | Environment / run | Trust/binding properties | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| Agent summary | "README commands match package scripts" | coding assistant | mutable branch only | agent session | unverified claim | Useful review hint; does not satisfy E1 by itself |
+| Static review | manual diff comparison | human reviewer | changed paths on example PR; exact commit omitted in this static fixture | reviewer workstation | captured/manual observation; not independently reproducible from this fixture alone | Commands match `package.json` script names |
+| Tests | not run | n/a | n/a | documentation-only | n/a | Not applicable; no runtime changes |
+| CI | not available in example | n/a | n/a | n/a | missing evidence | Unverified |
 
 ## Manual Verification
 
@@ -56,6 +60,7 @@ Reviewer should compare the README commands against `package.json` before merge.
 
 - Full setup was not executed locally.
 - CI status is not represented in this static example.
+- The example intentionally omits an exact commit SHA, so its static-review evidence is **not exact-subject-bound**. A real merge decision that requires commit-bound evidence should record the reviewed commit or CI run.
 
 ## Unverified Claims
 
@@ -65,6 +70,12 @@ Reviewer should compare the README commands against `package.json` before merge.
 ## Rollback
 
 Revert the README change.
+
+## Evidence Trust Note
+
+This example distinguishes an agent claim from a human observation. Neither is magically upgraded by appearing in an evidence report.
+
+For a stronger example, protected CI that checks the exact PR commit would be **subject-bound trusted-runner evidence**. If a distinct reviewer independently repeated the check against that exact commit, that would additionally provide **independent verification**. Signing the CI result would add provenance/integrity properties but would not prove the README is semantically correct beyond the checks performed.
 
 ## Reviewer Notes
 
