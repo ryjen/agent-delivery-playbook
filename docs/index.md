@@ -30,6 +30,7 @@ flowchart LR
 | `README.md` | guidance | Project overview and adoption path |
 | `docs/status-and-roadmap.md` | guidance | Evidence-backed maturity, current limitations, and dependency-ordered roadmap |
 | `docs/adoption/quickstart.md` | guidance | First 30-60 minute adoption path for one existing repo |
+| `docs/adoption/minimal-adoption-kernel.md` | guidance | Smallest sufficient governed-delivery profile and risk-triggered extensions |
 | `docs/ai-native-sdlc.md` | guidance | Why AI-native delivery needs extra SDLC controls |
 | `docs/policy-enforcement-map.md` | guidance | Crosswalk from AI-native SDLC controls to authority, CI, runtime, and governance enforcement surfaces |
 | `docs/secure-coding-agent-workflow.md` | guidance | End-to-end workflow from task to review |
@@ -89,7 +90,7 @@ flowchart LR
 
 ## Reading Paths
 
-- **New adopter:** quickstart -> README -> architecture -> AI-native SDLC -> policy enforcement map -> workflow -> task risk matrix -> PR template.
+- **New adopter:** quickstart -> minimal adoption kernel -> README -> architecture -> AI-native SDLC -> policy enforcement map -> workflow -> task risk matrix -> PR template.
 - **Reviewer:** architecture -> reviewer checklist -> evidence standard -> replayable evidence envelope -> sensitive paths -> attack catalog.
 - **Platform/AppSec owner:** architecture -> minimum controls -> trust model -> policy enforcement map -> agent capability catalog -> tool call decision records -> maturity model.
 - **Example-first reader:** golden path examples -> task envelope examples -> evidence report template.
