@@ -4,6 +4,22 @@ Traditional SDLC assumes humans author changes, tools execute deterministic chec
 
 This document defines the additional SDLC concern introduced when AI agents become delivery participants.
 
+## External reference and terminology
+
+The [AI Native Project AI Software Development Lifecycle](https://theainativeproject.org/ai-software-development-lifecycle/) and its handbook are useful external reference models for plan-first execution, structured context, lifecycle-wide AI participation, quality gates, governance, and engineering memory.
+
+This playbook does **not** import that framework as a second normative lifecycle. Its concepts map onto the existing task-envelope, risk, evidence, trust, learning-promotion, and governed-delivery contracts.
+
+In particular:
+
+- model output and agent findings are claims, not authority;
+- verifier output is evidence, not authorization;
+- persistent context and memory are untrusted inputs until governed where trust matters;
+- human review/approval is selected by task risk and policy, not merely because AI participated;
+- enforcement belongs at deterministic runtime, CI, repository, release, or governance boundaries rather than in prompting alone.
+
+Use `docs/policy-enforcement-map.md` for the operational crosswalk from lifecycle concerns to current enforcement surfaces and owners.
+
 ## Core concern
 
 AI-native SDLC governance answers:
