@@ -136,6 +136,6 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Status
 
-This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, SDLC/trust guidance, task-envelope validation, repository integrity checks, and CI validation are implemented; repository admission enforcement, flake-first CI, evidence binding, and demonstrated reference adoption remain active work.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, SDLC/trust guidance, task-envelope validation, repository integrity checks, and flake-first CI validation are implemented; repository admission enforcement, evidence binding, and demonstrated reference adoption remain active work.
 
 See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.

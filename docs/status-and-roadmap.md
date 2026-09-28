@@ -23,7 +23,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Standards-based YAML/JSON-Schema validation | validated | independent standards-based path |
 | Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
 | GitHub Actions validation | validated but not admission-enforced | current workflow passes; #60 tracks required admission |
-| Reproducible CI environment | incomplete | current CI still uses ambient runner/Python + imperative dependency installation; #55 |
+| Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
 | Evidence trust/binding model | planned | #38 |
 | Identity/delegation/capability binding | planned | #39 |
 | Context/memory supply-chain controls | planned | #40 |
@@ -51,32 +51,31 @@ Make this repository obey the governance model it describes:
 
 Exit: a failing or missing required check cannot silently admit a normal change to `main`.
 
-### 2. #55 — make CI flake-first and reproducible
-
-Move executable CI tooling into a repository-owned Nix flake while retaining `mise` as the task UX.
-
-Exit: CI and local validation use the same locked, repository-owned environment and no longer rely on ambient Python plus dynamic transitive pip resolution.
-
-### 3. #37 — define the minimal adoption kernel
+### 2. #37 — define the minimal adoption kernel
 
 Make first adoption proportionate rather than ceremonial.
 
 Exit: an adopter can identify the smallest sufficient control set in under five minutes, with additional artifacts triggered explicitly by risk/authority.
 
-### 4. #38 — define evidence trust and binding
+### 3. #38 — define evidence trust and binding
 
 Clarify the difference between a claim, captured output, commit-bound CI evidence, trusted-runner evidence, attestation, and independent reproduction.
 
 Exit: evidence requirements state what each evidence class proves and what it does not prove.
 
+### 4. #39 — strengthen identity, delegation, and capability modeling
+
+Bind accountable principal, runtime identity, task scope, capabilities, expiry, retries, and nested delegation without turning the playbook into an authorization runtime.
+
+Exit: identity and delegated authority semantics are explicit enough for adopting systems to enforce without conflating declaration with verified identity evidence.
+
 ## Follow-on security and demonstration work
 
 After the immediate queue:
 
-1. #39 — identity, delegation, and capability model;
-2. #40 — context and memory as untrusted supply-chain inputs;
-3. #41 — adversarial governance and bypass-resistance examples;
-4. #42 — standalone reference adoption and case study.
+1. #40 — context and memory as untrusted supply-chain inputs;
+2. #41 — adversarial governance and bypass-resistance examples;
+3. #42 — standalone reference adoption and case study.
 
 These should feed back into the playbook rather than being treated as independent documentation exercises.
 
