@@ -68,6 +68,7 @@ For navigation by reader intent, see `docs/index.md`.
 | `SECURITY.md` | Vulnerability scope, private reporting guidance, and disclosure process |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Active governed PR template auto-applied by GitHub |
 | `docs/index.md` | Documentation index and adoption map |
+| `docs/status-and-roadmap.md` | Current maturity, capability evidence, limitations, and prioritized roadmap |
 | `docs/architecture.md` | Canonical primitives, artifact authority, trust boundaries, lifecycle, and implementation limits |
 | `docs/adoption/quickstart.md` | First 30-60 minute adoption path for one existing repo |
 | `docs/ai-native-sdlc.md` | Governance concern for AI-native software delivery |
@@ -135,4 +136,6 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Status
 
-Early public starter structure. Expect the templates to evolve as teams apply them to real repositories and CI/CD systems.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, SDLC/trust guidance, task-envelope validation, repository integrity checks, and CI validation are implemented; repository admission enforcement, flake-first CI, evidence binding, and demonstrated reference adoption remain active work.
+
+See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.
