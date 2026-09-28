@@ -14,6 +14,15 @@ flowchart LR
   Review --> Merge[Merge or rollback]
 ```
 
+## Understand the Architecture
+
+| Document | Type | Purpose |
+| --- | --- | --- |
+| `docs/architecture.md` | guidance | Canonical primitives, artifact authority, trust boundaries, lifecycle, and implementation limits |
+| `docs/policy-enforcement-map.md` | guidance | Maps lifecycle controls to generic enforcement surfaces without making model output authoritative |
+| `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
+| `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for policy, schemas, templates, and examples |
+
 ## Adopt Governed Agent Delivery
 
 | Document | Type | Purpose |
@@ -79,8 +88,8 @@ flowchart LR
 
 ## Reading Paths
 
-- **New adopter:** quickstart -> README -> AI-native SDLC -> workflow -> task risk matrix -> PR template.
-- **Reviewer:** reviewer checklist -> evidence standard -> replayable evidence envelope -> sensitive paths -> attack catalog.
-- **Platform/AppSec owner:** minimum controls -> trust model -> policy enforcement map -> agent capability catalog -> tool call decision records -> maturity model.
+- **New adopter:** quickstart -> README -> architecture -> AI-native SDLC -> policy enforcement map -> workflow -> task risk matrix -> PR template.
+- **Reviewer:** architecture -> reviewer checklist -> evidence standard -> replayable evidence envelope -> sensitive paths -> attack catalog.
+- **Platform/AppSec owner:** architecture -> minimum controls -> trust model -> policy enforcement map -> agent capability catalog -> tool call decision records -> maturity model.
 - **Example-first reader:** golden path examples -> task envelope examples -> evidence report template.
-- **Maintainer:** governance lifecycle -> task envelope validation -> docs index.
+- **Maintainer:** architecture -> governance lifecycle -> task envelope validation -> docs index.
