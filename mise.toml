@@ -1,20 +1,19 @@
-[tasks.install-validation]
-description = "Install pinned standards-based validation dependencies"
-run = "python3 -m pip install --requirement requirements-validation.txt"
-
 [tasks.test]
-description = "Run validator unit tests"
-run = "python3 -m unittest discover -s tests -p 'test_*.py' -v"
+description = "Run validator unit tests inside the flake-owned environment"
+run = "nix develop --command python3 -m unittest discover -s tests -p 'test_*.py' -v"
 
 [tasks.validate-standard]
-description = "Run standards-based YAML and JSON Schema validation"
-run = "python3 scripts/validate-task-envelopes-standard.py"
+description = "Run standards-based YAML and JSON Schema validation inside the flake-owned environment"
+run = "nix develop --command python3 scripts/validate-task-envelopes-standard.py"
+
+[tasks.validate-lightweight]
+description = "Run dependency-free task-envelope validation inside the flake-owned environment"
+run = "nix develop --command python3 scripts/validate-task-envelopes.py"
+
+[tasks.validate-repository]
+description = "Run repository-integrity validation inside the flake-owned environment"
+run = "nix develop --command python3 scripts/validate-repository.py"
 
 [tasks.validate]
-description = "Run all repository validation checks"
-run = [
-  "python3 -m unittest discover -s tests -p 'test_*.py' -v",
-  "python3 scripts/validate-repository.py",
-  "python3 scripts/validate-task-envelopes.py",
-  "python3 scripts/validate-task-envelopes-standard.py",
-]
+description = "Run all repository validation through the authoritative Nix flake"
+run = "nix flake check --print-build-logs"
