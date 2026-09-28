@@ -34,8 +34,8 @@ An E2 test result can be a self-authored claim, captured local output, exact-com
 | --- | --- | --- |
 | T1 | E1 | Documentation and metadata can use lightweight evidence. |
 | T2 | E2 | Local code changes need tests or a documented reason tests are unavailable. |
-| T3 | E2 + E3 | Runtime-impacting changes need operational validation. |
-| T4 | E2 + E3 + E4 | Security, infra, CI/CD, secrets, auth, and production-data changes require independent review. |
+| T3 | E2 + E3 | High-risk bounded runtime/security/CI/operational changes need test plus operational evidence and applicable owner review. |
+| T4 | E2 + E3 + E4 | Restricted human-led changes need evidence for the human-executed result plus independent review/verification required by policy. |
 
 
 ## Evidence trust and binding
