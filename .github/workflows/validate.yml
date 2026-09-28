@@ -17,7 +17,7 @@ jobs:
   repository-integrity:
     name: Repository integrity
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository
@@ -25,15 +25,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Install Nix
+        uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+
       - name: Validate repository artifacts
-        run: python3 scripts/validate-repository.py
+        run: nix build .#checks.x86_64-linux.repository-integrity --no-link --print-build-logs
 
   task-envelopes:
     name: Task envelopes
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository
@@ -41,13 +42,8 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install pinned validation dependencies
-        run: python3 -m pip install --requirement requirements-validation.txt
-
-      - name: Test task-envelope validators
-        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Install Nix
+        uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
 
       - name: Validate task envelopes
-        run: |
-          python3 scripts/validate-task-envelopes.py
-          python3 scripts/validate-task-envelopes-standard.py
+        run: nix build .#checks.x86_64-linux.task-envelopes --no-link --print-build-logs

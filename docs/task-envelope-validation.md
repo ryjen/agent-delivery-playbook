@@ -5,15 +5,21 @@ The repository uses two independent validation paths:
 1. a dependency-free smoke validator for the intentionally small checked-in YAML subset;
 2. a standards-based validator using PyYAML and JSON Schema draft 2020-12.
 
+## Reproducible Environment
+
+`flake.nix` and `flake.lock` are the authoritative executable validation environment. The flake supplies Python plus the standards-based YAML and JSON Schema libraries used by CI and local focused checks.
+
+`mise` is an orchestration/UX layer over that environment; it does not install or resolve validation dependencies.
+
 ## Local Commands
 
-Install the pinned standards-validation dependencies once:
+Run all validation directly through the flake:
 
 ```bash
-mise run install-validation
+nix flake check --print-build-logs
 ```
 
-Run all validation:
+or through the repository task interface:
 
 ```bash
 mise run validate
@@ -24,6 +30,8 @@ Run focused checks with:
 ```bash
 mise run test
 mise run validate-standard
+mise run validate-lightweight
+mise run validate-repository
 ```
 
 ## Lightweight Validator
@@ -53,7 +61,7 @@ This parser is intentionally not a general YAML implementation.
 - compares the standards-based parsed value with the lightweight parser output;
 - reports parser drift when both paths interpret the same file differently.
 
-The standards dependencies are pinned in `requirements-validation.txt`. Dependency updates should be isolated, reviewed, and validated in CI.
+The standards dependencies are supplied by the locked Nixpkgs input in `flake.lock`. Dependency/input updates should be isolated, reviewed, and validated in CI.
 
 ## What Validation Does Not Decide
 
@@ -61,11 +69,9 @@ Neither path infers semantic risk, determines whether evidence is sufficient, ap
 
 ## CI Posture
 
-`.github/workflows/validate.yml` runs for pull requests and pushes to `main`. The `Task envelopes` job:
+`.github/workflows/validate.yml` runs for pull requests and pushes to `main`. The workflow installs only the pinned Nix bootstrap action on the runner. Repository-specific Python and validation libraries come from the committed flake/lock state.
 
-- installs pinned validation dependencies;
-- runs all validator unit tests;
-- runs both lightweight and standards-based validators.
+The `Repository integrity` and `Task envelopes` jobs build their corresponding flake checks. The task-envelope check runs all validator unit tests plus both lightweight and standards-based validators.
 
 The workflow remains read-only, uses `pull_request` rather than `pull_request_target`, disables persisted checkout credentials, and SHA-pins third-party actions.
 
@@ -75,7 +81,7 @@ Run `mise run validate` after changing:
 
 - either task-envelope validator;
 - validator tests;
-- `requirements-validation.txt`;
+- `flake.nix` or `flake.lock`;
 - `schemas/task-envelope.schema.json`;
 - task-envelope or golden-path examples;
 - context/provenance fields.

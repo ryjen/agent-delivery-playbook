@@ -18,15 +18,17 @@ Keep this repository standalone. Do not require another project, hosted service,
 
 ## Development Setup
 
-The repository uses Python 3 and `mise` for local task entry points.
+The repository owns its executable validation environment through a Nix flake. `mise` remains the convenient task entry point but does not own dependency resolution.
 
-Install the pinned standards-validation dependencies:
-
-```bash
-mise run install-validation
-```
+Prerequisite: Nix with flakes enabled.
 
 Run the complete validation suite:
+
+```bash
+nix flake check --print-build-logs
+```
+
+or equivalently:
 
 ```bash
 mise run validate
@@ -37,9 +39,13 @@ Focused commands are also available:
 ```bash
 mise run test
 mise run validate-standard
+mise run validate-lightweight
+mise run validate-repository
 ```
 
-The equivalent commands are documented in [`docs/task-envelope-validation.md`](docs/task-envelope-validation.md).
+Focused `mise` tasks enter the flake-owned development environment so local and CI validation use the same Python and standards-validation dependencies.
+
+The equivalent commands and environment contract are documented in [`docs/task-envelope-validation.md`](docs/task-envelope-validation.md).
 
 ## Contribution Boundaries
 
@@ -66,7 +72,7 @@ The equivalent commands are documented in [`docs/task-envelope-validation.md`](d
 - Do not use `pull_request_target` to execute pull-request code.
 - Disable persisted checkout credentials unless a justified write operation requires them.
 - Pin third-party Actions to immutable commit SHAs.
-- Pin validation dependencies and isolate dependency updates for review.
+- Keep validation dependencies in the repository flake/lock state and isolate dependency updates for review.
 - Never introduce production secrets into validation jobs or fixtures.
 
 ## Pull Requests
