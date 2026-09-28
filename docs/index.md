@@ -28,6 +28,7 @@ flowchart LR
 | Document | Type | Purpose |
 | --- | --- | --- |
 | `README.md` | guidance | Project overview and adoption path |
+| `docs/status-and-roadmap.md` | guidance | Evidence-backed maturity, current limitations, and dependency-ordered roadmap |
 | `docs/adoption/quickstart.md` | guidance | First 30-60 minute adoption path for one existing repo |
 | `docs/ai-native-sdlc.md` | guidance | Why AI-native delivery needs extra SDLC controls |
 | `docs/policy-enforcement-map.md` | guidance | Crosswalk from AI-native SDLC controls to authority, CI, runtime, and governance enforcement surfaces |
