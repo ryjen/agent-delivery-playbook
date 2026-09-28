@@ -1,0 +1,64 @@
+task:
+  id: T-0003
+  title: Harden pull-request validation permissions
+  objective: Tighten one CI validation workflow without changing release or deployment authority.
+  owner: platform-maintainer
+
+classification:
+  type: ci
+  risk_tier: T3
+
+context:
+  repositories:
+    - example/service
+  references:
+    - ".github/workflows/validate.yml"
+    - "platform-review: required"
+
+constraints:
+  allowed:
+    - inspect the validation workflow
+    - propose a least-privilege patch after platform-owner approval
+    - run repository validation
+    - document rollback
+  prohibited:
+    - adding write permissions
+    - using pull_request_target to execute pull-request code
+    - reading secrets
+    - changing deployment or release workflows
+    - bypassing required checks
+
+execution:
+  tools:
+    - repo_read
+    - approval_gate
+    - repo_write
+    - shell_tests
+  actions:
+    - inspect
+    - request_approval
+    - patch_after_approval
+    - test
+    - summarize
+
+evidence:
+  required_levels:
+    - E2
+    - E3
+  tests:
+    - repository validation
+    - workflow permission review
+    - pull-request event-path review
+  artifacts:
+    - approval record
+    - validation output
+    - rollback notes
+    - PR diff
+
+review:
+  required: true
+  approvers:
+    - platform_owner
+  notes: CI control changes require explicit approval, operational evidence, and independent owner review.
+
+status: proposed

@@ -1,8 +1,8 @@
 task:
   id: T-0004
-  title: Review access-control policy change
-  objective: Change access-control behavior only after explicit approval and security review.
-  owner: rj
+  title: Prepare access-control policy change for human-led execution
+  objective: Inspect the requested access-control change, prepare a bounded plan and negative-test design, and leave privileged implementation to an authorized human.
+  owner: security-owner
 
 classification:
   type: security
@@ -12,30 +12,30 @@ context:
   repositories:
     - example/service
   references:
-    - "security-review: pending"
+    - "security-review: required"
 
 constraints:
   allowed:
     - inspect access-control code
-    - propose implementation plan
-    - add negative tests after approval
+    - document affected invariants
+    - propose implementation steps
+    - propose negative tests
+    - prepare a review checklist
   prohibited:
+    - modifying access-control implementation
+    - exercising production or privileged credentials
     - reducing validation
     - reading secrets
     - changing CI permissions
-    - merging without security review
+    - merging or releasing the change
 
 execution:
   tools:
     - repo_read
-    - approval_gate
-    - shell_tests
-    - github_pr
   actions:
     - inspect
-    - request_approval
-    - patch_after_approval
-    - test
+    - plan
+    - propose_tests
     - summarize
 
 evidence:
@@ -44,20 +44,20 @@ evidence:
     - E3
     - E4
   tests:
-    - unit tests
-    - negative access-control tests
-    - smoke validation
+    - proposed unit and negative access-control tests
+    - human-executed operational validation required before merge
   artifacts:
-    - approval record
-    - security review notes
-    - rollback plan
-    - PR diff
+    - threat and invariant notes
+    - human execution plan
+    - proposed test matrix
+    - rollback or recovery plan
+    - independent review record
 
 review:
   required: true
   approvers:
     - security_owner
     - code_owner
-  notes: Security-sensitive work is blocked until explicit approval exists.
+  notes: Restricted work remains human-led; this envelope authorizes analysis and preparation, not privileged implementation.
 
 status: proposed

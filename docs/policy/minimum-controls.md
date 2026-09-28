@@ -4,6 +4,12 @@ This policy maps risk tiers to the minimum controls expected before merge.
 
 It is intentionally lightweight. The point is to create a common baseline that can later be enforced by templates, CI checks, or approval tooling.
 
+Use [`../adoption/minimal-adoption-kernel.md`](../adoption/minimal-adoption-kernel.md) to choose the smallest sufficient artifact set. A required control does not imply a dedicated file when an existing issue, PR, permission, or protected workflow represents the concern equivalently.
+
+## Representation versus control
+
+The kernel concerns—intent, risk, authority/tool constraints, evidence, and accountable outcome—must be resolved for meaningful write-capable work. Provenance ledgers, capability catalogs, replay bundles, tool decision records, attestations, and rollback rehearsals are risk-triggered extensions rather than universal paperwork.
+
 ## Control Matrix
 
 | Tier | Envelope | Evidence | Tool Records | Review | Merge Posture |
@@ -54,7 +60,7 @@ Required:
 
 ## T4 Controls
 
-Use for security, auth, secrets, CI/CD, infra, deployment authority, production data, and similarly sensitive changes.
+Use for restricted authority such as production secrets, signing/admin authority, or destructive/irreversible production effects. High-risk but bounded auth/security/CI/CD work may be T3 when policy permits tightly constrained agent assistance; T4 remains human-led.
 
 Required:
 
