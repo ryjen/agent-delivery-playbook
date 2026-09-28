@@ -28,11 +28,6 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
 
-      - name: Bootstrap flake lock
-        run: |
-          nix flake lock
-          cat flake.lock
-
       - name: Validate repository artifacts
         run: nix build .#checks.x86_64-linux.repository-integrity --no-link --print-build-logs
 
@@ -49,9 +44,6 @@ jobs:
 
       - name: Install Nix
         uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
-
-      - name: Bootstrap flake lock
-        run: nix flake lock
 
       - name: Validate task envelopes
         run: nix build .#checks.x86_64-linux.task-envelopes --no-link --print-build-logs
