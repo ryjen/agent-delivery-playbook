@@ -29,6 +29,11 @@ The envelope does not make the work deterministic. It makes nondeterminism, miss
 | Allowed/prohibited scope | Scope actually used compared with the envelope |
 | Changed paths | Files or directories changed |
 | Commands/checks run | Exact commands, scope, and result |
+| Evidence source / producer | Who or what produced each result and whether it is the same actor that produced the candidate |
+| Subject binding | Repository, exact commit/ref, artifact digest, external-state revision, or other immutable subject identity |
+| Environment / runner | Relevant execution environment or verifier identity |
+| Run / timestamp | Run identifier and time when freshness or auditability matters |
+| Integrity / independence | Attestation/signature reference and producer/verifier independence where required |
 | CI/artifact links | CI runs, logs, screenshots, reports, or generated artifacts |
 | Context/provenance summary | Included, excluded, summarized, deferred, or escalated context |
 | Manual verification | Human checks performed outside automation |
@@ -51,7 +56,10 @@ The envelope does not make the work deterministic. It makes nondeterminism, miss
 ## Change Reference
 
 - PR:
-- Branch/commit:
+- Repository:
+- Ref:
+- Exact commit:
+- Artifact/result digest, if applicable:
 - Changed paths:
 
 ## Execution Identity and Authority
@@ -73,11 +81,11 @@ The envelope does not make the work deterministic. It makes nondeterminism, miss
 
 ## Checks and Artifacts
 
-| Check | Command or artifact | Scope | Result |
-| --- | --- | --- | --- |
-| Static review |  |  |  |
-| Tests |  |  |  |
-| CI |  |  |  |
+| Check | Command/artifact | Evidence source / producer | Subject binding | Environment / run | Trust/binding properties | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| Static review |  |  |  |  |  |  |
+| Tests |  |  |  |  |  |  |
+| CI |  |  |  |  |  |  |
 
 ## Manual Verification
 
@@ -95,10 +103,15 @@ Unsupported claims must be marked as unverified. Do not hide them by omission.
 ## Evidence quality rules
 
 - Record what actually happened, not what the agent intended.
-- Prefer exact commands, paths, commit SHAs, and CI links over summaries.
+- Prefer exact commands, paths, commit SHAs, artifact digests, run IDs, and CI links over summaries.
+- State who/what produced the evidence and which exact subject it evaluates.
+- Do not treat a branch name or mutable artifact pointer as exact subject binding.
 - Mark missing checks as missing with a reason.
 - Mark unsupported claims as `unverified` instead of deleting them.
-- For T3/T4 work, include rollback and independent verification evidence.
+- For T3 work, prefer protected subject-bound CI/trusted-runner evidence over self-reported local output when the property is independently verifiable.
+- For T4 work, self-report cannot satisfy an independent-verification requirement; restricted execution remains human-led.
+- Attestation/integrity evidence proves only the bound provenance/integrity predicates, not semantic correctness or authorization.
+- Include rollback and required independent verification evidence for T3/T4 work.
 
 ## When this is required
 
