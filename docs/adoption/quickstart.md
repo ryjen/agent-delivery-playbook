@@ -6,16 +6,13 @@ Use this quickstart to apply the playbook to an existing software repository in 
 
 You have an existing repository with normal human review and CI. You want to let an AI coding agent help with one small task without giving it broad authority.
 
-## Step 1: Copy the minimum controls
+## Step 1: Start with the minimal adoption kernel
 
-Copy or adapt these files first:
+Read [`minimal-adoption-kernel.md`](minimal-adoption-kernel.md). Resolve bounded intent, risk, authority/tool constraints, evidence, and accountable outcome using the smallest representation that fits the task.
 
-| Source | Target | Why |
-| --- | --- | --- |
-| `templates/AGENTS.md` | repository root | Persistent agent instructions and boundaries |
-| `templates/SECURITY_INVARIANTS.md` | repository root or docs/security | System-specific constraints the agent must not violate |
-| `.github/PULL_REQUEST_TEMPLATE.md` | active PR template location | Evidence and review structure |
-| `templates/REVIEW_CHECKLIST.md` | reviewer docs or PR checklist | Human review expectations |
+For a one-off T1 change, an existing issue plus PR template may be sufficient. Do not create standalone governance files merely to satisfy a checklist.
+
+For repeatable repository adoption, a small starter set may include `AGENTS.md`, the PR template, reviewer checklist, and task-envelope schema/examples. Add security invariants, provenance, capability catalogs, tool-decision records, replay bundles, or enhanced approvals only when their documented triggers apply.
 
 Good-enough manual adoption is acceptable at this stage. Do not start by building custom policy engines, autonomous merge flows, or broad agent permissions.
 
