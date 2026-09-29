@@ -140,6 +140,14 @@ class ValidationTests(TemporaryYamlTestCase):
         errors = self.validate_text(with_provenance)
         self.assertIn("invalid context.provenance.escalations[].status: 'unknown'", errors)
 
+    def test_invalid_revoked_context_record_is_reported(self) -> None:
+        with_provenance = VALID_ENVELOPE.replace(
+            "  references: []",
+            "  references: []\n  provenance:\n    revoked:\n      - source: docs/old.md\n        reason: true",
+        )
+        errors = self.validate_text(with_provenance)
+        self.assertIn("context.provenance.revoked[].reason must be a string", errors)
+
     def test_required_list_missing_is_reported(self) -> None:
         errors = self.validate_text(
             VALID_ENVELOPE.replace("  repositories:\n    - example/repo\n", "")
@@ -150,7 +158,7 @@ class ValidationTests(TemporaryYamlTestCase):
 class HelperTests(unittest.TestCase):
     def test_example_discovery_contains_all_risk_tier_examples(self) -> None:
         names = {path.name for path in validator.example_files()}
-        self.assertTrue({"t1-doc-change.yaml", "t2-bugfix.yaml", "t4-auth-change.yaml"}.issubset(names))
+        self.assertTrue({"t1-doc-change.yaml", "t2-bugfix.yaml", "t3-ci-change.yaml", "t4-auth-change.yaml"}.issubset(names))
 
     def test_schema_uses_plural_evidence_field(self) -> None:
         self.assertEqual(validator.schema_evidence_field(), "required_levels")

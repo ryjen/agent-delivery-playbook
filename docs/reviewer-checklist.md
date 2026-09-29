@@ -25,7 +25,17 @@ The goal is not to make every PR heavy. The goal is to make risk, scope, evidenc
 - [ ] Denied or escalated tool requests are visible.
 - [ ] No tool use violates prohibited actions.
 
-## 4. Evidence
+## 4. Context and Provenance
+
+- [ ] Material sources that shaped the change are identifiable.
+- [ ] Source content is distinguishable from generated summaries/inference.
+- [ ] Untrusted repository/tool/web/memory content did not become authority merely by being observed.
+- [ ] Stale, unknown, superseded, or revoked inputs are visible.
+- [ ] Material context expansion was approved where required.
+- [ ] Cross-project/tenant and sensitive-data boundaries were preserved.
+- [ ] Secrets/customer/private data were minimized and retention is appropriate.
+
+## 5. Evidence
 
 - [ ] The PR includes specific evidence, not model claims.
 - [ ] Test commands and results are named.
@@ -33,7 +43,7 @@ The goal is not to make every PR heavy. The goal is to make risk, scope, evidenc
 - [ ] Operational validation exists for T3/T4 changes.
 - [ ] Independent review exists for T4 changes.
 
-## 5. Security Review
+## 6. Security Review
 
 Challenge the PR if it touches:
 
@@ -47,7 +57,7 @@ Challenge the PR if it touches:
 - dependency provenance
 - audit logging
 
-## 6. Attack Catalog Review
+## 7. Attack Catalog Review
 
 Look for signs of:
 
@@ -59,13 +69,13 @@ Look for signs of:
 - approval bypass
 - evidence manipulation
 
-## 7. Rollback
+## 8. Rollback
 
 - [ ] The rollback path is specific.
 - [ ] Reverting is sufficient, or a disable path exists.
 - [ ] T3/T4 changes include operational recovery notes.
 
-## 8. Merge Decision
+## 9. Merge Decision
 
 Approve only when:
 

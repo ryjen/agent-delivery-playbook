@@ -69,7 +69,22 @@
               }
             },
             "model_context_assumption": { "type": "string" },
-            "stale_context_caveats": { "type": "array", "items": { "type": "string" }, "default": [] }
+            "stale_context_caveats": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "revoked": {
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "object",
+                "required": ["source", "reason"],
+                "additionalProperties": false,
+                "properties": {
+                  "source": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "replacement": { "type": "string" },
+                  "revoked_by": { "type": "string" }
+                }
+              }
+            }
           }
         }
       }

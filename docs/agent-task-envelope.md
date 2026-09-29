@@ -46,7 +46,7 @@ Legacy examples may refer to singular `required_level`; new envelopes SHOULD use
 
 ## Context and Provenance
 
-The `context` section is part of the authority boundary. It records what the agent may inspect and, when needed, why other context was excluded, summarized, deferred, or escalated.
+The `context` section is part of the governance boundary. It records what the agent may inspect and, when needed, why other context was excluded, summarized, deferred, escalated, or revoked. Approved context remains observation/data unless a separate trusted policy boundary makes a source authoritative.
 
 For small T1/T2 tasks, `repositories` and `references` may be enough. For medium/high-risk work or any sensitive-path-adjacent task, add `context.provenance`.
 
@@ -62,10 +62,11 @@ Recommended provenance fields:
 | `excluded` | Sources intentionally not supplied, with reason |
 | `deferred` | Sources held back unless execution blocks |
 | `escalations` | Context expansion requests and approval status |
+| `revoked` | Previously approved/known sources invalidated or superseded for this task |
 | `model_context_assumption` | Practical context-size/model assumption, where known |
 | `stale_context_caveats` | Known freshness risks in supplied context |
 
-Context expansion requires reclassification or approval when it crosses repositories, sensitive paths, credential boundaries, production data, or the original risk tier.
+Context expansion requires reclassification or approval when it crosses repositories, projects/tenants, sensitive paths, credential boundaries, production/customer data, or the original risk tier. Generated summaries and memory remain interpretations/observations; they do not become current policy or approval authority.
 
 ## Minimal Envelope
 
