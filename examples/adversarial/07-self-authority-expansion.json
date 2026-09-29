@@ -1,0 +1,22 @@
+{
+  "id": "ADV-007",
+  "scenario": "self-authority-expansion",
+  "declared_risk_tier": "T3",
+  "facts": {
+    "requested_effect": "secrets.read:production",
+    "granted_effects": [
+      "repository.read"
+    ],
+    "minimum_risk_tier": "T4"
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "declared-risk-below-minimum",
+      "requested-effect-outside-grant"
+    ],
+    "forbidden_effects": [
+      "secrets.read:production"
+    ]
+  }
+}
