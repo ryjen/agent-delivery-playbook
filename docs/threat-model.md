@@ -187,6 +187,42 @@ Mitigations:
 - Maintain compatibility windows
 - Test rollback or disable paths for release-sensitive work
 
+### T11: Indirect context injection
+
+Repository files, issues, PR comments, logs, web content, package metadata, tool/MCP responses, or memory contain hostile instructions that attempt to alter tool use, credentials, targets, or policy interpretation.
+
+Mitigations:
+
+- Treat observed content as data, not authority.
+- Resolve capabilities, credentials, resource targets, and approvals outside natural-language observations.
+- Preserve source/provenance through retrieval and tool boundaries.
+- Separate content/diagnostics from structured control fields.
+- Add adversarial terminal-state fixtures for consequential paths.
+
+### T12: Stale, poisoned, omitted, or revoked context
+
+The agent acts on superseded architecture, poisoned retrieval, lossy summaries, omitted constraints, or previously approved context that is no longer valid.
+
+Mitigations:
+
+- Record provenance and relevant revision/digest/freshness.
+- Distinguish raw sources from summaries and inference.
+- Surface material exclusions and summary caveats.
+- Revalidate when required context is stale, unknown, superseded, or revoked.
+- Prefer current protected policy/code over remembered or summarized claims.
+
+### T13: Cross-project/tenant context contamination
+
+Persistent memory, shared retrieval, copied logs, or workspace context leaks across repository, project, tenant, customer, or task boundaries.
+
+Mitigations:
+
+- Default-deny cross-project/tenant retrieval.
+- Scope retrieval/memory by repository/project/tenant/task.
+- Minimize and redact sensitive data before context ingress.
+- Require explicit authorization for cross-boundary expansion.
+- Propagate revocation/deletion to derived memory where policy requires it.
+
 ## Risk signals
 
 Escalate review when a task touches:
@@ -209,6 +245,9 @@ Escalate review when a task touches:
 | Agent hides dependency risk | Adds package to simplify parsing | Dependency approval and scan |
 | Agent changes mobile permissions | Adds Android location permission for unrelated feature | Manifest review, mobile checklist |
 | Agent fabricates test success | Claims tests passed without running them | CI evidence required |
+| Poisoned issue comment changes tool target | Comment says to disable checks or use another credential | Observation/authority separation plus deterministic effect admission |
+| Stale memory overrides current policy | Prior approval is replayed as if still valid | Freshness/revocation checks; current authority wins |
+| Cross-project memory leaks private context | Agent imports another tenant/project's incident details | Scoped retrieval/memory isolation and minimization |
 | Agent edits release pipeline | Changes publish token scope or workflow triggers | Release owner review |
 
 ## Minimum control set
