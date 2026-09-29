@@ -8,7 +8,7 @@ The project is an **incubating public governance playbook/specification with exe
 
 It is more mature than a starter template: the repository has a canonical architecture, AI-native SDLC and trust models, normative task/risk/evidence policy, machine-readable task-envelope structure, dual validators, validator tests, repository-integrity checks, contribution/security policy, and an active validation workflow.
 
-It is **not** an agent runtime, authorization service, policy engine, evidence attestation service, or production deployment system. Broad real-world adoption and end-to-end enforceability have not yet been demonstrated.
+It is **not** an agent runtime, authorization service, policy engine, evidence attestation service, or production deployment system. One standalone representative adoption is demonstrated; broad production adoption and end-to-end runtime enforceability have not been demonstrated.
 
 ## Capability status
 
@@ -26,10 +26,10 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
 | Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
 | Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
-| Context/memory supply-chain controls | planned | #40 |
-| Adversarial/bypass-resistance fixtures | planned | #41 |
+| Context/memory supply-chain controls | implemented + validated structure | `docs/context-budget-and-provenance.md`; revoked-context schema/validator support; #40 complete |
+| Adversarial/bypass-resistance fixtures | validated | 10 machine-readable scenarios + deterministic CI evaluator under `examples/adversarial/`; #41 complete |
 | Minimal adoption kernel | implemented guidance | `docs/adoption/minimal-adoption-kernel.md`; optional artifacts are risk-triggered |
-| Standalone reference adoption | not demonstrated | #42 |
+| Standalone reference adoption | demonstrated (representative) | baseline PR #71 + governed T2/rejected paths in PR #72; `examples/reference-adoption/case-study.md` |
 | Release/version compatibility contract | planned | #43 |
 | Lightweight conformance kit | planned | #45 |
 | Runtime authorization / tool-effect gating | not implemented | deliberately outside this repository's runtime scope |
@@ -51,27 +51,21 @@ Make this repository obey the governance model it describes:
 
 Exit: a failing or missing required check cannot silently admit a normal change to `main`.
 
-### 2. #40 — treat context and memory as untrusted supply-chain inputs
+### 2. #43 — define release/version compatibility
 
-Make poisoning, staleness, authority confusion, retention, and provenance requirements explicit for repository/tool/retrieval/memory inputs.
+Turn the now-demonstrated adoption contract into an explicit pre-1.0 versioning/release policy without implying runtime conformance that the repository cannot enforce.
 
-Exit: adopting systems can distinguish trusted policy/authority from untrusted observations and can fail closed when required provenance/freshness cannot be established.
+Exit: normative/schema/template compatibility and release expectations are documented and testable where objective.
 
-### 3. #41 — add adversarial governance and bypass-resistance fixtures
+### 3. #45 — build the lightweight conformance kit
 
-Turn important threat-model claims into deterministic examples/fixtures that demonstrate forbidden effects remain absent under hostile context and authority pressure.
+Package the minimal validated pieces needed to evaluate an adopting repository without copying the whole playbook.
 
-Exit: the playbook demonstrates at least one bypass-resistant path instead of relying only on prose.
+Exit: adopters can run a small, versioned conformance path that reports what is structurally checked and what remains human/policy judgment.
 
-### 4. #42 — perform standalone reference adoption
+## Follow-on maturity work
 
-Exercise the minimal kernel, evidence model, and delegation guidance against a real or representative repository and feed observed friction/gaps back into the playbook.
-
-Exit: at least one end-to-end adoption is demonstrated with concrete evidence and a documented gap list.
-
-## Follow-on security and demonstration work
-
-These items are now the immediate post-self-conformance sequence and should feed back into the playbook rather than being treated as independent documentation exercises.
+The core guidance now has executable self-conformance, adversarial fixtures, and one standalone representative adoption. Remaining work should focus on provider admission (#60), release/compatibility (#43), and a proportionate conformance kit (#45), while preserving the documented limits around runtime enforcement and production evidence.
 
 ## Distribution and maturity work
 

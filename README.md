@@ -136,6 +136,6 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Status
 
-This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation guidance, task-envelope validation, repository integrity checks, and flake-first CI validation are implemented; provider-enforced repository admission, context/memory hardening, adversarial conformance, and demonstrated reference adoption remain active work.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. Provider-enforced repository admission, release/compatibility policy, and a lightweight conformance kit remain active work; production adoption and runtime authorization enforcement are not claimed.
 
 See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.

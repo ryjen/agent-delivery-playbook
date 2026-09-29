@@ -13,9 +13,11 @@ Introduce lightweight artifacts without blocking normal delivery.
 
 Adopt:
 
-- task envelopes for agent-assisted work
-- evidence reports in PRs
-- reviewer checklist
+- a visible task objective and scope for all write-capable agent work;
+- inline task/risk/evidence fields for small T1 work;
+- structured task envelopes as the normal T2+ path or when authority/context complexity triggers one;
+- evidence in PRs;
+- reviewer guidance proportionate to risk.
 
 Do not enforce everything immediately.
 
@@ -37,7 +39,7 @@ Adopt:
 
 ### Success Criteria
 
-- T4 surfaces are visible before merge.
+- high-risk T3 and restricted T4 surfaces are visible before merge.
 - CI, auth, secrets, infra, and dependency changes are no longer treated as routine cleanup.
 - Reviewers challenge incorrect tiering.
 
@@ -47,9 +49,10 @@ Start recording material tool decisions.
 
 Adopt:
 
-- tool call decision records
-- approval gates for T4 tool use
-- explicit denial/escalation records
+- tool-call decision records when a material external effect or authority decision exists;
+- explicit approval gates for sensitive T3 effects where policy requires them;
+- human-led handling for restricted T4 effects rather than delegating those effects to the agent;
+- explicit denial/escalation records.
 
 ### Success Criteria
 
@@ -95,9 +98,9 @@ Adopt:
 
 A team can start with three rules:
 
-1. Any agent-assisted PR needs a task objective and evidence.
-2. Any sensitive path makes the PR at least T3 or T4.
-3. Any CI, auth, secrets, infra, or production data change requires explicit human approval.
+1. Any write-capable agent-assisted PR needs bounded intent and evidence; T1 may represent this inline.
+2. Sensitive paths trigger the repository's minimum risk floor—typically T3, with T4 reserved for restricted human-led authority.
+3. CI, auth, secrets, infra, or production-data changes require the applicable accountable human/platform/security review; restricted effects are not delegated merely because approval exists.
 
 ## Anti-Patterns
 
@@ -115,3 +118,15 @@ Avoid:
 Start at Level 3 of the maturity model for high-risk work and Level 1-2 for low-risk work.
 
 That gives teams a usable path without pretending all agent work needs the same amount of ceremony.
+
+
+## Reference adoption finding
+
+The standalone reference adoption in `examples/reference-adoption/case-study.md` confirmed that applying every artifact universally creates unnecessary ceremony. The useful boundary was concern-based:
+
+- T2 needed explicit intent/scope, a bounded grant representation, E2 evidence, and an accountable outcome;
+- capability catalogs, attestations, and separate tool-decision records were unnecessary for the successful localized task;
+- the authority-expansion request was easier to reason about as a separate denied task/grant request;
+- exact candidate CI identity is best retained by the PR/run system rather than self-referenced inside the same changing commit.
+
+Use the minimal adoption kernel as the authority for the smallest sufficient artifact set.

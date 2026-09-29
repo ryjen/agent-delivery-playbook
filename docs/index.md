@@ -81,6 +81,7 @@ flowchart LR
 | `examples/` | example | Task envelopes and delivery examples |
 | `examples/replayable-evidence-report.md` | example | Replayable evidence report example |
 | `examples/agent-capability-catalog.md` | example | Filled capability catalog example |
+| `examples/reference-adoption/case-study.md` | demonstrated example | Standalone baseline, bounded T2 change, rejected authority-expansion path, exact CI/merge evidence, and adoption findings |
 | `docs/golden-path-examples.md` | guidance | Summary of example flows |
 | `docs/task-envelope-validation.md` | guidance | Local validation command for envelope examples |
 
