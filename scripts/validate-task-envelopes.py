@@ -221,6 +221,11 @@ def validate(path: Path, evidence_field: str) -> list[str]:
             if not isinstance(item.get("reason"), str): errors.append("context.provenance.escalations[].reason must be a string")
             if item.get("status") not in {"not_requested", "requested", "approved", "denied"}:
                 errors.append(f"invalid context.provenance.escalations[].status: {item.get('status')!r}")
+        for item in require_list_of_mappings(provenance_mapping, "revoked", "context.provenance.revoked", errors):
+            if not isinstance(item.get("source"), str): errors.append("context.provenance.revoked[].source must be a string")
+            if not isinstance(item.get("reason"), str): errors.append("context.provenance.revoked[].reason must be a string")
+            if "replacement" in item and not isinstance(item.get("replacement"), str): errors.append("context.provenance.revoked[].replacement must be a string")
+            if "revoked_by" in item and not isinstance(item.get("revoked_by"), str): errors.append("context.provenance.revoked[].revoked_by must be a string")
     constraints = require_mapping(envelope.get("constraints", {}), "constraints", errors)
     require_list_of_strings(constraints, "allowed", "constraints.allowed", errors, required=True)
     require_list_of_strings(constraints, "prohibited", "constraints.prohibited", errors, required=True)
