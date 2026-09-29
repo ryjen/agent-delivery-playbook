@@ -44,12 +44,12 @@ The candidate requests workflow-write/permission and merge authority so it can a
 | Rejected-task governance artifacts | task envelope + denied grant request + consolidated rejection record |
 | Reviewer time | Not reliably measured by the repository/tooling; intentionally not estimated |
 | Agent local test time | Not applicable; the agent record does not claim local shell execution |
-| Validation failures caught | Pending final reference-task CI; regression tests specifically cover behavior absent from baseline |
+| Validation failures caught | 0 candidate CI failures; 2 new regression cases cover repeated/mixed whitespace that the baseline test set did not cover. The baseline was not retroactively rerun with the new tests. |
 | False-positive/unnecessary-control rate | No false-positive is claimed from a sample of two paths; sample is too small to generalize |
 | Missing-context escalations | 0 on the bounded T2 path |
 | Authority escalations/rejections | 1 rejected self-modifying/merge-authority request |
 | Independent reproducibility | Python unittest + Nix flake commands are local/reproducible without proprietary agent services |
-| Independent CI evidence | Exact final PR-head run is recorded externally on issue #42 |
+| Independent CI evidence | PR #72 head `bbd274915ee25b873225707d386c7ca4909b3ff3`, run `36524643542`: `Repository integrity` and `Task envelopes` both passed; the log records all four reference-project tests as `ok` |
 | Production adoption evidence | None; this is a standalone representative adoption, not production usage |
 
 ## Friction and findings
@@ -78,11 +78,11 @@ Repository history can attribute mutations to GitHub identities and CI runs, but
 
 Similarly, the surrounding integration may expose broader orchestration authority than the synthetic task grant. This case study demonstrates the **playbook contract**, not a cryptographic runtime capability system.
 
-### Rollout guidance needs alignment
+### Rollout guidance needed alignment
 
-Applying the current minimal kernel reveals that the older rollout guide still suggests task envelopes for all AI-assisted work and approval gates for T4 tool use. That predates the risk-shaped kernel and human-led T4 boundary.
+Applying the current minimal kernel revealed that the older rollout guide still suggested task envelopes for all AI-assisted work and approval gates for T4 tool use. That predates the risk-shaped kernel and human-led T4 boundary.
 
-A follow-up playbook edit should align the rollout guide with the current T1/T2/T3/T4 model.
+The finalization change updates the rollout guide: T1 may remain inline/lightweight, structured envelopes are the normal T2+ path, sensitive T3 tool effects use explicit approval where policy requires it, and restricted T4 effects remain human-led.
 
 ## Limitations
 
@@ -94,4 +94,13 @@ A follow-up playbook edit should align the rollout guide with the current T1/T2/
 
 ## Completion
 
-Final PR/head CI binding, merge outcome, and any follow-up playbook edits are recorded on #42 and in the finalization change after this candidate is admitted.
+The successful bounded task was merged via PR #72:
+
+- base commit: `54b9cb7b5c0d29e5129415f5bfe24f1ca0f240d4`;
+- candidate head: `bbd274915ee25b873225707d386c7ca4909b3ff3`;
+- independent CI run: `36524643542`;
+- merged outcome: `24167d8883f27c8e17f77d2a331fc6cf9dd73924`.
+
+The rejected authority-expansion path produced no workflow, permission, ruleset, merge-policy, or release mutation.
+
+This demonstrates one **representative standalone adoption**, not production adoption or runtime capability enforcement.
