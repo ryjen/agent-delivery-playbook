@@ -1,0 +1,47 @@
+capability_grant:
+  grant_id: GRANT-WRITE-017
+  state: active
+  accountable_principal:
+    id: human:code-owner
+    evidence: protected-reviewer-identity
+  runtime_identity:
+    id: workload:branch-coding-agent
+    evidence: workload-identity:<runtime-id>
+  invocation_identity: workflow-run:<run-id>
+  task_envelope_id: T-0002
+  task_envelope_digest: sha256:<task-envelope-digest>
+  repository: example/service
+  ref_scope:
+    readable:
+      - main
+      - agent/T-0002
+    writable:
+      - agent/T-0002
+    protected:
+      - main
+  code_subject:
+    base_commit: <approved-base-commit>
+    candidate_branch: agent/T-0002
+  allowed_capabilities:
+    - repository.read
+    - repository.write:src/parser/**
+    - repository.write:tests/parser/**
+    - shell.execute:targeted-tests
+    - pull_request.create_or_update
+  prohibited_capabilities:
+    - repository.write:.github/**
+    - dependency.modify
+    - merge
+    - approval
+    - release
+    - secrets.read
+    - admin
+  credential_scope: repository-branch-write
+  network_scope:
+    - github.example
+  issuer: human:code-owner
+  approval_record: approval:T-0002-branch-write
+  issued_at: 2026-09-28T20:00:00Z
+  expires_at: 2026-09-28T21:00:00Z
+  revocation_state: not_revoked
+  parent_grant_id: null
