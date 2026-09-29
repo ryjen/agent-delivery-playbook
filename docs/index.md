@@ -21,6 +21,7 @@ flowchart LR
 | `docs/architecture.md` | guidance | Canonical primitives, artifact authority, trust boundaries, lifecycle, and implementation limits |
 | `docs/policy-enforcement-map.md` | guidance | Maps lifecycle controls to generic enforcement surfaces without making model output authoritative |
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
+| `docs/identity-delegation-and-capability-grants.md` | guidance | Per-task identity, grant binding, expiry, retries, revocation, and nested delegation semantics |
 | `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for policy, schemas, templates, and examples |
 
 ## Adopt Governed Agent Delivery

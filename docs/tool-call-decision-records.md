@@ -26,6 +26,8 @@ Tool Call Decision Records make those boundaries reviewable.
 tool_call_decision:
   id: TCDR-0001
   task_id: T-0002
+  grant_id: GRANT-WRITE-017
+  invocation_id: workflow-run:<run-id>
   requested_tool: shell_tests
   requested_action: run targeted unit tests
   decision: approved
@@ -56,10 +58,10 @@ tool_call_decision:
 | Repository writes | Yes | Changes project state. |
 | Shell commands | Yes | Can execute unexpected behavior. |
 | Package installation | Yes | Supply-chain surface. |
-| CI workflow edits | Yes, T4 | Changes delivery authority. |
+| CI workflow edits | Yes, normally T3; T4 if restricted authority is required | Changes delivery authority and may trigger stronger review. |
 | Network access | Yes | Exfiltration and untrusted input surface. |
-| Secret or credential paths | Yes, T4 | High-impact exposure risk. |
-| Production access | Yes, T4 | Operational impact. |
+| Secret or credential paths | Yes; T4 when restricted credentials are requested | High-impact exposure risk. |
+| Production access | Yes; typically T4 for privileged/destructive effects | Operational impact and restricted authority. |
 
 ## Denial Example
 
@@ -86,7 +88,7 @@ tool_call_decision:
   requested_tool: github_workflow_write
   requested_action: change pull_request workflow permissions
   decision: escalated
-  reason: CI permission changes require T4 classification and security review.
+  reason: CI permission changes require high-risk reclassification and platform/security review; restricted authority, if requested, remains T4 and human-led.
   constraints:
     - stop execution until reclassified
   evidence:
@@ -105,3 +107,11 @@ tool_call_decision:
 ## Design Rule
 
 Do not bury tool authority inside chat transcript. Put the decision where reviewers can see it.
+
+## Grant relationship
+
+When grant and invocation identifiers exist, material tool-call decisions should reference them.
+
+A decision can approve use already inside the active grant, deny, defer, or escalate a request for a new/superseding grant. It cannot widen the current grant by itself, and the requesting runtime cannot approve its own expansion.
+
+Retries use a new invocation ID. The same grant may be reused only while its task/resource/code/capability/time bindings remain valid.

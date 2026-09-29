@@ -32,6 +32,20 @@ Do not allow one identity or token to generate, approve, and deploy a meaningful
 | Release system | Promotes artifacts to environments | High-trust control plane |
 | Production system | Customer/data-impacting runtime | Restricted target |
 
+## Identity and delegation model
+
+The high-level separation-of-duties model here remains canonical. Execution-level identity, grant binding, expiry, revocation, retries, and nested delegation are defined in [`identity-delegation-and-capability-grants.md`](identity-delegation-and-capability-grants.md).
+
+Important distinctions:
+
+- accountable principal, runtime identity, invocation identity, verifier, approver, and release/admin roles are logically separate;
+- model/provider identity is metadata, not authority identity;
+- the task envelope records intent; a capability grant records delegated runtime authority;
+- effective task authority is a bounded subset of the durable capability catalog;
+- retries/resumed sessions do not mint authority;
+- nested delegation can only narrow the parent grant;
+- a runtime may request expansion but cannot approve its own authority increase.
+
 ## Authority levels
 
 | Level | Capability | Suitable for agents? |

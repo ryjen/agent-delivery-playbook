@@ -25,6 +25,12 @@ Use this catalog to document durable agent/tool authority in this repository.
 | Allowed paths |  |
 | Sensitive paths | none / listed below |
 | Human escalation contact |  |
+| Runtime/workload identity or class |  |
+| Runtime identity evidence | authenticated / provider-attested / declared / unknown |
+| Invocation/workflow identity source |  |
+| Nested delegation allowed | no / yes, bounded below |
+| Maximum grant lifetime |  |
+| Revocation mechanism |  |
 
 ### Authority profile
 
@@ -58,6 +64,14 @@ Credential storage and rotation notes:
 
 ```
 
+### Delegation limits
+
+- Maximum child capabilities:
+- Maximum child resource/path scope:
+- Maximum child lifetime:
+- Maximum delegation depth:
+- Authorities that may never be delegated:
+
 ### Approval requirements
 
 | Action | Approval required | Approver |
@@ -88,4 +102,4 @@ Credential storage and rotation notes:
 
 ## Review rule
 
-Model identity is not authority identity. Record the runtime, tool surface, token class, and approval boundary that make actions possible.
+Model identity is not authority identity. Record runtime identity evidence, tool surface, token class, delegation limits, lifetime, revocation path, and approval boundary. Cataloged authority is a ceiling, not a task grant.
