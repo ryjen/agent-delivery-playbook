@@ -71,9 +71,11 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/status-and-roadmap.md` | Current maturity, capability evidence, limitations, and prioritized roadmap |
 | `docs/architecture.md` | Canonical primitives, artifact authority, trust boundaries, lifecycle, and implementation limits |
 | `docs/adoption/quickstart.md` | First 30-60 minute adoption path for one existing repo |
+| `docs/adoption/minimal-adoption-kernel.md` | Smallest sufficient control profile and risk-triggered extensions |
 | `docs/ai-native-sdlc.md` | Governance concern for AI-native software delivery |
 | `docs/secure-coding-agent-workflow.md` | End-to-end secure agent workflow |
 | `docs/trust-model.md` | Identity, authority, and separation-of-duties model for agents and humans |
+| `docs/identity-delegation-and-capability-grants.md` | Per-task grant binding, expiry, retries, revocation, and nested delegation model |
 | `docs/agent-capability-catalog.md` | Guidance for documenting durable agent/tool authority |
 | `docs/context-budget-and-provenance.md` | Context selection and provenance ledger guidance |
 | `docs/replayable-evidence-envelope.md` | Replayable evidence envelope for agent-assisted PRs |
@@ -90,20 +92,18 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Recommended adoption path
 
-1. Start with `docs/adoption/quickstart.md` for the first manual adoption loop
+1. Start with `docs/adoption/quickstart.md` and `docs/adoption/minimal-adoption-kernel.md`
 2. Use `docs/index.md` to choose deeper reading paths
 3. Read `docs/architecture.md` to understand artifact authority, trust boundaries, and implementation limits
 4. Read `docs/ai-native-sdlc.md` and `docs/policy-enforcement-map.md` to establish the governance and enforcement model
-5. Copy `templates/AGENTS.md` into the target repository root
-6. Add `templates/SECURITY_INVARIANTS.md` and adapt it to the system
+5. Copy `templates/AGENTS.md` and the active PR/review templates when adopting the playbook as a repeatable repository practice
+6. Add `templates/SECURITY_INVARIANTS.md` only when system-specific security constraints materially need a durable local artifact
 7. Use `docs/task-risk-matrix.md` to classify agent tasks before execution
-8. Require `examples/agent-task-contract.md` for medium/high-risk agent work
-9. Use `docs/context-budget-and-provenance.md` for context expansion decisions
-10. Use `docs/delivery-evidence-standard.md` and `docs/replayable-evidence-envelope.md` for PR evidence expectations
-11. Apply `docs/trust-model.md` and `docs/agent-capability-catalog.md` when granting tool, repository, or CI access
-12. Add `.github/PULL_REQUEST_TEMPLATE.md` or adapt it into the target repository's active PR template location
-13. Add `templates/REVIEW_CHECKLIST.md` to PR review expectations
-14. Move repeated controls into CI, pre-commit hooks, branch protection, and release gates only after the manual path stabilizes
+8. Use a structured task envelope for T2+ work or whenever task/authority complexity requires it
+9. Use `docs/context-budget-and-provenance.md` when context expansion/provenance triggers apply
+10. Use `docs/delivery-evidence-standard.md` and `docs/replayable-evidence-envelope.md` for evidence coverage, trust, and exact-subject binding
+11. Apply `docs/trust-model.md`, `docs/identity-delegation-and-capability-grants.md`, and `docs/agent-capability-catalog.md` when granting tool, repository, or CI access
+12. Move repeated objective controls into CI, branch/ruleset protection, and release gates only after the manual path stabilizes
 
 ## Good first use cases
 
@@ -136,6 +136,6 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Status
 
-This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, SDLC/trust guidance, task-envelope validation, repository integrity checks, and flake-first CI validation are implemented; repository admission enforcement, evidence binding, and demonstrated reference adoption remain active work.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation guidance, task-envelope validation, repository integrity checks, and flake-first CI validation are implemented; provider-enforced repository admission, context/memory hardening, adversarial conformance, and demonstrated reference adoption remain active work.
 
 See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.
