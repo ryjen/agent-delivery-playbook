@@ -1,0 +1,19 @@
+capability_grant_request:
+  request_id: GRANT-REQ-DENIED-004
+  state: denied
+  accountable_principal: human:security-owner
+  runtime_identity: runtime:analysis-agent
+  invocation_identity: invocation:004
+  task_envelope_id: T-0004
+  requested_capabilities:
+    - secrets.read:production
+    - production.access
+  requested_resource: example/service
+  decision:
+    decided_by: policy:restricted-human-led
+    reason: T4 restricted authority is human-led and the task/parent grant does not permit production credentials.
+    effective_capabilities: []
+    requires_reclassification: false
+    escalation_path: Authorized human/change-management procedure
+  parent_grant_id: GRANT-READ-004
+  note: A denied request is an accountable governance outcome and grants no capability.
