@@ -35,8 +35,8 @@ Every envelope MUST include:
 | --- | --- | --- |
 | T1 | Documentation or non-runtime metadata | Lightweight review or auto-merge |
 | T2 | Localized code change with test coverage | Human review |
-| T3 | Cross-cutting runtime, data, or workflow change | Human review plus operational evidence |
-| T4 | Security, auth, infra, secrets, CI/CD, production data | Explicit approval gate and security review |
+| T3 | High-risk bounded runtime, security, data, CI/CD, or workflow change | Owner/platform/security review as applicable plus operational evidence |
+| T4 | Restricted authority such as production secrets/admin/signing or destructive/irreversible production effects | Human-led execution plus explicit approval and independent review |
 
 ## Evidence Levels
 
@@ -154,6 +154,16 @@ Agents MUST NOT expand scope silently. A task requiring a broader workspace, str
 Agents MUST treat the envelope as binding input, not advisory context.
 
 Reviewers SHOULD reject work when the PR does not map back to the envelope objective, constraints, and evidence expectations.
+
+## Runtime identity and capability grants
+
+The task envelope is an intent/governance record, not an authentication token or live capability grant.
+
+Runtime identity, invocation identity, credential scope, expiry, revocation, retries, and nested delegation belong to [`identity-delegation-and-capability-grants.md`](identity-delegation-and-capability-grants.md).
+
+The current task-envelope schema intentionally does **not** add fields that claim to authenticate runtime identity. A capability grant should reference the envelope by task ID plus immutable digest where practical.
+
+This prevents a runtime from gaining authority by editing or emitting identity fields inside the envelope.
 
 ## State Model
 
