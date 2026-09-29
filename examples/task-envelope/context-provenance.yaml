@@ -23,6 +23,11 @@ context:
       - package.json scripts
     summarized:
       - none
+    revoked:
+      - source: docs/legacy-setup.md
+        reason: Superseded setup instructions must not influence this task.
+        replacement: package.json
+        revoked_by: repo-maintainer
     excluded:
       - path: .github/workflows/
         reason: CI changes are outside this T1 task.
@@ -31,7 +36,7 @@ context:
     escalations:
       - source: .github/workflows/ci.yml
         reason: Would require CI-scope reclassification.
-        status: not_requested
+        status: denied
     model_context_assumption: Small documentation task; no large-context retrieval required.
     stale_context_caveats:
       - README may be stale; package.json is treated as the source of truth for scripts.
@@ -67,6 +72,6 @@ review:
   required: true
   approvers:
     - human-maintainer
-  notes: Context expansion into CI files would require reclassification.
+  notes: CI expansion was denied; revoked legacy setup guidance must not influence the change.
 
 status: proposed
