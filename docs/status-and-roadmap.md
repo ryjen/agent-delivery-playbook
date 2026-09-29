@@ -24,11 +24,11 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
 | GitHub Actions validation | validated but not admission-enforced | current workflow passes; #60 tracks required admission |
 | Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
-| Evidence trust/binding model | planned | #38 |
-| Identity/delegation/capability binding | planned | #39 |
+| Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
+| Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
 | Context/memory supply-chain controls | planned | #40 |
 | Adversarial/bypass-resistance fixtures | planned | #41 |
-| Minimal adoption kernel | planned | #37 |
+| Minimal adoption kernel | implemented guidance | `docs/adoption/minimal-adoption-kernel.md`; optional artifacts are risk-triggered |
 | Standalone reference adoption | not demonstrated | #42 |
 | Release/version compatibility contract | planned | #43 |
 | Lightweight conformance kit | planned | #45 |
@@ -51,33 +51,26 @@ Make this repository obey the governance model it describes:
 
 Exit: a failing or missing required check cannot silently admit a normal change to `main`.
 
-### 2. #37 — define the minimal adoption kernel
+### 2. #40 — treat context and memory as untrusted supply-chain inputs
 
-Make first adoption proportionate rather than ceremonial.
+Make poisoning, staleness, authority confusion, retention, and provenance requirements explicit for repository/tool/retrieval/memory inputs.
 
-Exit: an adopter can identify the smallest sufficient control set in under five minutes, with additional artifacts triggered explicitly by risk/authority.
+Exit: adopting systems can distinguish trusted policy/authority from untrusted observations and can fail closed when required provenance/freshness cannot be established.
 
-### 3. #38 — define evidence trust and binding
+### 3. #41 — add adversarial governance and bypass-resistance fixtures
 
-Clarify the difference between a claim, captured output, commit-bound CI evidence, trusted-runner evidence, attestation, and independent reproduction.
+Turn important threat-model claims into deterministic examples/fixtures that demonstrate forbidden effects remain absent under hostile context and authority pressure.
 
-Exit: evidence requirements state what each evidence class proves and what it does not prove.
+Exit: the playbook demonstrates at least one bypass-resistant path instead of relying only on prose.
 
-### 4. #39 — strengthen identity, delegation, and capability modeling
+### 4. #42 — perform standalone reference adoption
 
-Bind accountable principal, runtime identity, task scope, capabilities, expiry, retries, and nested delegation without turning the playbook into an authorization runtime.
+Exercise the minimal kernel, evidence model, and delegation guidance against a real or representative repository and feed observed friction/gaps back into the playbook.
 
-Exit: identity and delegated authority semantics are explicit enough for adopting systems to enforce without conflating declaration with verified identity evidence.
-
+Exit: at least one end-to-end adoption is demonstrated with concrete evidence and a documented gap list.
 ## Follow-on security and demonstration work
 
-After the immediate queue:
-
-1. #40 — context and memory as untrusted supply-chain inputs;
-2. #41 — adversarial governance and bypass-resistance examples;
-3. #42 — standalone reference adoption and case study.
-
-These should feed back into the playbook rather than being treated as independent documentation exercises.
+These items are now the immediate post-self-conformance sequence and should feed back into the playbook rather than being treated as independent documentation exercises.
 
 ## Distribution and maturity work
 
