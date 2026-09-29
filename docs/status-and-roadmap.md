@@ -68,6 +68,7 @@ Exit: the playbook demonstrates at least one bypass-resistant path instead of re
 Exercise the minimal kernel, evidence model, and delegation guidance against a real or representative repository and feed observed friction/gaps back into the playbook.
 
 Exit: at least one end-to-end adoption is demonstrated with concrete evidence and a documented gap list.
+
 ## Follow-on security and demonstration work
 
 These items are now the immediate post-self-conformance sequence and should feed back into the playbook rather than being treated as independent documentation exercises.
