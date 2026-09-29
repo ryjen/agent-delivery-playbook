@@ -14,6 +14,10 @@ run = "nix develop --command python3 scripts/validate-task-envelopes.py"
 description = "Run repository-integrity validation inside the flake-owned environment"
 run = "nix develop --command python3 scripts/validate-repository.py"
 
+[tasks.validate-adversarial]
+description = "Run adversarial bypass-resistance fixture validation"
+run = "nix develop --command python3 scripts/validate-adversarial-fixtures.py"
+
 [tasks.validate]
 description = "Run all repository validation through the authoritative Nix flake"
 run = "nix flake check --print-build-logs"
