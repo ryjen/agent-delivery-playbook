@@ -62,6 +62,7 @@ Exit: normative/schema/template compatibility and release expectations are docum
 Package the minimal validated pieces needed to evaluate an adopting repository without copying the whole playbook.
 
 Exit: adopters can run a small, versioned conformance path that reports what is structurally checked and what remains human/policy judgment.
+
 ## Follow-on maturity work
 
 The core guidance now has executable self-conformance, adversarial fixtures, and one standalone representative adoption. Remaining work should focus on provider admission (#60), release/compatibility (#43), and a proportionate conformance kit (#45), while preserving the documented limits around runtime enforcement and production evidence.
