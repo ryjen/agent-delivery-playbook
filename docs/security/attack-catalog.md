@@ -32,7 +32,7 @@ Each entry should be handled as an operational pattern: description, example, in
 | Context Poisoning | RAG, memory, notes, copied snippets | T2-T4 |
 | Memory Poisoning | Persistent agent memory or project summaries | T3-T4 |
 | Secret Exfiltration | Filesystem, logs, tool calls, PR output | T4 |
-| CI Privilege Escalation | Workflow files, tokens, runners | T4 |
+| CI Privilege Escalation | Workflow files, tokens, runners | T3-T4 |
 | Dependency Confusion | Package managers, lockfiles, registries | T3-T4 |
 | Approval Bypass | Risk downgrades, fake reviewers, hidden scope | T4 |
 | Evidence Manipulation | Fabricated tests, selective logs, omitted failures | T3-T4 |
@@ -182,8 +182,8 @@ A PR changes `pull_request` to `pull_request_target` and adds a script that echo
 
 ### Prevention
 
-- classify CI/CD edits as T4
-- require security review
+- classify CI/CD edits as high risk; use T4 only when restricted authority is involved
+- require platform/security review
 - pin actions
 - minimize token permissions
 
@@ -289,3 +289,8 @@ An auth change is labeled as a refactor to avoid security approval.
 - risk-tier rationale
 - changed sensitive paths
 - approval record
+
+
+## Executable adversarial scenarios
+
+See [`adversarial-scenarios.md`](adversarial-scenarios.md) for ten threat/control scenarios and the CI-backed bypass-resistance fixture model.
