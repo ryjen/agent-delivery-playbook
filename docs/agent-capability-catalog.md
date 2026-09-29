@@ -15,6 +15,14 @@ Catalog durable agent/tool configurations, not every prompt. Examples:
 - local shell executor used by an agent;
 - hosted agent service with GitHub permissions.
 
+## Durable profile versus task grant
+
+A capability catalog describes durable runtime/tool configuration and the **maximum authority that may be considered for delegation**. It does not authorize every cataloged capability for every task.
+
+`effective task grant ⊆ durable catalog profile`
+
+Per-task grants follow [`identity-delegation-and-capability-grants.md`](identity-delegation-and-capability-grants.md) and bind task identity, repository/ref/code subject, capabilities, issuer/approval, invocation, expiry, and revocation.
+
 ## Authority dimensions
 
 | Dimension | Questions |
@@ -49,3 +57,21 @@ Capability catalogs should be reviewed regularly because stale authority is a co
 ## Boundary rule
 
 Agents can use tools only through the authority granted to their configured runtime. A stronger model does not imply stronger authority, and a weaker model does not make broad credentials safe.
+## Identity and lifecycle fields
+
+For each durable configuration, record where practical:
+
+- accountable owner;
+- runtime/workload identity or identity class;
+- whether runtime identity is authenticated, attested, declared, or unknown;
+- invocation/workflow identity source;
+- maximum repository/ref/path/effect scope;
+- credential and network class;
+- nested-delegation policy and maximum scope/depth;
+- default/max grant lifetime;
+- revocation/decommission mechanism;
+- prohibited authority combinations such as generate + approve + release.
+
+Runtime model/version metadata can aid reproducibility but does not establish authority.
+
+Cataloged authority is a ceiling, not a per-task grant.
