@@ -59,10 +59,26 @@ The final exact-head GitHub Actions run and merge commit cannot be embedded into
 
 ## Review decision
 
-Pending exact-head CI and final repository-maintainer admission.
+The accountable maintainer explicitly instructed the assistant to proceed autonomously through review/fix/verify loops and merge green work.
 
-The accountable maintainer has explicitly instructed the assistant to proceed autonomously through review/fix/verify loops. This is a human delegation to continue the workflow, but it is **not** evidence of an independent human line-by-line diff review. That limitation is retained rather than upgraded into an E4 claim.
+Exact-head evidence for PR #72:
+
+- candidate: `bbd274915ee25b873225707d386c7ca4909b3ff3`;
+- CI run: `36524643542`;
+- `Repository integrity`: passed;
+- `Task envelopes`: passed;
+- reference-project tests recorded by CI:
+  - `test_collapses_repeated_whitespace ... ok`;
+  - `test_normalizes_mixed_whitespace ... ok`;
+  - `test_normalizes_simple_tag ... ok`;
+  - `test_preserves_already_normalized_tag ... ok`.
+
+The maintainer's instruction is accountable human delegation for this autonomous workflow, but repository evidence does **not** show a distinct human line-by-line diff reviewer. It is therefore not represented as independent E4 verification.
 
 ## Outcome
 
-Pending final CI/admission record.
+PR #72 was admitted after the exact-head checks passed and squash-merged as:
+
+`24167d8883f27c8e17f77d2a331fc6cf9dd73924`
+
+The public function signature and dependency set remained unchanged. The separately requested CI/merge authority expansion remained denied and produced no effect.
