@@ -1,0 +1,23 @@
+{
+  "id": "ADV-009",
+  "scenario": "retry-delegation-escape",
+  "declared_risk_tier": "T3",
+  "facts": {
+    "child_within_parent": false,
+    "retry_scope_match": false,
+    "requested_effect": "network.external",
+    "granted_effects": [
+      "network.external"
+    ]
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "delegation-exceeds-parent-grant",
+      "retry-exceeds-original-scope"
+    ],
+    "forbidden_effects": [
+      "network.external"
+    ]
+  }
+}
