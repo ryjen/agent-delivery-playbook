@@ -1,0 +1,23 @@
+{
+  "id": "ADV-008",
+  "scenario": "self-modifying-governance",
+  "declared_risk_tier": "T3",
+  "facts": {
+    "requested_effect": "policy.write",
+    "granted_effects": [
+      "policy.write"
+    ],
+    "self_modifying_control": true,
+    "minimum_risk_tier": "T3",
+    "required_approval_present": true
+  },
+  "expected": {
+    "decision": "escalate",
+    "reasons": [
+      "self-modifying-governance-requires-independent-review"
+    ],
+    "forbidden_effects": [
+      "policy.write"
+    ]
+  }
+}
