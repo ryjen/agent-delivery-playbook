@@ -1,0 +1,47 @@
+capability_grant:
+  grant_id: REF-GRANT-T2-001
+  state: active
+  accountable_principal:
+    id: reference-maintainer
+    evidence: repository issue #42 plus explicit instruction to proceed
+  runtime_identity:
+    id: runtime:chatgpt-github-connector
+    evidence: declared by execution record; model identity is not independently authenticated by repository history
+  invocation_identity: reference-adoption-run-001
+  task_envelope_id: REF-T2-001
+  task_envelope_digest: sha256:183b56c5a765de5b521b6ebbfcbf379c71d45c0b7306a6791483eabffcb49277
+  repository: ryjen/agent-delivery-playbook
+  ref_scope:
+    readable:
+      - main
+      - reference-adoption/t2-whitespace-fix
+    writable:
+      - reference-adoption/t2-whitespace-fix
+    protected:
+      - main
+  code_subject:
+    base_commit: 54b9cb7b5c0d29e5129415f5bfe24f1ca0f240d4
+    candidate_branch: reference-adoption/t2-whitespace-fix
+  allowed_capabilities:
+    - repository.read
+    - repository.write:examples/reference-adoption/**
+    - repository.write:tests/test_reference_project.py
+    - pull_request.create_or_update
+  prohibited_capabilities:
+    - repository.write:.github/**
+    - repository.write:policy/**
+    - dependency.modify
+    - approval
+    - merge
+    - release
+    - secrets.read
+    - admin
+  credential_scope: branch/repository connector authority as exposed by host; effective credential scope is not independently observable from this fixture
+  network_scope:
+    - github.com
+  issuer: reference-maintainer
+  approval_record: issue #42 / current authorized proceed instruction
+  issued_at: 2026-09-29T05:00:00Z
+  expires_at: task completion
+  revocation_state: not_revoked
+  parent_grant_id: null

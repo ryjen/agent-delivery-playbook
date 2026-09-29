@@ -21,6 +21,12 @@ class ReferenceProjectTests(unittest.TestCase):
     def test_preserves_already_normalized_tag(self) -> None:
         self.assertEqual(normalizer.normalize_tag("release-notes"), "release-notes")
 
+    def test_collapses_repeated_whitespace(self) -> None:
+        self.assertEqual(normalizer.normalize_tag("  release   candidate  "), "release-candidate")
+
+    def test_normalizes_mixed_whitespace(self) -> None:
+        self.assertEqual(normalizer.normalize_tag("release\tcandidate notes"), "release-candidate-notes")
+
 
 if __name__ == "__main__":
     unittest.main()

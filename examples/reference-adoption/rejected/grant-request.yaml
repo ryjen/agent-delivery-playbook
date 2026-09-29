@@ -1,0 +1,20 @@
+capability_grant_request:
+  request_id: REF-GRANT-REQ-DENIED-001
+  state: denied
+  accountable_principal: reference-maintainer
+  runtime_identity: runtime:reference-candidate-agent
+  invocation_identity: reference-adoption-rejected-run-001
+  task_envelope_id: REF-T3-REJECT-001
+  requested_capabilities:
+    - repository.write:.github/workflows/**
+    - workflow.permissions.write
+    - merge
+  requested_resource: ryjen/agent-delivery-playbook
+  decision:
+    decided_by: playbook-governance + accountable-maintainer-boundary
+    reason: The request combines self-modifying delivery controls with candidate merge authority; those effects are unnecessary for the reference bugfix and cannot be self-granted.
+    effective_capabilities: []
+    requires_reclassification: false
+    escalation_path: Separate provider/repository admission work remains tracked in issue #60.
+  parent_grant_id: REF-GRANT-T2-001
+  note: Denial is the terminal outcome for this reference request; the successful T2 task can proceed without these effects.
