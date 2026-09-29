@@ -43,6 +43,9 @@ The external framework is informative. The playbook and repository-local contrac
 | Bounded task intent | Task envelope + issue/spec | Confirm semantic goal, non-goals, and acceptable blast radius | Schema/required-field validation | Mixed |
 | Risk classification | `docs/task-risk-matrix.md` | Classify semantic risk and reject downgrades | Validate tier identifiers and required declared fields | Mixed |
 | Context provenance | Context records / cited sources | Judge relevance, authority, and contradictions | Validate declared provenance/freshness metadata where available | Mixed |
+| Observation / instruction separation | Runtime/tool/context mediation policy | Decide which trusted control sources can carry authority | Prevent untrusted content from supplying capability, credential, protected-target, or approval fields where structure is enforceable | Mixed / hard fail for exact control-data violations |
+| Context freshness / revocation | Context policy + current source state | Judge semantic staleness and acceptable exceptions | Compare revision/timestamp/digest; reject known revoked/mismatched required sources | Mixed / hard fail for exact mismatch |
+| Context isolation / minimization | Data/repository/tenant policy | Decide allowed cross-boundary use and necessary sensitive detail | Resource/tenant allowlists, secret/PII filtering, size/retention limits | Mixed |
 | Context expansion | Task scope / runtime policy | Approve material expansion for sensitive work | Detect undeclared sources/tools where observable | Mixed |
 | Agent/runtime identity | Trust model + invocation record | Decide acceptable accountable principal/runtime | Bind verifiable runtime/invocation identity | Mixed |
 | Delegated authority | Exact task/capability grant | Define allowed effects and issuer accountability | Scope, expiry, revision, target, and action checks | Hard fail for objective mismatch |
