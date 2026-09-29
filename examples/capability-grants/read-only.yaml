@@ -1,0 +1,39 @@
+capability_grant:
+  grant_id: GRANT-READ-001
+  state: active
+  accountable_principal:
+    id: human:maintainer
+    evidence: authenticated-repository-session
+  runtime_identity:
+    id: runtime:docs-reader
+    evidence: declared-local-runtime
+  invocation_identity: invocation:001
+  task_envelope_id: T-READ-001
+  task_envelope_digest: sha256:<task-envelope-digest>
+  repository: example/service
+  ref_scope:
+    readable:
+      - main
+    writable: []
+  code_subject:
+    base_commit: <exact-main-commit>
+  allowed_capabilities:
+    - repository.read
+    - issue.read
+  prohibited_capabilities:
+    - repository.write
+    - shell.execute
+    - network.external
+    - pull_request.write
+    - merge
+    - release
+    - secrets.read
+    - admin
+  credential_scope: repository-read-only
+  network_scope: none
+  issuer: human:maintainer
+  approval_record: approval:read-only-task
+  issued_at: 2026-09-28T20:00:00Z
+  expires_at: 2026-09-28T20:30:00Z
+  revocation_state: not_revoked
+  parent_grant_id: null
