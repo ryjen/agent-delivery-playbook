@@ -3,221 +3,85 @@
   "$id": "https://github.com/ryjen/agent-delivery-playbook/schemas/task-envelope.schema.json",
   "title": "Agent Task Envelope",
   "type": "object",
-  "required": [
-    "task",
-    "classification",
-    "context",
-    "constraints",
-    "execution",
-    "evidence",
-    "review",
-    "status"
-  ],
+  "required": ["task", "classification", "context", "constraints", "execution", "evidence", "review", "status"],
   "additionalProperties": false,
   "properties": {
     "task": {
       "type": "object",
-      "required": [
-        "id",
-        "title",
-        "objective",
-        "owner"
-      ],
+      "required": ["id", "title", "objective", "owner"],
       "additionalProperties": false,
       "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "title": {
-          "type": "string",
-          "minLength": 1
-        },
-        "objective": {
-          "type": "string",
-          "minLength": 1
-        },
-        "owner": {
-          "type": "string",
-          "minLength": 1
-        }
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "objective": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 }
       }
     },
     "classification": {
       "type": "object",
-      "required": [
-        "type",
-        "risk_tier"
-      ],
+      "required": ["type", "risk_tier"],
       "additionalProperties": false,
       "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "docs",
-            "bugfix",
-            "feature",
-            "refactor",
-            "infra",
-            "security",
-            "ci",
-            "data",
-            "other"
-          ]
-        },
-        "risk_tier": {
-          "type": "string",
-          "enum": [
-            "T1",
-            "T2",
-            "T3",
-            "T4"
-          ]
-        }
+        "type": { "type": "string", "enum": ["docs", "bugfix", "feature", "refactor", "infra", "security", "ci", "data", "other"] },
+        "risk_tier": { "type": "string", "enum": ["T1", "T2", "T3", "T4"] }
       }
     },
     "context": {
       "type": "object",
-      "required": [
-        "repositories"
-      ],
+      "required": ["repositories"],
       "additionalProperties": false,
       "properties": {
-        "repositories": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        },
-        "references": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
+        "repositories": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "references": { "type": "array", "items": { "type": "string" }, "default": [] },
         "provenance": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "approved_sources": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
-            "included": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
-            "summarized": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
+            "approved_sources": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "included": { "type": "array", "items": { "type": "string" }, "default": [] },
+            "summarized": { "type": "array", "items": { "type": "string" }, "default": [] },
             "excluded": {
               "type": "array",
               "default": [],
               "items": {
                 "type": "object",
-                "required": [
-                  "path",
-                  "reason"
-                ],
+                "required": ["path", "reason"],
                 "additionalProperties": false,
                 "properties": {
-                  "path": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "reason": {
-                    "type": "string",
-                    "minLength": 1
-                  }
+                  "path": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 }
                 }
               }
             },
-            "deferred": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
+            "deferred": { "type": "array", "items": { "type": "string" }, "default": [] },
             "escalations": {
               "type": "array",
               "default": [],
               "items": {
                 "type": "object",
-                "required": [
-                  "source",
-                  "reason",
-                  "status"
-                ],
+                "required": ["source", "reason", "status"],
                 "additionalProperties": false,
                 "properties": {
-                  "source": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "reason": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "not_requested",
-                      "requested",
-                      "approved",
-                      "denied"
-                    ]
-                  }
+                  "source": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "status": { "type": "string", "enum": ["not_requested", "requested", "approved", "denied"] }
                 }
               }
             },
-            "model_context_assumption": {
-              "type": "string"
-            },
-            "stale_context_caveats": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
+            "model_context_assumption": { "type": "string" },
+            "stale_context_caveats": { "type": "array", "items": { "type": "string" }, "default": [] },
             "revoked": {
               "type": "array",
               "default": [],
               "items": {
                 "type": "object",
-                "required": [
-                  "source",
-                  "reason"
-                ],
+                "required": ["source", "reason"],
                 "additionalProperties": false,
                 "properties": {
-                  "source": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "reason": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "replacement": {
-                    "type": "string"
-                  },
-                  "revoked_by": {
-                    "type": "string"
-                  }
+                  "source": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "replacement": { "type": "string" },
+                  "revoked_by": { "type": "string" }
                 }
               }
             }
@@ -227,121 +91,47 @@
     },
     "constraints": {
       "type": "object",
-      "required": [
-        "allowed",
-        "prohibited"
-      ],
+      "required": ["allowed", "prohibited"],
       "additionalProperties": false,
       "properties": {
-        "allowed": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "prohibited": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
+        "allowed": { "type": "array", "items": { "type": "string" } },
+        "prohibited": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
       }
     },
     "execution": {
       "type": "object",
-      "required": [
-        "tools",
-        "actions"
-      ],
+      "required": ["tools", "actions"],
       "additionalProperties": false,
       "properties": {
-        "tools": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        },
-        "actions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
+        "tools": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "actions": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
       }
     },
     "evidence": {
       "type": "object",
-      "required": [
-        "required_levels"
-      ],
+      "required": ["required_levels"],
       "additionalProperties": false,
       "properties": {
         "required_levels": {
           "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "E1",
-              "E2",
-              "E3",
-              "E4"
-            ]
-          },
+          "items": { "type": "string", "enum": ["E1", "E2", "E3", "E4"] },
           "minItems": 1,
           "uniqueItems": true
         },
-        "tests": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
-        "artifacts": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        }
+        "tests": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "artifacts": { "type": "array", "items": { "type": "string" }, "default": [] }
       }
     },
     "review": {
       "type": "object",
-      "required": [
-        "required"
-      ],
+      "required": ["required"],
       "additionalProperties": false,
       "properties": {
-        "required": {
-          "type": "boolean"
-        },
-        "approvers": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
-        "notes": {
-          "type": "string"
-        }
+        "required": { "type": "boolean" },
+        "approvers": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "notes": { "type": "string" }
       }
     },
-    "status": {
-      "type": "string",
-      "enum": [
-        "proposed",
-        "approved",
-        "executing",
-        "blocked",
-        "review",
-        "merged",
-        "rejected"
-      ]
-    }
+    "status": { "type": "string", "enum": ["proposed", "approved", "executing", "blocked", "review", "merged", "rejected"] }
   }
 }
