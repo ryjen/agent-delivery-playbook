@@ -105,7 +105,7 @@ A capability grant is the effective authority made available for one task or exe
 
 The playbook currently documents capability boundaries but does not issue or enforce grants. In a manual adoption, the effective grant may be represented by human-controlled tool selection, repository permissions, sandbox configuration, and short-lived credentials.
 
-See [`trust-model.md`](trust-model.md) and [`agent-capability-catalog.md`](agent-capability-catalog.md).
+See [`trust-model.md`](trust-model.md), [`identity-delegation-and-capability-grants.md`](identity-delegation-and-capability-grants.md), and [`agent-capability-catalog.md`](agent-capability-catalog.md).
 
 ### Context provenance
 
@@ -428,12 +428,14 @@ Rollback is system-specific. A source-code revert may be insufficient for data m
 | Governance model and lifecycle | Documented |
 | AI-native SDLC enforcement crosswalk | Documented |
 | Risk and evidence policy | Documented |
+| Evidence trust and exact-subject binding model | Documented |
+| Identity, delegation, and capability-grant model | Documented; runtime enforcement delegated to adopting systems |
 | Task-envelope JSON Schema | Implemented |
 | Lightweight and standards-based example validation | Implemented |
 | Repository link/JSON integrity validation | Implemented |
 | Portable templates and examples | Available |
 | Semantic risk-classification enforcement | Manual |
-| Runtime identity and capability binding | Not implemented |
+| Runtime identity and capability enforcement | Not implemented |
 | Tool-effect authorization | Not implemented |
 | Independent evidence attestation | Not implemented |
 | Protected evidence storage | Not implemented |
@@ -450,7 +452,6 @@ The most important current gaps are:
 - semantic classification and approval remain human decisions;
 - copied templates can drift after adoption;
 - governance and CI independence depends on downstream repository protection; this repository's own provider-enforced admission gap is tracked by #60;
-- executable CI is not yet flake-first under the current Micrantha standard; migration is tracked by #55;
 - no conformance profile yet proves that a downstream repository implemented the full control set.
 
 These gaps should remain visible. Documentation, templates, and green validation checks must not be presented as equivalent to runtime enforcement.
@@ -459,6 +460,7 @@ These gaps should remain visible. Documentation, templates, and green validation
 
 - [`policy-enforcement-map.md`](policy-enforcement-map.md)
 - [`trust-model.md`](trust-model.md)
+- [`identity-delegation-and-capability-grants.md`](identity-delegation-and-capability-grants.md)
 - [`secure-coding-agent-workflow.md`](secure-coding-agent-workflow.md)
 - [`agent-task-envelope.md`](agent-task-envelope.md)
 - [`task-risk-matrix.md`](task-risk-matrix.md)
