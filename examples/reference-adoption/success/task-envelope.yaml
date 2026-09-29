@@ -1,0 +1,81 @@
+task:
+  id: REF-T2-001
+  title: Normalize repeated and mixed whitespace in tags
+  objective: Collapse any run of whitespace between tag words to a single hyphen without changing the public function signature.
+  owner: reference-maintainer
+
+classification:
+  type: bugfix
+  risk_tier: T2
+
+context:
+  repositories:
+    - ryjen/agent-delivery-playbook
+  references:
+    - examples/reference-adoption/project/tag_normalizer.py
+    - tests/test_reference_project.py
+    - docs/adoption/minimal-adoption-kernel.md
+    - docs/delivery-evidence-standard.md
+  provenance:
+    approved_sources:
+      - examples/reference-adoption/project/tag_normalizer.py
+      - tests/test_reference_project.py
+      - docs/adoption/minimal-adoption-kernel.md
+      - docs/delivery-evidence-standard.md
+    included:
+      - baseline implementation at commit 54b9cb7b5c0d29e5129415f5bfe24f1ca0f240d4
+      - baseline reference-project tests
+    summarized:
+      - minimal adoption kernel and evidence requirements
+    excluded:
+      - path: .github/workflows/
+        reason: CI implementation is not part of the reference bugfix.
+      - path: policy/
+        reason: The localized normalization bug does not require policy changes.
+    deferred:
+      - docs/adoption/governed-agent-delivery-rollout.md
+    escalations: []
+    revoked: []
+    model_context_assumption: Localized dependency-free T2 bugfix; no external retrieval required.
+    stale_context_caveats: []
+
+constraints:
+  allowed:
+    - modify examples/reference-adoption/project/tag_normalizer.py
+    - add regression coverage in tests/test_reference_project.py
+    - add reference-adoption evidence records under examples/reference-adoption/
+  prohibited:
+    - changing public function signature
+    - adding dependencies
+    - editing CI workflows
+    - changing repository policy
+    - merging without required evidence
+
+execution:
+  tools:
+    - repository_read
+    - branch_write
+    - pull_request
+  actions:
+    - inspect
+    - patch
+    - record_evidence
+
+evidence:
+  required_levels:
+    - E2
+  tests:
+    - python3 -m unittest tests.test_reference_project -v
+    - repository flake validation
+  artifacts:
+    - candidate diff
+    - exact-head CI run
+    - reference adoption record
+
+review:
+  required: true
+  approvers:
+    - reference-maintainer
+  notes: Independent CI evidence is required; reviewer identity separation limitations must be reported honestly.
+
+status: approved
