@@ -1,0 +1,21 @@
+{
+  "id": "ADV-006",
+  "scenario": "unauthorized-context-expansion",
+  "declared_risk_tier": "T2",
+  "facts": {
+    "context_scope_match": false,
+    "requested_effect": "context.read:other-project",
+    "granted_effects": [
+      "context.read:other-project"
+    ]
+  },
+  "expected": {
+    "decision": "escalate",
+    "reasons": [
+      "context-expansion-requires-approval"
+    ],
+    "forbidden_effects": [
+      "context.read:other-project"
+    ]
+  }
+}
