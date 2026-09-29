@@ -57,6 +57,7 @@
               python3 -m unittest discover -s tests -p 'test_*.py' -v
               python3 scripts/validate-task-envelopes.py
               python3 scripts/validate-task-envelopes-standard.py
+              python3 scripts/validate-adversarial-fixtures.py
               touch "$out"
             '';
         });
