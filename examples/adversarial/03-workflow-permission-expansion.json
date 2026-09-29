@@ -1,0 +1,23 @@
+{
+  "id": "ADV-003",
+  "scenario": "workflow-permission-expansion",
+  "declared_risk_tier": "T3",
+  "facts": {
+    "requested_effect": "workflow.permissions.write",
+    "granted_effects": [
+      "workflow.permissions.write"
+    ],
+    "workflow_permission_expansion": true,
+    "minimum_risk_tier": "T3",
+    "required_approval_present": true
+  },
+  "expected": {
+    "decision": "escalate",
+    "reasons": [
+      "workflow-authority-change-requires-review"
+    ],
+    "forbidden_effects": [
+      "workflow.permissions.write"
+    ]
+  }
+}

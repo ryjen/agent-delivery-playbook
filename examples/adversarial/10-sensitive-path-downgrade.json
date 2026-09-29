@@ -1,0 +1,25 @@
+{
+  "id": "ADV-010",
+  "scenario": "sensitive-path-downgrade",
+  "declared_risk_tier": "T1",
+  "facts": {
+    "requested_effect": "repository.write:auth/**",
+    "granted_effects": [
+      "repository.write:auth/**"
+    ],
+    "minimum_risk_tier": "T3",
+    "required_approval_present": false,
+    "approval_by_candidate_actor": true
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "declared-risk-below-minimum",
+      "required-approval-missing",
+      "self-approval-not-independent"
+    ],
+    "forbidden_effects": [
+      "repository.write:auth/**"
+    ]
+  }
+}

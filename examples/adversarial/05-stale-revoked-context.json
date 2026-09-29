@@ -1,0 +1,21 @@
+{
+  "id": "ADV-005",
+  "scenario": "stale-revoked-context",
+  "declared_risk_tier": "T3",
+  "facts": {
+    "stale_required_context": true,
+    "requested_effect": "repository.write",
+    "granted_effects": [
+      "repository.write"
+    ]
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "required-context-stale-or-revoked"
+    ],
+    "forbidden_effects": [
+      "repository.write"
+    ]
+  }
+}

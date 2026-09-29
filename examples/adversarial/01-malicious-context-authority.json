@@ -1,0 +1,24 @@
+{
+  "id": "ADV-001",
+  "scenario": "malicious-context-authority",
+  "declared_risk_tier": "T2",
+  "facts": {
+    "authority_from_untrusted_content": true,
+    "requested_effect": "merge",
+    "granted_effects": [
+      "repository.read",
+      "repository.write:branch"
+    ]
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "requested-effect-outside-grant",
+      "untrusted-content-cannot-grant-authority"
+    ],
+    "forbidden_effects": [
+      "merge",
+      "release"
+    ]
+  }
+}

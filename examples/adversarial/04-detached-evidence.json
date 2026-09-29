@@ -1,0 +1,22 @@
+{
+  "id": "ADV-004",
+  "scenario": "detached-evidence",
+  "declared_risk_tier": "T2",
+  "facts": {
+    "requested_effect": "merge",
+    "granted_effects": [
+      "merge"
+    ],
+    "evidence_subject_match": false,
+    "required_approval_present": true
+  },
+  "expected": {
+    "decision": "reject",
+    "reasons": [
+      "evidence-subject-mismatch"
+    ],
+    "forbidden_effects": [
+      "merge"
+    ]
+  }
+}

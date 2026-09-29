@@ -65,6 +65,7 @@ flowchart LR
 | `docs/reviewer-checklist.md` | guidance | Review checklist for agent-assisted work |
 | `docs/threat-model.md` | guidance | Threat model for AI-assisted delivery |
 | `docs/security/attack-catalog.md` | guidance | Attack patterns reviewers should consider |
+| `docs/security/adversarial-scenarios.md` | guidance + executable examples | Ten bypass-resistance scenarios backed by deterministic CI fixtures |
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
 | `docs/agent-capability-catalog.md` | guidance | Agent/tool authority catalog guidance |
 | `docs/tool-call-decision-records.md` | normative policy | Records for material tool authority decisions |
