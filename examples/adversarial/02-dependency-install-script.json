@@ -1,0 +1,22 @@
+{
+  "id": "ADV-002",
+  "scenario": "dependency-install-script",
+  "declared_risk_tier": "T2",
+  "facts": {
+    "requested_effect": "dependency.modify",
+    "granted_effects": [
+      "dependency.modify"
+    ],
+    "dependency_install_script": true,
+    "minimum_risk_tier": "T2"
+  },
+  "expected": {
+    "decision": "escalate",
+    "reasons": [
+      "dependency-install-script-requires-review"
+    ],
+    "forbidden_effects": [
+      "dependency.modify"
+    ]
+  }
+}
