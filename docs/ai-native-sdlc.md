@@ -1,6 +1,8 @@
 # AI-Native SDLC Governance
 
-Traditional SDLC assumes humans author changes, tools execute deterministic checks, and reviewers evaluate a bounded diff. AI-native delivery changes that model. Agents can plan work, assemble context, modify files, run tools, open pull requests, and produce review evidence.
+Traditional SDLC remains useful, but AI-native delivery changes where it sits in the overall system. Established engineering and product lifecycles can still govern bounded specialist work, while the outer delivery system decomposes tasks, routes them, constrains authority, verifies results, and composes evidence across many such loops.
+
+Agents can plan work, assemble context, modify files, run tools, open pull requests, and produce review evidence. The additional governance problem appears when those non-human participants operate across or between traditional lifecycle stages.
 
 This document defines the additional SDLC concern introduced when AI agents become delivery participants.
 
@@ -19,6 +21,51 @@ In particular:
 - enforcement belongs at deterministic runtime, CI, repository, release, or governance boundaries rather than in prompting alone.
 
 Use `docs/policy-enforcement-map.md` for the operational crosswalk from lifecycle concerns to current enforcement surfaces and owners.
+
+## AI-native macro, traditional micro
+
+This playbook does not treat traditional SDLC, product-development, security-review, incident-response, or experimental workflows as obsolete.
+
+The useful distinction is:
+
+> **AI-native macro, traditional micro.**
+
+At the macro level, the delivery system becomes AI-native: it can decompose work, route tasks to specialists, select context and tools, apply policy, collect evidence, coordinate retries, and integrate results.
+
+At the micro level, a specialist may still use an established lifecycle internally:
+
+```text
+AI-native delivery system
+        |
+        +--> software specialist
+        |      requirements -> design -> implement -> test
+        |
+        +--> product specialist
+        |      problem -> options -> prototype -> validate
+        |
+        +--> security specialist
+        |      threat -> control -> verify -> report
+        |
+        +--> investigation specialist
+        |      observe -> hypothesize -> experiment -> evaluate
+        |
+        v
+governed integration -> acceptance -> effect
+```
+
+Those lifecycles become composable specialist protocols rather than disappearing.
+
+A specialist should therefore be understood as more than a model with domain knowledge. Where rigor matters, it combines:
+
+- bounded task and authority;
+- bounded, attributable context;
+- a domain-appropriate workflow or lifecycle;
+- explicit evidence requirements;
+- a result contract consumable by the parent workflow.
+
+The parent workflow does not need to own every internal specialist step, but it must be able to constrain authority, require the relevant evidence, and determine whether the result is sufficient for the next governed transition.
+
+This framing also avoids a false choice between "traditional" and "AI-native" delivery. AI-native orchestration can preserve decades of useful engineering discipline while changing how those practices are instantiated, composed, repeated, and governed.
 
 ## Core concern
 
