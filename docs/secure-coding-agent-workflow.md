@@ -18,6 +18,13 @@ flowchart LR
 
 The agent is useful when the task boundary is explicit and verification is stronger than the agent's claim about correctness.
 
+This workflow can operate at two levels:
+
+- as the end-to-end workflow for a simple repository task; or
+- as a **specialist micro-lifecycle** nested inside a larger AI-native delivery system.
+
+In the nested case, the parent workflow may dynamically assign a bounded software task to a specialist that runs this sequence internally. The surrounding system still owns the parent task boundary, delegated authority, cross-specialist composition, policy, and final acceptance. Nested use does not allow the specialist to widen its own grant or bypass normal evidence and approval requirements.
+
 ## Baseline workflow
 
 ### 1. Classify the task
@@ -117,7 +124,9 @@ Check for:
 
 ### 7. Apply normal SDLC gates
 
-Agent-authored code should not bypass branch protection, CI, AppSec review, release approvals, or deployment controls.
+AI-native orchestration does not make established SDLC controls obsolete. Agent-authored code should not bypass branch protection, CI, AppSec review, release approvals, or deployment controls.
+
+Inside a specialist loop, these gates may be the normal local lifecycle. At the outer level, their results become evidence consumed by the larger governed workflow rather than automatic authorization to continue.
 
 Recommended gates:
 
