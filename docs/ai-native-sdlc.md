@@ -8,7 +8,9 @@ This document defines the additional SDLC concern introduced when AI agents beco
 
 The [AI Native Project AI Software Development Lifecycle](https://theainativeproject.org/ai-software-development-lifecycle/) and its handbook are useful external reference models for plan-first execution, structured context, lifecycle-wide AI participation, quality gates, governance, and engineering memory.
 
-This playbook does **not** import that framework as a second normative lifecycle. Its concepts map onto the existing task-envelope, risk, evidence, trust, learning-promotion, and governed-delivery contracts.
+Kiro's [Frontier Engineering](https://kiro.dev/topics/frontier-engineering/) principles are a useful practitioner signal for agent-oriented codebases, short executable feedback loops, boundary-based trust, and continuous tuning of agent tooling. Treat them as non-normative industry guidance rather than empirical evidence; this playbook does not rely on Kiro's quantitative productivity claims.
+
+This playbook does **not** import either framework as a second normative lifecycle. Their concepts map onto the existing task-envelope, risk, evidence, trust, learning-promotion, and governed-delivery contracts.
 
 In particular:
 
