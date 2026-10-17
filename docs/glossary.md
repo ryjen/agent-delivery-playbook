@@ -191,4 +191,4 @@ Do not create a canonical concept heading with a deprecated alias. Existing hist
 5. Keep risk/evidence identifier tables synchronized with the task-envelope schema and normative standards. The deterministic check `scripts/validate-glossary.py` verifies uniqueness, deprecated heading misuse, and exact ID sets; it cannot judge semantic correctness.
 6. Review [governance lifecycle](governance-lifecycle.md), [contribution rules](../CONTRIBUTING.md), and referenced normative docs when semantics or compatibility change.
 
-**Enforcement limitation:** Glossary validation and green CI are advisory structural evidence until the external [GitHub admission ruleset](operations/main-admission.md) is activated and its negative-admission behavior is verified (#60).
+**Enforcement limitation:** Glossary validation and green CI remain structural evidence, not authorization. The external [GitHub admission ruleset](operations/main-admission.md) has since been activated and a failing-check PR was observed blocked for **this repository** (#60). That provider enforcement does not follow this glossary into an adopter repository.
