@@ -60,7 +60,7 @@ def validate_proposal(value: dict[str, Any]) -> list[str]:
         return errors + ["rules must be an array"]
 
     names = [x.get("type") if isinstance(x, dict) else None for x in rules]
-    if len(names) != 4 or len(set(names)) != 4 or set(names) != {
+    if len(names) != 4 or any(not isinstance(name, str) for name in names) or len(set(names)) != 4 or set(names) != {
         "deletion", "non_fast_forward", "pull_request", "required_status_checks"
     }:
         return errors + ["expected exactly four admission rule types"]
@@ -72,7 +72,8 @@ def validate_proposal(value: dict[str, Any]) -> list[str]:
     if not isinstance(pr, dict):
         errors.append("pull_request parameters missing")
     else:
-        if set(pr.get("allowed_merge_methods", [])) != {"merge", "squash", "rebase"}:
+        methods = pr.get("allowed_merge_methods")
+        if not isinstance(methods, list) or any(not isinstance(x, str) for x in methods) or len(methods) != 3 or set(methods) != {"merge", "squash", "rebase"}:
             errors.append("unexpected permitted merge methods")
         for field, required in [
             ("dismiss_stale_reviews_on_push", True),
@@ -89,16 +90,17 @@ def validate_proposal(value: dict[str, Any]) -> list[str]:
     else:
         if checks.get("strict_required_status_checks_policy") is not True:
             errors.append("required checks must enforce current base")
-        expected_checks = {"Repository integrity", "Task envelopes"}
+        expected_checks = {("Repository integrity", 15368), ("Task envelopes", 15368)}
         actual_checks = checks.get("required_status_checks")
         if (
             not isinstance(actual_checks, list)
             or len(actual_checks) != 2
             or any(
-                not isinstance(x, dict) or set(x) != {"context"} or
-                not isinstance(x.get("context"), str) for x in actual_checks
+                not isinstance(x, dict) or set(x) != {"context", "integration_id"} or
+                not isinstance(x.get("context"), str) or type(x.get("integration_id")) is not int
+                for x in actual_checks
             )
-            or {x["context"] for x in actual_checks} != expected_checks
+            or {(x["context"], x["integration_id"]) for x in actual_checks} != expected_checks
         ):
             errors.append("required check contexts drifted")
     return errors
