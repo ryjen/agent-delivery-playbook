@@ -1,6 +1,6 @@
 # Agent Task Envelope
 
-The Agent Task Envelope is the canonical record for AI-assisted engineering work. It defines the objective, risk tier, permitted context, allowed tools, execution constraints, evidence, and review requirements before an agent acts.
+The Agent Task Envelope is the canonical record for AI-assisted engineering work. It defines the objective, risk tier, permitted context, allowed tools, execution constraints, evidence, and review requirements before an agent acts. The [governance glossary](glossary.md) distinguishes task intent, runtime identity, capability grant, review, and approval; those distinctions do not change the [schema](../schemas/task-envelope.schema.json).
 
 The envelope is intentionally boring. It should be easy to diff, review, archive, and replay.
 
