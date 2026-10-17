@@ -86,6 +86,8 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/glossary.md` | Canonical agent-delivery governance terms and risk/evidence identifiers |
 | `docs/adr/README.md` | Recorded architecture decisions, trade-offs, statuses, and supersession process |
 | `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility and release gate; **no published release yet** |
+| `docs/releases/v0.1.0-readiness.md` | Draft first-release evidence and exact-commit qualification checklist; no tag or approval yet |
+| `docs/releases/v0.1.0-notes.md` | Draft first-release notes, compatibility and limits; not published |
 | `docs/conformance-kit.md` | Read-only conformance report prototype and limitations; structural checks do not authorize changes |
 | `docs/governed-predictive-models.md` | Optional ML/JEPA decision-model evaluation and safety checklist; advisory only |
 | `CHANGELOG.md` | Unreleased changes; dated entries only after qualified tags |
@@ -144,4 +146,4 @@ For navigation by reader intent, see `docs/index.md`.
 
 This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. The lightweight advisory conformance kit is implemented, and GitHub's required-PR/check rules are activated with a provider-blocked failing-check PR (#60). The missing-check/direct-push cases and administrator control-plane limits remain explicitly unverified. The pre-1.0 compatibility policy is documented but no release tag is published; production adoption and runtime authorization enforcement are not claimed.
 
-See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.
+See `docs/status-and-roadmap.md` for the evidence-backed capability matrix and `docs/releases/v0.1.0-readiness.md` for the proposed first-release gates. **No release is published or authorized by this documentation.**
