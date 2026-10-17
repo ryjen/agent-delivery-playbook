@@ -20,6 +20,7 @@ flowchart LR
 | --- | --- | --- |
 | `docs/architecture.md` | guidance | Canonical primitives, artifact authority, trust boundaries, lifecycle, and implementation limits |
 | `docs/policy-enforcement-map.md` | guidance | Maps lifecycle controls to generic enforcement surfaces without making model output authoritative |
+| `docs/operations/main-admission.md` | operator runbook (not enforced by documentation) | Staged GitHub ruleset configuration, fail-closed activation preflight, required-check source, and negative-admission proof for #60 |
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
 | `docs/identity-delegation-and-capability-grants.md` | guidance | Per-task identity, grant binding, expiry, retries, revocation, and nested delegation semantics |
 | `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for policy, schemas, templates, and examples |
