@@ -59,6 +59,16 @@ def project(value: dict[str, Any]) -> dict[str, Any]:
                 if isinstance(checks, list) and all(isinstance(x, dict) for x in checks):
                     checks.sort(key=lambda x: str(x.get("context")))
             if rule.get("type") == "pull_request":
+                # GitHub defaults extra approval for unattributed Copilot PRs to true.
+                # GitHub documents this as having no effect when zero approvals are
+                # required. Normalize only that exact inert combination; otherwise
+                # retain the field so review/admission policy drift fails closed.
+                if (
+                    params.get("required_approving_review_count") == 0
+                    and type(params.get("required_approving_review_count")) is int
+                    and params.get("require_extra_approval_for_unattributed_changes") is True
+                ):
+                    params.pop("require_extra_approval_for_unattributed_changes")
                 if params.get("automatic_copilot_code_review_enabled") is False:
                     params.pop("automatic_copilot_code_review_enabled")
                 if params.get("required_reviewers") == []:
