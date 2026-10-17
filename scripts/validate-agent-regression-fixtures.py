@@ -42,8 +42,6 @@ def classify(fixture: dict[str, Any]) -> str:
         change["risk_tier"] in {"T3", "T4"}
         or change["capability_expanded"]
         or evaluation["oracle_producer_writable"]
-        or evaluation["independence_status"] != "independently_verified"
-        and change["risk_tier"] in {"T3", "T4"}
     ):
         return "escalate"
     return "no-regression-found"
@@ -75,9 +73,9 @@ def validate_fixture(fixture: Any) -> list[str]:
     if errors:
         return errors
 
-    if change.get("kind") not in {"skill", "prompt", "model", "tool-contract", "context", "verifier"}:
+    if not isinstance(change.get("kind"), str) or change["kind"] not in {"skill", "prompt", "model", "tool-contract", "context", "verifier"}:
         errors.append("invalid change kind")
-    if change.get("risk_tier") not in TIERS:
+    if not isinstance(change.get("risk_tier"), str) or change["risk_tier"] not in TIERS:
         errors.append("invalid risk tier")
     if type(change.get("capability_expanded")) is not bool:
         errors.append("capability_expanded must be boolean")
@@ -96,7 +94,7 @@ def validate_fixture(fixture: Any) -> list[str]:
         errors.append("evaluation detached from candidate revision")
     if type(evaluation.get("oracle_producer_writable")) is not bool:
         errors.append("oracle_producer_writable must be boolean")
-    if evaluation.get("independence_status") not in {"claimed", "independently_verified"}:
+    if not isinstance(evaluation.get("independence_status"), str) or evaluation["independence_status"] not in {"claimed", "independently_verified"}:
         errors.append("invalid independence_status")
 
     case_ids: set[str] = set()
@@ -112,17 +110,17 @@ def validate_fixture(fixture: Any) -> list[str]:
             errors.append(f"{prefix} duplicate id")
         else:
             case_ids.add(case_id)
-        if case.get("family") not in FAMILIES:
+        if not isinstance(case.get("family"), str) or case["family"] not in FAMILIES:
             errors.append(f"{prefix} invalid family")
         for phase in ("baseline", "candidate"):
-            if case.get(phase) not in STATUSES:
+            if not isinstance(case.get(phase), str) or case[phase] not in STATUSES:
                 errors.append(f"{prefix} invalid {phase} status")
         if case.get("evidence_subject_ref") != evaluation.get("candidate_subject_ref"):
             errors.append(f"{prefix} evidence subject detached")
         if case.get("evidence_plan_ref") != evaluation.get("verifier_plan_ref"):
             errors.append(f"{prefix} evidence plan detached")
 
-    if expected.get("regression_disposition") not in DISPOSITIONS:
+    if not isinstance(expected.get("regression_disposition"), str) or expected["regression_disposition"] not in DISPOSITIONS:
         errors.append("invalid expected regression_disposition")
     if expected.get("effect_authorized") is not False:
         errors.append("fixture must not authorize any effects")
