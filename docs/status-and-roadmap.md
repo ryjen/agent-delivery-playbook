@@ -1,107 +1,66 @@
 # Project Status and Roadmap
 
-_Last reconciled: 2026-09-28._
+_Last reconciled: 2026-10-17 against \`main\` commit \`56ab8b343200914ad286e04893ea9ce3f2a31d25\` and GitHub's live ruleset. This is an evidence snapshot, not a release authorization._
 
 ## Current state
 
-The project is an **incubating public governance playbook/specification with executable conformance pieces**.
+The project is an **incubating public governed-delivery playbook with validated structural conformance tooling and one representative standalone adoption**. It is more than a starter template, but it is not an agent runtime, policy authorization service, independent attestation service, or production deployment system.
 
-It is more mature than a starter template: the repository has a canonical architecture, AI-native SDLC and trust models, normative task/risk/evidence policy, machine-readable task-envelope structure, dual validators, validator tests, repository-integrity checks, contribution/security policy, and an active validation workflow.
+The next milestone is a carefully qualified first **\`v0.1.0\` release**, not a new governance engine. No release or tag has been published. See [the first-release readiness dossier](releases/v0.1.0-readiness.md) and [draft release notes](releases/v0.1.0-notes.md).
 
-It is **not** an agent runtime, authorization service, policy engine, evidence attestation service, or production deployment system. One standalone representative adoption is demonstrated; broad production adoption and end-to-end runtime enforceability have not been demonstrated.
+## Capability and evidence status
 
-## Capability status
-
-| Capability | State | Evidence / limitation |
+| Capability | Qualified state | Evidence and boundary |
 | --- | --- | --- |
-| Canonical governed-delivery architecture | implemented guidance | `docs/architecture.md`; lifecycle, boundaries, sources of truth, failure paths |
-| AI-native SDLC governance model | implemented guidance | `docs/ai-native-sdlc.md` |
-| Policy/enforcement crosswalk | implemented guidance | `docs/policy-enforcement-map.md`; vendor/runtime neutral |
-| Trust and separation-of-duties model | implemented guidance | `docs/trust-model.md` |
-| Task-envelope schema | implemented | JSON Schema plus checked-in examples |
-| Lightweight task-envelope validator | validated | unit-tested repository tooling |
-| Standards-based YAML/JSON-Schema validation | validated | independent standards-based path |
-| Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
-| GitHub Actions validation | provider-enforced PR/status admission qualified for failing checks | GitHub ruleset `17832277` requires PRs and both source-pinned checks, strict current-base validation, no ambient bypass. Live structural preflight passes and disposable PR #87 demonstrated failing required checks with `mergeable_state: blocked`. Direct-push and missing-check paths remain untested; administrator control-plane privilege persists. See #60 |
-| Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
-| Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
-| Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
-| Context/memory supply-chain controls | implemented + validated structure | `docs/context-budget-and-provenance.md`; revoked-context schema/validator support; #40 complete |
-| Adversarial/bypass-resistance fixtures | validated | 10 machine-readable scenarios + deterministic CI evaluator under `examples/adversarial/`; #41 complete |
-| Minimal adoption kernel | implemented guidance | `docs/adoption/minimal-adoption-kernel.md`; optional artifacts are risk-triggered |
-| Standalone reference adoption | demonstrated (representative) | baseline PR #71 + governed T2/rejected paths in PR #72; `examples/reference-adoption/case-study.md` |
-| Release/version compatibility contract | documented, first tag not qualified | `docs/versioning-and-compatibility.md`; `CHANGELOG.md`; no published tag or release; #43 and #60 release gate |
-| Lightweight conformance kit | implemented pilot, pending review and portability qualification | `scripts/conformance-kit.py`, `docs/conformance-kit.md`; deterministic self-report and negative tests in flake, with advisory-only evidence; #45 |
-| Runtime authorization / tool-effect gating | not implemented | deliberately outside this repository's runtime scope |
-| Protected evidence storage / attestation | not implemented | downstream enforcement concern |
-| Production adoption evidence | not demonstrated | requires reference/real adoption work |
+| Canonical architecture, governance lifecycle and trust model | documented | [Architecture](architecture.md), [trust model](trust-model.md), [governance lifecycle](governance-lifecycle.md); implementation-independent |
+| Normative task risk, evidence and minimum controls | documented | [Task risk matrix](task-risk-matrix.md), [evidence standard](delivery-evidence-standard.md), [minimum controls](policy/minimum-controls.md) |
+| Task-envelope JSON Schema and lightweight/standards-based validation | validated structural checks | \`schemas/task-envelope.schema.json\`, \`scripts/validate-task-envelopes.py\` and \`scripts/validate-task-envelopes-standard.py\`; schema success does not validate intent or grant authority |
+| Context/memory provenance, identity and delegation | documented with structure checks | \`docs/context-budget-and-provenance.md\`, \`docs/identity-delegation-and-capability-grants.md\`; **not** runtime authorization |
+| Glossary and ADR history | implemented and checked where structural | [Glossary](glossary.md), [ADR index](adr/README.md); issues [#35](https://github.com/ryjen/agent-delivery-playbook/issues/35) and [#36](https://github.com/ryjen/agent-delivery-playbook/issues/36) closed |
+| Adversarial fixtures and agent-configuration regression profile | validated synthetic contracts | \`examples/adversarial/\`, \`examples/agent-regression/\`; deterministic fixture results are not empirical benchmarks or production security proof |
+| Reproducible repository validation | validated on \`main\` | \`flake.nix\` + \`flake.lock\`; [Validate run 39075352393](https://github.com/ryjen/agent-delivery-playbook/actions/runs/39075352393) at \`56ab8b3\` passed \`Repository integrity\` and \`Task envelopes\` |
+| Default-branch PR/status admission | provider-enforced, failing-check path demonstrated | GitHub ruleset \`17832277\` active: PR and strict two-check requirement, no ruleset bypass actors; [disposable failed-check PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) reported \`mergeable_state: blocked\`; issue [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) closed. Missing-check and direct-push cases not independently exercised; administrators can still edit provider settings |
+| Lightweight read-only conformance kit | implemented and self-validated pilot | \`scripts/conformance-kit.py\`, [kit contract](conformance-kit.md) and negative tests; issue [#45](https://github.com/ryjen/agent-delivery-playbook/issues/45) closed. **Adopter portability and independent provenance/approval validation are not demonstrated** |
+| Minimal adoption kernel and standalone case study | documented and one example demonstrated | [Minimal kernel](adoption/minimal-adoption-kernel.md), [reference adoption](../examples/reference-adoption/case-study.md), candidate PRs [#71](https://github.com/ryjen/agent-delivery-playbook/pull/71) and [#72](https://github.com/ryjen/agent-delivery-playbook/pull/72); synthetic/tiny project, not production adoption |
+| Version/compatibility and draft first-release process | documented, release not qualified | [Compatibility policy](versioning-and-compatibility.md), \`CHANGELOG.md\`, [release dossier](releases/v0.1.0-readiness.md); no tag/release or accountable exact-commit release approval |
+| Runtime capability enforcement, protected attestations, production adoption | not demonstrated or out of playbook scope | Requires implementing systems, authenticated independent evidence, and a separate risk-qualified decision |
 
-## Immediate execution queue
+**Evidence rule:** “implemented,” “validated,” “demonstrated,” and “provider-enforced” are distinct. A structural validator returning green neither authorizes a tool effect nor verifies a signed approval or evidence producer.
 
-Keep the near-term queue intentionally small.
+## Immediate queue — first release qualification
 
-### 1. #60 — enforce repository admission
+1. **Reconcile the candidate package.** Confirm the policy/schema/validator/example compatibility contract and publishable, version-neutral guidance remain coherent. This is a documentation and evidence check; do not change the normative schema merely to improve release wording.
+2. **Qualify an exact candidate.** Run \`nix flake check --print-build-logs\` and the required GitHub PR jobs against the reviewed release-preparation head. Recheck final \`main\` after merge: the preparatory baseline commit above is **not** the later release commit.
+3. **Review operational and distribution boundaries.** Inspect the reference adoption and adversarial fixture results, document untested portability, pinning, provenance and negative-admission limits, and prepare release notes. Avoid claims of broad production rollout.
+4. **Require accountable release authorization.** Only after explicit approval of the **exact final commit** may an authorized operator create and verify the annotated \`v0.1.0\` tag and corresponding GitHub release. A documentation PR is not such approval.
+5. **Demonstrate pinned adoption** in a separate consumer checkout after tagging. Preserve exact tag-to-commit and flake-lock binding; do not implicitly fetch moving \`main\`.
 
-Make this repository obey the governance model it describes:
+The [release dossier](releases/v0.1.0-readiness.md) contains the proof matrix and remaining tag checks. A release must not be marked done merely because this readiness PR merges.
 
-- require normal PR admission for non-trivial changes;
-- require stable validation checks;
-- define explicit accountable break-glass behavior;
-- bind admission evidence to the applicable candidate.
+## Completed issues, retained as history
 
-Exit: a failing or missing required check cannot silently admit a normal change to `main`.
+- [#45](https://github.com/ryjen/agent-delivery-playbook/issues/45) — read-only conformance kit merged in PR #82; portability beyond the self-test remains unverified.
+- [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) — activated GitHub rules and blocked negative PR demonstrated; administrative-control-plane and untested negative-path limits retained.
+- [#35](https://github.com/ryjen/agent-delivery-playbook/issues/35) — canonical glossary with identifier check in PR #83.
+- [#36](https://github.com/ryjen/agent-delivery-playbook/issues/36) — ADR template, history and contribution conventions in PR #84.
+- [#74](https://github.com/ryjen/agent-delivery-playbook/issues/74) — optional, non-authoritative decision/prediction guidance in PR #85.
+- [#43](https://github.com/ryjen/agent-delivery-playbook/issues/43) — versioning and compatibility policy; publishing the first tag is **separate** from closing the policy issue.
 
-### 2. #45 — build the lightweight conformance kit
+## Deferred maturity work
 
-Package the minimal validated pieces needed to evaluate an adopting repository without copying the whole playbook.
-
-Exit: adopters can run a small, versioned conformance path that reports what is structurally checked and what remains human/policy judgment.
-
-## Follow-on maturity work
-
-The core guidance now has executable self-conformance, adversarial fixtures, a lightweight advisory conformance kit (#45), and one standalone representative adoption. The GitHub provider ruleset for #60 has been activated and failing-check rejection was observed on a disposable PR; separate first-release/tag qualification remains gated. No production runtime enforcement is claimed.
-
-## Distribution and maturity work
-
-After the core model is demonstrated:
-
-- #45 — lightweight governed-delivery conformance kit.
-- First release/tag qualification per `docs/versioning-and-compatibility.md`, **after** #60 produces provider-backed admission evidence; no tag has been published.
-
-A pre-1.0 release should represent a coherent, demonstrated adoption contract rather than simply a documentation milestone.
-
-## Deferred governance refinements
-
-Useful governance work should not displace executable self-conformance:
-
-- #35 — glossary and terminology governance;
-- #36 — ADR process for stable governance choices.
-
-Promote either only when current work is blocked by terminology or decision-history ambiguity.
+Actual cross-repository consumer portability tests, richer evidence provenance/independence, published compatibility migrations, and production adoption may warrant later scoped issues **after** the first candidate review. Do not re-open closed implementation issues merely because a future maturity goal is unproven. No new policy engine, learned-model runtime, generic attestation platform, or new CI provider is required for \`v0.1.0\`.
 
 ## Scope boundary
 
-The playbook owns **portable governed-delivery methodology, contracts, templates, examples, and deterministic conformance guidance**.
-
-It does not own personal automation, CareerOps, scheduled reporting infrastructure, or domain-specific n8n workflows. The 2026-09-28 review routed previous scope drift to domain owners:
-
-- Anthesis research intake → `hackelia-micrantha/anthesis#265`;
-- personal writing/blog intake → `ryjen/blog#109`;
-- scheduled project/CI/repository-health reporting → `ryjen/ops-cadence#44`;
-- resume/job-pipeline reporting → `ryjen/career-workflows#280`.
-
-Reusable lessons from those systems may return here only when they generalize into vendor-neutral governed-delivery controls.
+The playbook owns portable governed-delivery methodology, contracts, templates, examples and deterministic conformance guidance. It does **not** own personal automation, CareerOps, scheduled reporting infrastructure, or domain-specific n8n workflows. Domain-specific work remains with its respective repositories (Anthesis, Dubnium, ops-cadence, career-workflows).
 
 ## Completion standard
 
-A capability is not considered demonstrated merely because documentation exists or CI is green.
+- **Documented:** a rule or architecture is described.
+- **Implemented:** code or an artifact exists.
+- **Validated:** repeatable, appropriately bound evidence supports the implemented behavior.
+- **Demonstrated:** a bounded real or representative use case was exercised with attributable results.
+- **Provider-enforced:** the external service's active configuration and material admission behavior were observed.
+- **Released:** an explicitly approved immutable tag and published notes are verified against the accepted commit; **not yet achieved**.
 
-Claims should distinguish:
-
-- **documented** — behavior or policy is described;
-- **implemented** — supporting artifact/tooling exists;
-- **validated** — implementation has relevant repeatable evidence;
-- **demonstrated** — an end-to-end supported use case has been exercised;
-- **deferred** — intentionally outside the current milestone.
-
-The roadmap should be updated when implementation evidence changes, not on a fixed ceremonial cadence.
+Update this page when evidence changes, not on a ceremonial schedule.
