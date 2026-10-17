@@ -43,6 +43,7 @@ This repository contains normative docs, guidance, templates, schemas, examples,
 | New doc | Add it to `docs/index.md`; add README link when it affects adoption path |
 | Deprecation | Add replacement pointer and migration note |
 | Sensitive-path or authority guidance change | Review trust model, task risk matrix, evidence standard, and capability catalog guidance |
+| New or redefined governance term, tier, or evidence identifier | Update [canonical glossary](glossary.md), link normative sources, record migration/deprecated names, and run deterministic glossary validation |
 
 ## Migration notes
 

@@ -52,7 +52,9 @@ The equivalent commands and environment contract are documented in [`docs/task-e
 ### Documentation and policy
 
 - Distinguish normative requirements from guidance and examples.
-- Define new terms or use the canonical glossary once available.
+- Use the [canonical glossary](docs/glossary.md) for governance terminology; link to a canonical heading rather than creating competing definitions.
+- Review the glossary and relevant normative documents whenever a term, alias, risk/evidence identifier, or authority boundary changes; document migration and deprecated naming where applicable.
+- Run the glossary consistency check through the flake suite (or `python3 scripts/validate-glossary.py`); it checks structural drift, not semantic agreement.
 - Avoid claims stronger than the repository's demonstrated enforcement.
 - Include realistic failure modes, escalation paths, and rejection outcomes.
 - Keep examples synthetic and free of secrets or personal data.

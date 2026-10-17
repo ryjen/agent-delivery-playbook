@@ -24,6 +24,7 @@ flowchart LR
 | `docs/trust-model.md` | guidance | Authority, identity, and separation-of-duties model |
 | `docs/identity-delegation-and-capability-grants.md` | guidance | Per-task identity, grant binding, expiry, retries, revocation, and nested delegation semantics |
 | `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for policy, schemas, templates, and examples |
+| `docs/glossary.md` | terminology reference | Canonical governance terms, deliberate distinctions, deprecated aliases, and schema-checked T/E identifiers; #35 |
 
 ## Adopt Governed Agent Delivery
 

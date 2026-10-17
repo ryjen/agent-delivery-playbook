@@ -2,6 +2,8 @@
 
 Use this matrix before assigning work to an AI coding agent. The goal is not to block agent use. The goal is to match the task to the right constraints, evidence, and review path.
 
+Terminology and canonical envelope identifiers are indexed in the [glossary](glossary.md#risk-tier-identifiers). Informational tier 0 below does not add a `T0` value to the task-envelope schema.
+
 ## Risk tiers
 
 | Tier | Description | Agent suitability | Required controls |

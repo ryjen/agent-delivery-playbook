@@ -83,6 +83,7 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
 | `docs/governance-lifecycle.md` | Lifecycle rules for policies, templates, schemas, and examples |
+| `docs/glossary.md` | Canonical agent-delivery governance terms and risk/evidence identifiers |
 | `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility and release gate; **no published release yet** |
 | `docs/conformance-kit.md` | Read-only conformance report prototype and limitations; structural checks do not authorize changes |
 | `CHANGELOG.md` | Unreleased changes; dated entries only after qualified tags |

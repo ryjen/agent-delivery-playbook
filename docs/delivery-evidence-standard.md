@@ -1,6 +1,6 @@
 # Delivery Evidence Standard
 
-The Delivery Evidence Standard defines what must be produced before AI-assisted work can be trusted, reviewed, merged, or promoted.
+The Delivery Evidence Standard defines what must be produced before AI-assisted work can be trusted, reviewed, merged, or promoted. For canonical term distinctions and E1–E4 identifiers, see the [governance glossary](glossary.md#evidence-identifiers); the definitions and requirements in this standard remain normative.
 
 The core rule is simple:
 

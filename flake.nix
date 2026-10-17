@@ -45,6 +45,7 @@
             ''
               ${env.checkedSource}
               python3 scripts/validate-repository.py
+              python3 scripts/validate-glossary.py
               touch "$out"
             '';
 
