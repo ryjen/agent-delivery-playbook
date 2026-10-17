@@ -31,7 +31,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Minimal adoption kernel | implemented guidance | `docs/adoption/minimal-adoption-kernel.md`; optional artifacts are risk-triggered |
 | Standalone reference adoption | demonstrated (representative) | baseline PR #71 + governed T2/rejected paths in PR #72; `examples/reference-adoption/case-study.md` |
 | Release/version compatibility contract | documented, first tag not qualified | `docs/versioning-and-compatibility.md`; `CHANGELOG.md`; no published tag or release; #43 and #60 release gate |
-| Lightweight conformance kit | planned | #45 |
+| Lightweight conformance kit | implemented pilot, pending review and portability qualification | `scripts/conformance-kit.py`, `docs/conformance-kit.md`; deterministic self-report and negative tests in flake, with advisory-only evidence; #45 |
 | Runtime authorization / tool-effect gating | not implemented | deliberately outside this repository's runtime scope |
 | Protected evidence storage / attestation | not implemented | downstream enforcement concern |
 | Production adoption evidence | not demonstrated | requires reference/real adoption work |
