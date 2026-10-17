@@ -30,7 +30,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Adversarial/bypass-resistance fixtures | validated | 10 machine-readable scenarios + deterministic CI evaluator under `examples/adversarial/`; #41 complete |
 | Minimal adoption kernel | implemented guidance | `docs/adoption/minimal-adoption-kernel.md`; optional artifacts are risk-triggered |
 | Standalone reference adoption | demonstrated (representative) | baseline PR #71 + governed T2/rejected paths in PR #72; `examples/reference-adoption/case-study.md` |
-| Release/version compatibility contract | planned | #43 |
+| Release/version compatibility contract | documented, first tag not qualified | `docs/versioning-and-compatibility.md`; `CHANGELOG.md`; no published tag or release; #43 and #60 release gate |
 | Lightweight conformance kit | planned | #45 |
 | Runtime authorization / tool-effect gating | not implemented | deliberately outside this repository's runtime scope |
 | Protected evidence storage / attestation | not implemented | downstream enforcement concern |
