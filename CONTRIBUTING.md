@@ -92,7 +92,7 @@ Draft pull requests are appropriate for incomplete work. Mark a pull request rea
 
 ## Provider admission (current status)
 
-The GitHub default-branch ruleset now **configures** required pull requests and the two stable jobs (`Repository integrity` and `Task envelopes`) as strict admission gates with no bypass actors. This is verified by a live provider ruleset readback; **negative-admission behavior is not yet qualified** until a deliberately failed or missing required check is shown to block a normal PR. See [`docs/operations/main-admission.md`](docs/operations/main-admission.md). Do not weaken checks, treat a model review as provider approval, or use administrator authority to bypass the proof.
+The GitHub default-branch ruleset now **configures** required pull requests and the two stable jobs (`Repository integrity` and `Task envelopes`) as strict admission gates with no bypass actors. This is verified by a live ruleset readback and deliberately failing [PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87), which GitHub blocked with `mergeable_state: blocked`. Missing-check/direct-push paths were not independently tested; administrative ruleset changes remain a separate high-trust boundary. See [`docs/operations/main-admission.md`](docs/operations/main-admission.md). Do not weaken checks, treat a model review as provider approval, or use administrator authority to bypass the proof.
 
 ## Validation Expectations
 
