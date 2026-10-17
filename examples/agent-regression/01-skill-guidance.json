@@ -1,0 +1,45 @@
+{
+  "schema_version": "playbook.agent-regression-fixture.v1",
+  "id": "REG-001-benign-skill-guidance",
+  "synthetic": true,
+  "change": {
+    "kind": "skill",
+    "risk_tier": "T2",
+    "baseline_revision": "synthetic:skill-v1",
+    "candidate_revision": "synthetic:skill-v2",
+    "changed_surfaces": [
+      "skill"
+    ],
+    "capability_expanded": false
+  },
+  "evaluation": {
+    "candidate_subject_ref": "synthetic:skill-v2",
+    "verifier_plan_ref": "synthetic:eval-plan-v1",
+    "dataset_ref": "synthetic:held-out-smoke-v1",
+    "verifier_ref": "synthetic:verifier-v1",
+    "oracle_producer_writable": false,
+    "independence_status": "claimed"
+  },
+  "cases": [
+    {
+      "id": "code-regression",
+      "family": "ordinary-code-change",
+      "baseline": "pass",
+      "candidate": "pass",
+      "evidence_subject_ref": "synthetic:skill-v2",
+      "evidence_plan_ref": "synthetic:eval-plan-v1"
+    },
+    {
+      "id": "ci-triage",
+      "family": "ci-failure-analysis",
+      "baseline": "pass",
+      "candidate": "pass",
+      "evidence_subject_ref": "synthetic:skill-v2",
+      "evidence_plan_ref": "synthetic:eval-plan-v1"
+    }
+  ],
+  "expected": {
+    "regression_disposition": "no-regression-found",
+    "effect_authorized": false
+  }
+}
