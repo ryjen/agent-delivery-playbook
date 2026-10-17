@@ -81,6 +81,52 @@ class AdmissionRulesetTests(unittest.TestCase):
             item, proposal(), require_original_timestamp=False
         ))
 
+    def test_equivalent_utc_timestamp_does_not_reject_unchanged_baseline(self) -> None:
+        snapshot = observed(checker.BASELINE, "2026-06-18T08:09:46.285Z")
+        self.assertEqual(checker.validate_observed(
+            snapshot, checker.BASELINE, require_original_timestamp=True
+        ), [])
+
+    def test_provider_inert_defaults_and_order_normalize(self) -> None:
+        item = observed(proposal(), "2026-10-17T20:00:00Z")
+        item["rules"].reverse()
+        pr = next(x for x in item["rules"] if x["type"] == "pull_request")
+        pr["parameters"]["automatic_copilot_code_review_enabled"] = False
+        pr["parameters"]["required_reviewers"] = []
+        pr["parameters"]["dismissal_restriction"] = {"enabled": False, "allowed_actors": []}
+        pr["parameters"]["allowed_merge_methods"].reverse()
+        checks = next(x for x in item["rules"] if x["type"] == "required_status_checks")
+        checks["parameters"]["do_not_enforce_on_create"] = False
+        checks["parameters"]["required_status_checks"].reverse()
+        self.assertEqual(checker.validate_observed(
+            item, proposal(), require_original_timestamp=False
+        ), [])
+
+    def test_semantically_material_provider_default_is_not_ignored(self) -> None:
+        item = observed(proposal())
+        checks = next(x for x in item["rules"] if x["type"] == "required_status_checks")
+        checks["parameters"]["do_not_enforce_on_create"] = True
+        self.assertIn("observed provider ruleset differs from expected policy",
+                      checker.validate_observed(
+                          item, proposal(), require_original_timestamp=False
+                      ))
+
+    def test_unknown_provider_rule_parameter_fails_closed(self) -> None:
+        item = observed(proposal())
+        pr = next(x for x in item["rules"] if x["type"] == "pull_request")
+        pr["parameters"]["unknown_rule"] = False
+        self.assertIn("observed provider ruleset differs from expected policy",
+                      checker.validate_observed(
+                          item, proposal(), require_original_timestamp=False
+                      ))
+
+    def test_operator_runbook_has_real_shell_fences(self) -> None:
+        runbook = (ROOT / "docs" / "operations" / "main-admission.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertGreaterEqual(runbook.count("```bash"), 3)
+        self.assertNotIn("\\```bash", runbook)
+
     def test_read_only_cli_active_fixture(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / "ruleset.json"
