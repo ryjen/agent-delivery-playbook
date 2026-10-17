@@ -22,7 +22,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Lightweight task-envelope validator | validated | unit-tested repository tooling |
 | Standards-based YAML/JSON-Schema validation | validated | independent standards-based path |
 | Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
-| GitHub Actions validation | validated; required PR/check rules activated, negative admission proof pending | GitHub ruleset `17832277` now requires PRs, `Repository integrity` and `Task envelopes` checks with strict current-base validation and no ambient bypass. Read-only structural preflight passes after allowing GitHub's inert unattributed-Copilot approval default at zero approvals. #60 remains open until provider-backed failing/missing-check rejection evidence is collected |
+| GitHub Actions validation | provider-enforced PR/status admission qualified for failing checks | GitHub ruleset `17832277` requires PRs and both source-pinned checks, strict current-base validation, no ambient bypass. Live structural preflight passes and disposable PR #87 demonstrated failing required checks with `mergeable_state: blocked`. Direct-push and missing-check paths remain untested; administrator control-plane privilege persists. See #60 |
 | Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
 | Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
 | Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
@@ -59,7 +59,7 @@ Exit: adopters can run a small, versioned conformance path that reports what is 
 
 ## Follow-on maturity work
 
-The core guidance now has executable self-conformance, adversarial fixtures, a lightweight advisory conformance kit (#45), and one standalone representative adoption. The GitHub provider ruleset for #60 has been activated, but qualifying rejection evidence remains outstanding; first-release/tag qualification is still gated. No production runtime enforcement is claimed.
+The core guidance now has executable self-conformance, adversarial fixtures, a lightweight advisory conformance kit (#45), and one standalone representative adoption. The GitHub provider ruleset for #60 has been activated and failing-check rejection was observed on a disposable PR; separate first-release/tag qualification remains gated. No production runtime enforcement is claimed.
 
 ## Distribution and maturity work
 
