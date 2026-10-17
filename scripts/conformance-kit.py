@@ -47,7 +47,11 @@ def envelopes(root: Path, names: list[str]) -> dict:
     else:
         paths = sorted(set((root / "examples/task-envelope").glob("*.yaml")) |
                        set((root / "examples/golden-path").glob("**/task-envelope.yaml")))
-        paths = [path for path in paths if path.resolve().is_relative_to(root)]
+        escaped = [str(path.relative_to(root)) for path in paths
+                   if not path.resolve().is_relative_to(root)]
+        if escaped:
+            return check("task_envelopes", "fail",
+                         "Auto-discovered envelope escapes repository root", escaped)
     if not paths:
         return check("task_envelopes", "skipped", "No envelopes supplied or discovered")
     standard = module("standard_checker", PLAYBOOK / "scripts/validate-task-envelopes-standard.py")
