@@ -4,7 +4,7 @@ Contributions should preserve the repository's central invariant: agent-assisted
 
 ## Before Starting
 
-Use an existing issue when one covers the work. For material design changes, open or update an issue before implementation so scope, terminology, and compatibility impact are visible.
+Use an existing issue when one covers the work. For material design changes, open or update an issue before implementation so scope, terminology, and compatibility impact are visible. Add or update an [architecture decision record](docs/adr/README.md) when a security/authority boundary, schema/compatibility contract, or established governance principle changes or needs an explicit trade-off; routine edits do not need an ADR. An ADR is a decision history, not an alternative policy or provider configuration.
 
 A contribution should state:
 
