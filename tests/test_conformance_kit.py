@@ -67,6 +67,21 @@ class ConformanceKitTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 kit.within(root, "escape/private.json")
 
+    def test_auto_discovered_envelope_symlink_escape_fails_even_with_green_integrity(self) -> None:
+        with tempfile.TemporaryDirectory() as name, tempfile.TemporaryDirectory() as other:
+            root = Path(name).resolve()
+            examples = root / "examples" / "task-envelope"
+            examples.mkdir(parents=True)
+            foreign = Path(other) / "untrusted.yaml"
+            foreign.write_text("untrusted: true\n", encoding="utf-8")
+            (examples / "hidden.yaml").symlink_to(foreign)
+            report = kit.evaluate(root, [], [], None, True)
+            self.assertEqual(report["overall"], "fail")
+            states = {x["id"]: x["status"] for x in report["checks"]}
+            self.assertEqual(states["task_envelopes"], "fail")
+            self.assertEqual(states["reference_integrity"], "pass")
+            self.assertIn("hidden.yaml", report["checks"][0]["details"][0])
+
     def test_absolute_and_parent_path_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as name:
             root = Path(name).resolve()
