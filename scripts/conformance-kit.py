@@ -53,7 +53,7 @@ def envelopes(root: Path, names: list[str]) -> dict:
         invalid = []
         for path in paths:
             try:
-                resolved = path.resolve()
+                resolved = path.resolve(strict=True)
             except (RuntimeError, OSError):
                 invalid.append(str(path.relative_to(root)) + ": unresolved or cyclic symlink")
                 continue
