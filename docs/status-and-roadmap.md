@@ -30,10 +30,10 @@ The next milestone is a carefully qualified first **`v0.1.0` release**, not a ne
 ## Immediate queue — first release qualification
 
 1. **Reconcile the candidate package.** Confirm the policy/schema/validator/example compatibility contract and publishable, version-neutral guidance remain coherent. This is a documentation and evidence check; do not change the normative schema merely to improve release wording.
-2. **Qualify an exact candidate.** Run `nix flake check --print-build-logs` and the required GitHub PR jobs against the reviewed release-preparation head. Recheck final `main` after merge: the preparatory baseline commit above is **not** the later release commit.
+2. **Qualify the real subjects.** Record PR head/base identities **and** the synthetic merge-ref actually checked by `pull_request` CI; it is not the PR head commit. Require a separate passing `push` run and reproducible Nix validation on the **exact final `main` commit** after merge. The preparatory baseline above is not the release commit.
 3. **Review operational and distribution boundaries.** Inspect the reference adoption and adversarial fixture results, document untested portability, pinning, provenance and negative-admission limits, and prepare release notes. Avoid claims of broad production rollout.
-4. **Require accountable release authorization.** Only after explicit approval of the **exact final commit** may an authorized operator create and verify the annotated `v0.1.0` tag and corresponding GitHub release. A documentation PR is not such approval.
-5. **Demonstrate pinned adoption** in a separate consumer checkout after tagging. Preserve exact tag-to-commit and flake-lock binding; do not implicitly fetch moving `main`.
+4. **Require accountable release authorization.** Only after explicit approval of the **exact final commit and draft notes** may an authorized operator create and independently verify the annotated `v0.1.0` tag. **Do not publish the GitHub release yet.**
+5. **Test before publication.** Perform and record a clean tagged-checkout/consumer smoke test, preserve tag-to-commit and flake-lock binding, and finish approval of the notes. Only after it passes may an authorized operator publish the matching GitHub release and verify its contents. Do not fetch moving `main` or silently retarget a failed tag.
 
 The [release dossier](releases/v0.1.0-readiness.md) contains the proof matrix and remaining tag checks. A release must not be marked done merely because this readiness PR merges.
 
