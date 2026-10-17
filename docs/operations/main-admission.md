@@ -47,21 +47,27 @@ The `baseline` guard checks the **full selected policy fields**, ruleset ID/sour
 
 ### 2. Apply through the authorized provider API (one explicit mutation)
 
-```bash
-# Re-read and re-check immediately before the admin operation.
-gh api repos/ryjen/agent-delivery-playbook/rulesets/17832277 \
-  > /tmp/agent-delivery-playbook-ruleset-before.json
-python3 scripts/check-admission-ruleset.py \
-  --mode baseline --observed /tmp/agent-delivery-playbook-ruleset-before.json
+The **same command block** must condition the write on a fresh successful GET **and** a passing baseline guard. A nonzero preflight result must never be followed by an unconditional PUT. Review the intended policy JSON and the original snapshot before executing this block.
 
-gh api --method PUT \
-  -H 'Accept: application/vnd.github+json' \
-  repos/ryjen/agent-delivery-playbook/rulesets/17832277 \
-  --input examples/provider-admission/main.ruleset.json \
-  > /tmp/agent-delivery-playbook-ruleset-after.json
+```bash
+# The PUT runs only if the live fetch AND baseline verification both succeed.
+if gh api repos/ryjen/agent-delivery-playbook/rulesets/17832277 \
+    > /tmp/agent-delivery-playbook-ruleset-before.json \
+  && python3 scripts/check-admission-ruleset.py \
+    --mode baseline --observed /tmp/agent-delivery-playbook-ruleset-before.json
+then
+  gh api --method PUT \
+    -H 'Accept: application/vnd.github+json' \
+    repos/ryjen/agent-delivery-playbook/rulesets/17832277 \
+    --input examples/provider-admission/main.ruleset.json \
+    > /tmp/agent-delivery-playbook-ruleset-after.json
+else
+  printf '%s\n' 'STOP: live ruleset changed, is inaccessible, or baseline verification failed' >&2
+  false
+fi
 ```
 
-The `PUT` is a **provider administrator action** that may replace the existing rules array and bypass list. Do not use on an unreviewed or changed target. A 401/403/404/422 is not permission to use an agent shell, another credential, or an ungoverned execution path.
+The `PUT` is a **provider administrator action** that may replace the existing rules array and bypass list. Do not use on an unreviewed or changed target. A 401/403/404/422 is not permission to use an agent shell, another credential, or an ungoverned execution path. The read-check/write window is still subject to a possible concurrent ruleset edit because this procedure has no server-side compare-and-swap guarantee; stop and reconcile unexpected read-back state.
 
 ### 3. Observe read-back (read-only)
 
