@@ -58,6 +58,7 @@
               python3 scripts/validate-task-envelopes.py
               python3 scripts/validate-task-envelopes-standard.py
               python3 scripts/validate-adversarial-fixtures.py
+              python3 scripts/conformance-kit.py --root . --integrity --format markdown
               touch "$out"
             '';
         });
