@@ -44,6 +44,7 @@ This repository contains normative docs, guidance, templates, schemas, examples,
 | Deprecation | Add replacement pointer and migration note |
 | Sensitive-path or authority guidance change | Review trust model, task risk matrix, evidence standard, and capability catalog guidance |
 | New or redefined governance term, tier, or evidence identifier | Update [canonical glossary](glossary.md), link normative sources, record migration/deprecated names, and run deterministic glossary validation |
+| Security/compatibility-sensitive architecture decision | Add or supersede a concise [ADR](adr/README.md), link governing policy/schema, and update the implementation and migration evidence separately |
 
 ## Migration notes
 
