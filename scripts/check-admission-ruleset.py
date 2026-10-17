@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import argparse
 import json
+from copy import deepcopy
+from datetime import datetime
 import sys
 from pathlib import Path
 from typing import Any
@@ -39,8 +41,49 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def project(value: dict[str, Any]) -> dict[str, Any]:
-    # Provider metadata such as timestamps and hyperlinks is not policy.
-    return {key: value.get(key) for key in FIELDS}
+    """Normalize only known semantically inert provider defaults.
+
+    Unknown provider fields must NOT be discarded: unexpected policy is drift.
+    """
+    result = deepcopy({key: value.get(key) for key in FIELDS})
+    rules = result.get("rules")
+    if isinstance(rules, list) and all(isinstance(rule, dict) for rule in rules):
+        for rule in rules:
+            params = rule.get("parameters")
+            if not isinstance(params, dict):
+                continue
+            if rule.get("type") == "required_status_checks":
+                if params.get("do_not_enforce_on_create") is False:
+                    params.pop("do_not_enforce_on_create")
+                checks = params.get("required_status_checks")
+                if isinstance(checks, list) and all(isinstance(x, dict) for x in checks):
+                    checks.sort(key=lambda x: str(x.get("context")))
+            if rule.get("type") == "pull_request":
+                if params.get("automatic_copilot_code_review_enabled") is False:
+                    params.pop("automatic_copilot_code_review_enabled")
+                if params.get("required_reviewers") == []:
+                    params.pop("required_reviewers")
+                if params.get("dismissal_restriction") == {"enabled": False, "allowed_actors": []}:
+                    params.pop("dismissal_restriction")
+                methods = params.get("allowed_merge_methods")
+                if isinstance(methods, list) and all(isinstance(x, str) for x in methods):
+                    methods.sort()
+        rules.sort(key=lambda x: str(x.get("type")))
+    actors = result.get("bypass_actors")
+    if isinstance(actors, list) and all(isinstance(x, dict) for x in actors):
+        actors.sort(key=lambda x: (str(x.get("actor_type")), str(x.get("actor_id")), str(x.get("bypass_mode"))))
+    return result
+
+
+def same_instant(left: Any, right: str) -> bool:
+    if not isinstance(left, str):
+        return False
+    try:
+        a = datetime.fromisoformat(left.replace("Z", "+00:00"))
+        b = datetime.fromisoformat(right.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return a.tzinfo is not None and b.tzinfo is not None and a == b
 
 
 def validate_proposal(value: dict[str, Any]) -> list[str]:
@@ -112,7 +155,7 @@ def validate_observed(
     errors: list[str] = []
     if observed.get("id") != RULESET_ID or observed.get("source") != REPOSITORY:
         errors.append("wrong ruleset identity/source")
-    if require_original_timestamp and observed.get("updated_at") != ORIGINAL_UPDATE:
+    if require_original_timestamp and not same_instant(observed.get("updated_at"), ORIGINAL_UPDATE):
         errors.append("ruleset updated since the 2026-10-17 baseline; reconcile before PUT")
     if project(observed) != project(expected):
         errors.append("observed provider ruleset differs from expected policy")
