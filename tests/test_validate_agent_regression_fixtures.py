@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import copy
 import importlib.util
 import json
 import unittest
@@ -78,6 +77,21 @@ class AgentRegressionFixtureTests(unittest.TestCase):
         item = fixture("01-skill-guidance.json")
         item["cases"][0]["candidate"] = "success"
         self.assertIn("case[0] invalid candidate status", validator.validate_fixture(item))
+
+    def test_malformed_enum_values_are_reported_without_crashing(self) -> None:
+        changes = [
+            (lambda item: item["change"].update({"kind": ["tool-contract"]}), "invalid change kind"),
+            (lambda item: item["change"].update({"risk_tier": {"tier": "T2"}}), "invalid risk tier"),
+            (lambda item: item["evaluation"].update({"independence_status": []}), "invalid independence_status"),
+            (lambda item: item["cases"][0].update({"family": []}), "case[0] invalid family"),
+            (lambda item: item["cases"][0].update({"candidate": []}), "case[0] invalid candidate status"),
+            (lambda item: item["expected"].update({"regression_disposition": []}), "invalid expected regression_disposition"),
+        ]
+        for mutate, error in changes:
+            item = fixture("01-skill-guidance.json")
+            mutate(item)
+            with self.subTest(error=error):
+                self.assertIn(error, validator.validate_fixture(item))
 
     def test_duplicate_case_id_rejected(self) -> None:
         item = fixture("01-skill-guidance.json")
