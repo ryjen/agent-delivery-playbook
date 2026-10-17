@@ -22,6 +22,35 @@ In particular:
 
 Use `docs/policy-enforcement-map.md` for the operational crosswalk from lifecycle concerns to current enforcement surfaces and owners.
 
+## Practitioner crosswalk: Anthropic's AI-native SDLC playbook (2026-08-21)
+
+Anthropic's [AI-native SDLC playbook](https://claude.com/resources/articles/the-ai-native-sdlc-playbook) describes six connected stages (Plan, Design, Build, Test, Deploy, Maintain), versioned handoff artifacts, skills and hooks, layered review, continuous evaluation, and operational feedback. Those are **useful implementation patterns, not an additional normative lifecycle**. This repository remains vendor-neutral and retains its existing task, risk, evidence, trust, and enforcement contracts.
+
+| Practitioner pattern | Adopt through existing playbook control | Limitation to preserve |
+| --- | --- | --- |
+| `intent.md` / `spec.md` / `plan.md` and committed handoffs | Bounded task contract; recorded acceptance criteria and revisions | A Git commit records a change; it does not prove intent, execution, or independent acceptance |
+| Versioned skills, agent instructions, and context | Context provenance, policy ownership, controlled promotion | Instructions guide behavior, but are not a complete enforcement boundary |
+| Hooks, managed permissions, and sandbox defaults | Capability catalog, scoped runtime identity, deterministic gates | A hook only mediates the paths it actually intercepts; alternate APIs, credentials, subprocesses and delegates require separate reachability proof |
+| Agent reviewers and verifier subagents | Exact-subject E2/E3/E4 evidence and independent-verifier policy | Context or model separation alone does not prove independence when trust roots, oracles or permissions are shared |
+| Continuous agent evaluations | Versioned, risk-triggered configuration regression profile (tracked in [#77](https://github.com/ryjen/agent-delivery-playbook/issues/77)) | Agent scores, LLM-as-judge assessments and self-written tests cannot replace independent executable evidence or approvals |
+| Incident-to-intent feedback | Bounded read-only observation, claim/evidence separation, approved task intake | A diagnosis or report is a candidate claim, not permission to mutate a repository or production system |
+
+### Qualification rules
+
+1. **Authority is evaluated at the effect boundary.** A tool-call hook is valuable defence in depth, but claiming complete mediation requires enumerating and testing reachable equivalent effect paths. Every consequential path needs an enforceable policy boundary, including retries, alternate routes and delegated actions. See the [policy-enforcement map](policy-enforcement-map.md).
+2. **Evidence is about an exact subject.** Retain candidate/base commit or artifact digest, verification plan and version, policy-relevant dependencies, verifier/runner trust identity, results, unsupported/indeterminate states, and approval references separately. A green check, signature, attestation or successful transport proves only the property actually measured; it cannot authorize its own promotion.
+3. **Verification independence must be demonstrated.** A different prompt, process, subagent or model may catch errors, but independence requires inspecting common trust roots, who can change tests/oracles, how the candidate is materialized, and whether producer-owned authority can influence the verdict. Prefer deterministic and protected external checks for high-risk decisions.
+4. **Configuration is a change surface.** When a prompt, skill, model, tool permission, context-building rule or verifier rubric changes, run proportionate before/after regression evaluations over frozen representative tasks, including adverse and incident-derived cases where available. Report abstentions and infrastructure failures rather than silently treating them as passes.
+5. **Optimize for qualified outcomes, not code volume.** Evaluate throughput alongside escaped defects, rework, reviewer effort, false confidence, rollback/recovery, bypass findings, and evidence completeness. Use actual observed measurements; do not invent production quality claims or turn metrics into self-approval.
+
+### Downstream implementation boundaries (informative, not dependencies)
+
+- **Anthesis**: evidence-provenance and semantic-verifier sufficiency — [#139](https://github.com/hackelia-micrantha/anthesis/issues/139), [#199](https://github.com/hackelia-micrantha/anthesis/issues/199).
+- **Dubnium**: bounded clean verifier execution, exact candidate identity, failure states and complete-mediation validation — [#896](https://github.com/ryjen/dubnium/issues/896), [#867](https://github.com/ryjen/dubnium/issues/867) (structural fixture; does not establish live proof), [#1632](https://github.com/ryjen/dubnium/issues/1632) (read-only pilot evaluation).
+- **ops-cadence**: evidence-aware, source-health-safe, read-only portfolio observation — [#19](https://github.com/ryjen/ops-cadence/issues/19), [#44](https://github.com/ryjen/ops-cadence/issues/44).
+
+The operational evaluation-profile template and measurement guidance belong in [#77](https://github.com/ryjen/agent-delivery-playbook/issues/77); this document establishes interpretation and ownership only.
+
 ## Core concern
 
 AI-native SDLC governance answers:
