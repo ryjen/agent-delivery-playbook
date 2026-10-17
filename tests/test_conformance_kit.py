@@ -82,6 +82,33 @@ class ConformanceKitTests(unittest.TestCase):
             self.assertEqual(states["reference_integrity"], "pass")
             self.assertIn("hidden.yaml", report["checks"][0]["details"][0])
 
+    def test_cyclic_auto_discovered_symlink_returns_structured_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            folder = root / "examples" / "task-envelope"
+            folder.mkdir(parents=True)
+            (folder / "loop.yaml").symlink_to("loop.yaml")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                exit_code = kit.main(["--root", str(root), "--format", "json"])
+            report = json.loads(output.getvalue())
+            self.assertEqual(exit_code, 1)
+            self.assertEqual(report["overall"], "fail")
+            self.assertEqual(report["checks"][0]["status"], "fail")
+            self.assertIn("cyclic symlink", report["checks"][0]["details"][0])
+
+    def test_explicit_cyclic_symlink_returns_failed_input_report(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            (root / "loop.yaml").symlink_to("loop.yaml")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                exit_code = kit.main(["--root", str(root), "--envelope", "loop.yaml"])
+            report = json.loads(output.getvalue())
+            self.assertEqual(exit_code, 1)
+            self.assertEqual(report["overall"], "fail")
+            self.assertFalse(report["effect_authorized"])
+
     def test_absolute_and_parent_path_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as name:
             root = Path(name).resolve()
