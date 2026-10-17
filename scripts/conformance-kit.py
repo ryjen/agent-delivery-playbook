@@ -35,7 +35,10 @@ def module(name: str, path: Path) -> Any:
 def within(root: Path, name: str) -> Path:
     if Path(name).is_absolute():
         raise ValueError("absolute target path not permitted")
-    target = (root / name).resolve()
+    try:
+        target = (root / name).resolve()
+    except (RuntimeError, OSError) as exc:
+        raise ValueError("target cannot be resolved safely") from exc
     if not target.is_relative_to(root):
         raise ValueError("target escapes repository root")
     return target
@@ -47,11 +50,18 @@ def envelopes(root: Path, names: list[str]) -> dict:
     else:
         paths = sorted(set((root / "examples/task-envelope").glob("*.yaml")) |
                        set((root / "examples/golden-path").glob("**/task-envelope.yaml")))
-        escaped = [str(path.relative_to(root)) for path in paths
-                   if not path.resolve().is_relative_to(root)]
-        if escaped:
+        invalid = []
+        for path in paths:
+            try:
+                resolved = path.resolve()
+            except (RuntimeError, OSError):
+                invalid.append(str(path.relative_to(root)) + ": unresolved or cyclic symlink")
+                continue
+            if not resolved.is_relative_to(root):
+                invalid.append(str(path.relative_to(root)) + ": escapes repository root")
+        if invalid:
             return check("task_envelopes", "fail",
-                         "Auto-discovered envelope escapes repository root", escaped)
+                         "Auto-discovered envelope is not safely contained", invalid)
     if not paths:
         return check("task_envelopes", "skipped", "No envelopes supplied or discovered")
     standard = module("standard_checker", PLAYBOOK / "scripts/validate-task-envelopes-standard.py")
