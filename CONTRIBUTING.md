@@ -88,6 +88,10 @@ Keep pull requests focused and reviewable. Include:
 
 Draft pull requests are appropriate for incomplete work. Mark a pull request ready only when its intended checks pass and its documentation matches the implemented behavior.
 
+## Provider admission (current status)
+
+The repository validation workflow and its two stable jobs do **not** become mandatory merge gates simply because they pass. Until the external GitHub ruleset change and a blocked negative merge are independently observed, provider-enforced pull-request admission remains **pending**. The operator procedure and exact check names are in [`docs/operations/main-admission.md`](docs/operations/main-admission.md); contributor permissions do not authorize bypassing that runbook. Treat model review as evidence, not provider approval.
+
 ## Validation Expectations
 
 At minimum, run:

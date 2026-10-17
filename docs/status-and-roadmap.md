@@ -22,7 +22,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Lightweight task-envelope validator | validated | unit-tested repository tooling |
 | Standards-based YAML/JSON-Schema validation | validated | independent standards-based path |
 | Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
-| GitHub Actions validation | validated but not admission-enforced | current workflow passes; #60 tracks required admission |
+| GitHub Actions validation | validated; admission not enforced | current workflow passes; #60 tracks required admission. The proposed provider ruleset and guarded operator activation/negative-test runbook exist under `examples/provider-admission/` and `docs/operations/main-admission.md` but are not GitHub-enforced until separately activated and verified |
 | Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
 | Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
 | Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
