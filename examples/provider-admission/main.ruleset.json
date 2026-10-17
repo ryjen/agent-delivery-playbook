@@ -38,10 +38,12 @@
       "parameters": {
         "required_status_checks": [
           {
-            "context": "Repository integrity"
+            "context": "Repository integrity",
+            "integration_id": 15368
           },
           {
-            "context": "Task envelopes"
+            "context": "Task envelopes",
+            "integration_id": 15368
           }
         ],
         "strict_required_status_checks_policy": true
