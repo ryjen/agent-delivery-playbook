@@ -1,6 +1,6 @@
 # Main branch admission: GitHub provider activation (issue #60)
 
-**Status (2026-10-17): prepared and testable, not activated.** This document is a repository-specific runbook, **not** an enforced policy merely because it is committed. The enforcement authority is GitHub's active ruleset for `ryjen/agent-delivery-playbook`, not this file, CI logs, or a model review. The connected GitHub integration can read but cannot write repository rulesets. Applying changes requires a separate authorized repository administrator with `Administration: write`.
+**Status (2026-10-17): provider ruleset activated; negative-admission proof pending.** The GitHub API now reports pull-request admission, strict required checks, and no bypass actors. The additional provider-populated `require_extra_approval_for_unattributed_changes: true` is documented by GitHub as having no effect at zero required approvals; see the structural-checker regression tests. This runbook is not enforcement itself, and the current configuration still needs negative-admission verification before issue #60 can close. The connected GitHub integration can read but cannot administer rulesets; administrator action must remain separately authorized.
 
 ## Verified original configuration
 
@@ -13,6 +13,22 @@
 - Real check contexts: **`Repository integrity`** and **`Task envelopes`**, both emitted by `github-actions` (GitHub App integration ID **15368**). Confirmed on merged PR #79's `main` commit `d05e55b142e7ddcbf610ea3d44f9ef59b854b3c5`.
 
 The above is a timestamped observation, not a future guarantee. Always read live ruleset state before activation.
+
+## Activated provider observation (2026-10-17)
+
+An administrator successfully applied the reviewed ruleset update. The authenticated readback for ruleset `17832277` reports:
+
+- `updated_at: 2026-10-17T15:17:05.207-07:00`;
+- active default-branch `pull_request` rule with zero required approvals, resolved conversations, and allowed merge methods unchanged;
+- strict `required_status_checks` for `Repository integrity` and `Task envelopes`, pinned to GitHub Actions integration ID `15368`;
+- `bypass_actors: []` and `current_user_can_bypass: never`;
+- existing deletion/non-fast-forward controls preserved.
+
+GitHub also populated `require_extra_approval_for_unattributed_changes: true` in the pull-request parameters even though the submitted payload omitted it. [GitHub documents](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#additional-approval-for-unattributed-copilot-pull-requests) that this default has **no effect when the required approval count is zero**. The read-only checker therefore accepts **only** that exact combination as an inert GitHub provider default. An unexpected field or changed approval count still fails preflight.
+
+**Operational warning:** the original pre-activation baseline snapshot is now intentionally obsolete. Do not rerun the original activation PUT or weaken the active provider rule to satisfy the old `--mode baseline` check. Use `--mode active` with fresh readback to verify current state. Future ruleset changes require a newly reviewed proposal and concurrency-aware operator procedure.
+
+**Outstanding:** demonstrate GitHub rejecting a normal PR with failing or missing required validation evidence. A successful structural readback is not negative-admission evidence.
 
 ## Proposed minimum provider configuration
 
@@ -30,7 +46,7 @@ Avoid silently making the project unusable with an unsatisfiable review requirem
 
 ## Operator sequence: inspect -> verify -> apply -> observe
 
-This requires GitHub CLI (`gh`), a GitHub identity authorized for repository-ruleset administration, and a trusted operator environment. Execute from the repository's reviewed `main` **after this runbook PR passes and merges**. Do not paste tokens in terminals, reports, or issue comments.
+**Historical activation procedure — already executed. Do not apply again against the former baseline.** This procedure documents the reviewed one-time administrative transition. The original guard must now fail after the successful update; that is expected, not grounds to replay the PUT. New changes require a new approved proposal and fresh baseline. Do not paste tokens in terminals, reports, or issue comments.
 
 ### 1. Verify source and snapshot (read-only)
 
@@ -110,7 +126,7 @@ Do not place private credentials or audit-sensitive evidence in the public repos
 - [x] Real baseline ruleset inspected.
 - [x] Required contexts and GitHub Actions provider identity confirmed.
 - [x] Proposed configuration, structural preflight, and bounded activation runbook prepared.
-- [ ] Administrator applied the provider rule and independent live read-back passed.
+- [x] Administrator applied the provider rule; authenticated live readback confirms the expected rules and no bypass actors (provider-added inert default noted above).
 - [ ] Failing or absent required check demonstrably blocked a normal merge.
 - [ ] Break-glass/accountability and remaining limitations were recorded.
 - [ ] Issue #60 and capability status reconciled against those **external observations**.
