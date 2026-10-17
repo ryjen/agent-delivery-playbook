@@ -1,6 +1,6 @@
 # Minimum Controls Policy
 
-This policy maps risk tiers to the minimum controls expected before merge.
+This policy maps risk tiers to the minimum controls expected before merge. The [governance glossary](../glossary.md) indexes canonical identifiers and distinguishes advisory documentation from enforceable authority; the requirements in this policy remain normative.
 
 It is intentionally lightweight. The point is to create a common baseline that can later be enforced by templates, CI checks, or approval tooling.
 
