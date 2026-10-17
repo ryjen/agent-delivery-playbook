@@ -48,10 +48,10 @@ Keep released tags immutable. Fix a defect through a new tag and explicit supers
 
 ## Release checklist and execution
 
-**First candidate:** `v0.1.0` (tentative; not published). Do not publish merely because this file or its PR merges.
+**First candidate:** `v0.1.0` (tentative; not published). See the [draft readiness dossier](releases/v0.1.0-readiness.md) and [draft release notes](releases/v0.1.0-notes.md). Do not publish merely because this file or its PR merges; a new exact-commit qualification is required after the readiness PR merges.
 
 Required evidence before a tag:
-- [ ] [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is qualified by **live** provider ruleset read-back and a negative admission test, or an explicitly reviewed exception is documented with risk and scope.
+- [x] [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is qualified for the tested failing-check path by a live provider ruleset read-back and blocked disposable PR #87. Missing-check and direct-push rejection remain untested, and administrator ruleset-edit authority persists.
 - [ ] Exact candidate commit and current-base PR checks pass through the repository-owned Nix flake; results reference the candidate and validation toolchain.
 - [ ] Normative policies, schema, examples and validators are internally consistent; execute `nix flake check --print-build-logs` on the candidate.
 - [ ] The reference adoption and negative adversarial fixtures remain valid or their limitations are disclosed.
