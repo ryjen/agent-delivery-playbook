@@ -1,6 +1,6 @@
 # Agent configuration regression evaluation (pilot profile)
 
-**Status:** illustrative, non-normative, vendor-neutral guidance. This is not a second evidence envelope, agent test runner, or effect-authorization service.
+**Status:** illustrative, non-normative, vendor-neutral guidance. This is not a second evidence envelope, agent test runner, or effect-authorization service. Optional prediction/decision models should additionally follow the [baseline-first, abstention, calibration and promotion guidance](governed-predictive-models.md); these checked synthetic fixtures do not establish predictive model validity.
 
 A prompt, skill, model, tool contract, retrieval process, or verifier rubric is a **change to engineering behaviour**, even when no application source changes. Treat such changes as candidates for risk-proportionate *before/after* evaluations. Preserve the existing task-envelope, risk-tier, evidence, approval, and enforcement sources of truth.
 
