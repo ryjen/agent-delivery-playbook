@@ -21,4 +21,4 @@ Begin with bounded human review and minimal task/evidence artifacts. Encode repe
 
 ## Consequences and verification
 
-Local and CI tests can provide objective evidence, not automatic runtime authorization or provider admission. The live GitHub branch ruleset remains [unqualified (#60)](https://github.com/ryjen/agent-delivery-playbook/issues/60) until an administrator enables required checks and negative-admission testing proves enforcement. No CI change should silently weaken existing checks.
+Local and CI tests can provide objective evidence, not runtime authorization or provider admission **by themselves**. Subsequently, the live GitHub branch ruleset was activated and a failing required-check PR was observed blocked under [issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60). This is provider evidence for this repository only; it does not qualify a release or imply runtime permission enforcement. No CI change should silently weaken existing checks.
