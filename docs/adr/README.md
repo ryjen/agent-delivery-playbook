@@ -27,4 +27,4 @@ See [ADR template](TEMPLATE.md). Contributors should add/update an ADR for a sec
 | [0006](0006-schema-compatibility-and-unknown-fields.md) | Fail-closed schema fields and version migration | accepted | JSON Schema, compatibility policy |
 | [0007](0007-separate-delivery-authorities.md) | Generation, verification, approval, merge, release | accepted | Trust model, delivery evidence |
 
-**Open implementation gap:** [issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60) still requires live GitHub PR/required-check admission activation and negative-admission evidence. No ADR is proof of that external enforcement.
+**Observed enforcement boundary:** [Issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is complete for active GitHub PR/required-check rules and a blocked failing-check test in this repository; see the [provider runbook](../operations/main-admission.md). An ADR is never provider evidence itself. Missing-check/direct-push rejection and runtime permission enforcement are not claimed.
