@@ -214,7 +214,7 @@ def markdown(report: dict) -> str:
     for item in report["checks"]:
         lines.append("| " + item["id"] + " | " + item["status"] + " | " +
                      item["summary"].replace("|", "/").replace("\n", " ") + " |")
-        details.extend("- " + item["id"] + ": " + detail.replace("\\r", " ").replace("\\n", " ").replace("|", "/") for detail in item["details"])
+        details.extend("- " + item["id"] + ": " + detail.replace("\r", " ").replace("\n", " ").replace("|", "/") for detail in item["details"])
     if details:
         lines += ["", "## Check details", "", *details]
     lines += ["", "Limitations:"] + ["- " + text for text in report["limitations"]]
