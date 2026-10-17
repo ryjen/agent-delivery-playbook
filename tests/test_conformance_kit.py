@@ -109,6 +109,39 @@ class ConformanceKitTests(unittest.TestCase):
             self.assertEqual(report["overall"], "fail")
             self.assertFalse(report["effect_authorized"])
 
+    def test_integrity_symlink_escape_cannot_produce_green_report(self) -> None:
+        with tempfile.TemporaryDirectory() as name, tempfile.TemporaryDirectory() as elsewhere:
+            root = Path(name).resolve()
+            foreign = Path(elsewhere) / "good.json"
+            foreign.write_text('{"valid": true}\n', encoding="utf-8")
+            (root / "linked.json").symlink_to(foreign)
+            result = kit.evaluate(root, [], [], None, True)
+            self.assertEqual(result["overall"], "fail")
+            target = next(x for x in result["checks"] if x["id"] == "reference_integrity")
+            self.assertEqual(target["status"], "fail")
+            self.assertIn("escapes repository root", target["details"][0])
+
+    def test_integrity_cyclic_file_fails_structurally(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            (root / "loop.md").symlink_to("loop.md")
+            result = kit.evaluate(root, [], [], None, True)
+            self.assertEqual(result["overall"], "fail")
+            target = next(x for x in result["checks"] if x["id"] == "reference_integrity")
+            self.assertEqual(target["status"], "fail")
+
+    def test_cyclic_root_returns_json_failure_not_traceback(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            (root / "loop").symlink_to("loop")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                status = kit.main(["--root", str(root / "loop"), "--format", "json"])
+            report = json.loads(output.getvalue())
+            self.assertEqual(status, 1)
+            self.assertEqual(report["overall"], "fail")
+            self.assertFalse(report["effect_authorized"])
+
     def test_absolute_and_parent_path_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as name:
             root = Path(name).resolve()
