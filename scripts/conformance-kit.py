@@ -162,8 +162,8 @@ def manifest_checks(root: Path, filename: str | None) -> list[dict]:
         binding = check("evidence_binding", "fail", "Candidate SHA must be a 40/64 hex digest")
     elif (not isinstance(evidence, list) or not evidence or any(
         not isinstance(row, dict) or row.get("subject_sha") != candidate or
-        not isinstance(row.get("check"), str) or not row.get("check") or
-        not isinstance(row.get("source"), str) or not row.get("source")
+        not isinstance(row.get("check"), str) or not row["check"].strip() or
+        not isinstance(row.get("source"), str) or not row["source"].strip()
         for row in evidence
     )):
         binding = check("evidence_binding", "fail", "Evidence subject/source metadata detached or incomplete")
@@ -210,10 +210,13 @@ def markdown(report: dict) -> str:
     lines = ["# Governed Delivery Conformance (pilot)", "",
              "Outcome: **" + report["overall"] + "**; no effect authority.", "",
              "| Check | Status | Description |", "| --- | --- | --- |"]
+    details = []
     for item in report["checks"]:
         lines.append("| " + item["id"] + " | " + item["status"] + " | " +
                      item["summary"].replace("|", "/").replace("\n", " ") + " |")
-        lines.extend("- " + detail for detail in item["details"])
+        details.extend("- " + item["id"] + ": " + detail for detail in item["details"])
+    if details:
+        lines += ["", "## Check details", "", *details]
     lines += ["", "Limitations:"] + ["- " + text for text in report["limitations"]]
     return "\n".join(lines)
 
