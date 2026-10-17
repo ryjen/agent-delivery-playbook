@@ -180,6 +180,25 @@ class ConformanceKitTests(unittest.TestCase):
             self.assertEqual(report["overall"], "fail")
             self.assertEqual(next(x for x in report["checks"] if x["id"] == "evidence_binding")["status"], "fail")
 
+    def test_whitespace_evidence_fields_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            for field in ("check", "source"):
+                value = example_manifest()
+                value["evidence"][0][field] = " \t "
+                (root / "manifest.json").write_text(json.dumps(value), encoding="utf-8")
+                report = kit.evaluate(root, [], [], "manifest.json", False)
+                self.assertEqual(report["overall"], "fail")
+                self.assertEqual(next(x for x in report["checks"] if x["id"] == "evidence_binding")["status"], "fail")
+
+    def test_markdown_details_follow_all_table_rows(self) -> None:
+        report = kit.evaluate(ROOT, [], [".github/workflows/validate.yml"], None, False)
+        output = kit.markdown(report)
+        self.assertIn("| approval_presence | skipped |", output)
+        self.assertIn("## Check details", output)
+        self.assertLess(output.index("| approval_presence | skipped |"), output.index("## Check details"))
+        self.assertLess(output.index("## Check details"), output.index("- sensitive_paths:"))
+
     def test_missing_required_approval_is_warning(self) -> None:
         with tempfile.TemporaryDirectory() as name:
             root = Path(name).resolve()
