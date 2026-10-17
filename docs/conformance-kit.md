@@ -79,7 +79,7 @@ These fields are **advisory conformance inputs**, not a replacement for task-env
 
 Checked-in tests include a playbook self-conformance path, invalid task envelopes, symlink/root escapes, invalid changed paths, sensitive-path match, missing approval reference, malformed capability inventory, exact-subject evidence mismatch, empty/unverified inputs and both output formats. The flake runs the same tests and an end-to-end self-conformance command.
 
-This prototype does **not** implement independent remote check verification, actual role-identity binding, GitHub required-check admission, signed provenance, dynamic context selection, CODEOWNERS semantics, or inference about risk. The existing [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is still the GitHub-side provider admission owner. This kit cannot close #60 or qualify a `v0.1.0` release.
+This prototype does **not** implement independent remote check verification, actual role-identity binding, GitHub required-check admission, signed provenance, dynamic context selection, CODEOWNERS semantics, or inference about risk. GitHub provider admission for **this repository** was separately activated and tested under [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60); it does not derive from this kit or transfer to adopters. This kit's passing self-test does **not** independently qualify `v0.1.0` for release.
 
 ## Evidence and ownership
 
@@ -87,6 +87,6 @@ This prototype does **not** implement independent remote check verification, act
 - [Task envelope schema](../schemas/task-envelope.schema.json) and [validation](task-envelope-validation.md) — authoritative structure.
 - [Enforcement map](policy-enforcement-map.md) — sources of authority and control boundaries.
 - [Delivery evidence standard](delivery-evidence-standard.md) — evidence sufficiency remains risk and policy controlled.
-- [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) — only GitHub's live ruleset enforces actual branch admission.
+- [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) — GitHub's live default-branch ruleset enforces admission for this repository; conformance-kit output is not an equivalent control.
 
 A future independently accepted adapter could verify immutable GitHub check runs or a trusted Anthesis approval using their actual source APIs. That requires a separate reviewed scope and must not be inferred from this report format.

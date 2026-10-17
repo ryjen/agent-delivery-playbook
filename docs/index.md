@@ -97,6 +97,8 @@ flowchart LR
 | `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for docs, schemas, templates, and examples |
 | `docs/adr/README.md` | decision history | ADR template, index, status/supersession rules and accepted security/compatibility rationale; #36 |
 | `docs/versioning-and-compatibility.md` | release policy (pre-1.0) | Version and contract compatibility, tagged release gates, migration expectations; #43 |
+| `docs/releases/v0.1.0-readiness.md` | draft release qualification | Evidence matrix, exact-commit approval and final tag checklist; NOT a release |
+| `docs/releases/v0.1.0-notes.md` | draft release notes | Proposed first release contents, compatibility and unsupported claims; NOT published |
 
 ## Reading Paths
 

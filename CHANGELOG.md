@@ -13,6 +13,7 @@ Changes to the Agent Delivery Playbook are recorded here. No published release o
 - Canonical governance glossary and structural terminology/schema drift tests (#35).
 - Lightweight architecture decision record index/template and historical rationale for stable trust/compatibility decisions (#36); ADR acceptance is not provider control enforcement.
 - Optional baseline-first predictive/decision-model guidance and QART-style evaluation checklist (#74), with explicit advisory-only authority and no learned-model requirement.
+- First-release **preparation only**: reconciled capability/evidence roadmap, [v0.1.0 readiness dossier](docs/releases/v0.1.0-readiness.md) and [draft release notes](docs/releases/v0.1.0-notes.md); **no tag or release is approved/published by this entry**.
 
 ### Limitations
 - Do not treat an unreleased changelog entry as shipped, adopted, or enforced.

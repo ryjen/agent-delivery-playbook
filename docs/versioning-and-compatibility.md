@@ -48,16 +48,27 @@ Keep released tags immutable. Fix a defect through a new tag and explicit supers
 
 ## Release checklist and execution
 
-**First candidate:** `v0.1.0` (tentative; not published). Do not publish merely because this file or its PR merges.
+**First candidate:** `v0.1.0` (tentative; not published). See the [draft readiness dossier](releases/v0.1.0-readiness.md) and [draft release notes](releases/v0.1.0-notes.md). Do not publish merely because this file or its PR merges; a new exact-commit qualification is required after the readiness PR merges.
 
-Required evidence before a tag:
-- [ ] [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is qualified by **live** provider ruleset read-back and a negative admission test, or an explicitly reviewed exception is documented with risk and scope.
-- [ ] Exact candidate commit and current-base PR checks pass through the repository-owned Nix flake; results reference the candidate and validation toolchain.
-- [ ] Normative policies, schema, examples and validators are internally consistent; execute `nix flake check --print-build-logs` on the candidate.
-- [ ] The reference adoption and negative adversarial fixtures remain valid or their limitations are disclosed.
-- [ ] `CHANGELOG.md`, migration notes, version name, release contents and unsupported areas are reviewed.
-- [ ] An accountable release operator approves the **exact commit**, then creates the annotated tag and release through authorized credentials outside untrusted agent/CI runtimes.
-- [ ] Verify release tag -> commit -> content/lock and published release notes. Preserve immutable links and required CI references.
+Required evidence **before creating an annotated release tag**:
+- [x] [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) is qualified for the tested failing-check path by a live provider ruleset read-back and blocked disposable PR #87. Missing-check and direct-push rejection remain untested, and administrator ruleset-edit authority persists.
+- [ ] Record current-base PR **head/base and actual synthetic merge-ref checkout** identity together with the repository-owned Nix validation run and check contexts. Normal `pull_request` checkout validates the merge ref; it does **not** test the head commit in isolation.
+- [ ] Separately qualify the **exact resulting `main` SHA** after merge with passing `push` checks and `nix flake check --print-build-logs` (or equivalent exact-subject reproducible validation), including pinned toolchain and runner/environment identity.
+- [ ] Normative policies, schema, examples, validators, reference adoption and adversarial negative fixtures are consistent; record scope and limitations.
+- [ ] Review `CHANGELOG.md`, migration notes, version name, release draft and unsupported areas.
+- [ ] An accountable release operator explicitly approves the **exact final commit and draft notes**. No privileged publishing job is authorized by this checklist.
+
+**Tag creation and verification — after the pre-tag gates, before publication:**
+- [ ] An authorized operator creates the annotated tag at the approved commit; do not retarget an existing tag.
+- [ ] Independently read back tag object -> approved commit -> tree/`flake.lock` and preserve the reference. **Do not publish the GitHub release yet.**
+
+**Before publishing the GitHub release:**
+- [ ] Reproduce the tagged checkout/consumer smoke test in a clean environment, recording tag/commit binding, command, environment and result. A failed or missing required smoke test blocks publication; **never move the tag** to hide the failure.
+- [ ] Finalize and approve release notes with actual verification links and known limitations.
+
+**Publication and confirmation — after all above gates:**
+- [ ] An authorized operator publishes the GitHub release pointing to the verified tag.
+- [ ] Independently read back tag, commit, contents/lock and published notes; retain immutable evidence references.
 
 The workflow currently uses SHA-pinned Actions and `contents: read`. **Do not add a privileged release job** to make this convenient. If automation is proposed later, its signing/release permissions and protected admission paths require an independent design, credentials review and tests.
 
