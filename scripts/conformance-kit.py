@@ -148,7 +148,7 @@ def manifest_checks(root: Path, filename: str | None) -> list[dict]:
         capability = check("capabilities", "skipped", "No capability inventory")
     elif (not isinstance(caps, dict) or any(
         not isinstance(caps.get(k), list) or not caps[k] or
-        not all(isinstance(item, str) and item for item in caps[k])
+        not all(isinstance(item, str) and item.strip() for item in caps[k])
         for k in ("tools", "resources", "effects")
     )):
         capability = check("capabilities", "fail", "Incomplete capability declaration")
@@ -214,7 +214,7 @@ def markdown(report: dict) -> str:
     for item in report["checks"]:
         lines.append("| " + item["id"] + " | " + item["status"] + " | " +
                      item["summary"].replace("|", "/").replace("\n", " ") + " |")
-        details.extend("- " + item["id"] + ": " + detail for detail in item["details"])
+        details.extend("- " + item["id"] + ": " + detail.replace("\\r", " ").replace("\\n", " ").replace("|", "/") for detail in item["details"])
     if details:
         lines += ["", "## Check details", "", *details]
     lines += ["", "Limitations:"] + ["- " + text for text in report["limitations"]]
