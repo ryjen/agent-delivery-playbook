@@ -84,6 +84,24 @@ def envelopes(root: Path, names: list[str]) -> dict:
 def integrity(root: Path, enabled: bool) -> dict:
     if not enabled:
         return check("reference_integrity", "skipped", "Repository scan not requested")
+    # The existing validator scans local paths; do not let an adopter's symlinks
+    # silently import evidence from outside the chosen repository.
+    invalid = []
+    for pattern in ("*.json", "*.md"):
+        for file in sorted(root.rglob(pattern)):
+            relative = file.relative_to(root)
+            if ".git" in relative.parts:
+                continue
+            try:
+                resolved = file.resolve(strict=True)
+            except (RuntimeError, OSError):
+                invalid.append(str(relative) + ": unavailable or cyclic file")
+                continue
+            if not resolved.is_relative_to(root):
+                invalid.append(str(relative) + ": escapes repository root")
+    if invalid:
+        return check("reference_integrity", "fail",
+                     "Repository scan includes unsafe or unresolved files", invalid)
     existing = module("integrity_checker", PLAYBOOK / "scripts/validate-repository.py")
     previous = existing.ROOT
     existing.ROOT = root
@@ -214,7 +232,7 @@ def main(argv: list[str] | None = None) -> int:
         if not root.is_dir():
             raise ValueError("Root is not a directory")
         report = evaluate(root, args.envelope, args.changed_path, args.manifest, args.integrity)
-    except (ValueError, OSError, UnicodeError, TypeError, KeyError, yaml.YAMLError):
+    except (ValueError, OSError, RuntimeError, UnicodeError, TypeError, KeyError, yaml.YAMLError):
         report = {
             "schema_version": "playbook.conformance-report.v1",
             "subject": {"source": "local-filesystem"},
