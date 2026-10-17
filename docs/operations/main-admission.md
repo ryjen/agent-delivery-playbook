@@ -1,6 +1,6 @@
 # Main branch admission: GitHub provider activation (issue #60)
 
-**Status (2026-10-17): provider ruleset activated; negative-admission proof pending.** The GitHub API now reports pull-request admission, strict required checks, and no bypass actors. The additional provider-populated `require_extra_approval_for_unattributed_changes: true` is documented by GitHub as having no effect at zero required approvals; see the structural-checker regression tests. This runbook is not enforcement itself, and the current configuration still needs negative-admission verification before issue #60 can close. The connected GitHub integration can read but cannot administer rulesets; administrator action must remain separately authorized.
+**Status (2026-10-17): provider admission activated and failed-check negative admission verified.** GitHub reports required PRs, strict status checks, and no bypass actors. [Disposable PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) had failing required checks and GitHub reported `mergeable_state: blocked` for its exact head. No protected merge or administrative override was attempted. The provider-populated `require_extra_approval_for_unattributed_changes: true` is documented by GitHub as having no effect at zero approvals; the structural-checker regression tests cover that narrow default. The runbook does not independently prove missing-check or direct-push rejection. The connected GitHub integration cannot administer rulesets.
 
 ## Verified original configuration
 
@@ -28,7 +28,7 @@ GitHub also populated `require_extra_approval_for_unattributed_changes: true` in
 
 **Operational warning:** the original pre-activation baseline snapshot is now intentionally obsolete. Do not rerun the original activation PUT or weaken the active provider rule to satisfy the old `--mode baseline` check. Use `--mode active` with fresh readback to verify current state. Future ruleset changes require a newly reviewed proposal and concurrency-aware operator procedure.
 
-**Outstanding:** demonstrate GitHub rejecting a normal PR with failing or missing required validation evidence. A successful structural readback is not negative-admission evidence.
+**Completed failed-check proof:** [test PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) on exact head `4f66cebeac1c6f81abd0a9f4b2edebc4f84fe46e` produced [Validate run 39074884112](https://github.com/ryjen/agent-delivery-playbook/actions/runs/39074884112): both required checks failed; the integrity job identified the intentional broken local link. Authenticated GitHub PR readback reported `mergeable_state: blocked`, although `mergeable: true` for git-graph conflict status. The PR was closed **without merge**. Missing-check and direct-push scenarios remain untested, and a future administrator ruleset change could weaken enforcement. Revalidate after material policy changes.
 
 ## Proposed minimum provider configuration
 
@@ -127,8 +127,8 @@ Do not place private credentials or audit-sensitive evidence in the public repos
 - [x] Required contexts and GitHub Actions provider identity confirmed.
 - [x] Proposed configuration, structural preflight, and bounded activation runbook prepared.
 - [x] Administrator applied the provider rule; authenticated live readback confirms the expected rules and no bypass actors (provider-added inert default noted above).
-- [ ] Failing or absent required check demonstrably blocked a normal merge.
-- [ ] Break-glass/accountability and remaining limitations were recorded.
-- [ ] Issue #60 and capability status reconciled against those **external observations**.
+- [x] Failing required checks blocked the disposable normal [PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) (GitHub `mergeable_state: blocked`); missing-check scenario not independently tested.
+- [x] Residual administrator control-plane privilege, manual break-glass/restoration obligations, and untested missing-check/direct-push cases are recorded; **no exception or override was exercised**.
+- [x] Read-only active-mode structural preflight and disposable provider rejection evidence are linked here and in [issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60); the repository remains **pre-release** pending its separate release checklist.
 
 A green CI run, approved documentation PR, or structural preflight does **not** close #60 without active provider enforcement and negative admission evidence.
