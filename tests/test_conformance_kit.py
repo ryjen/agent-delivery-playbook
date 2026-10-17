@@ -199,6 +199,30 @@ class ConformanceKitTests(unittest.TestCase):
         self.assertLess(output.index("| approval_presence | skipped |"), output.index("## Check details"))
         self.assertLess(output.index("## Check details"), output.index("- sensitive_paths:"))
 
+    def test_whitespace_only_capability_label_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name).resolve()
+            value = example_manifest()
+            value["capabilities"]["tools"] = [" \t "]
+            (root / "manifest.json").write_text(json.dumps(value), encoding="utf-8")
+            report = kit.evaluate(root, [], [], "manifest.json", False)
+            self.assertEqual(report["overall"], "fail")
+            capability = next(x for x in report["checks"] if x["id"] == "capabilities")
+            self.assertEqual(capability["status"], "fail")
+
+    def test_markdown_detail_newlines_cannot_forge_sections(self) -> None:
+        supplied = "workflow.yaml\\n## Forged approval\\n| reviewer | pass |"
+        supplied = supplied.replace("\\n", "\n")
+        report = {
+            "overall": "warning",
+            "checks": [kit.check("sensitive_paths", "warning", "Review required", [supplied])],
+            "limitations": [],
+        }
+        rendered = kit.markdown(report)
+        self.assertNotIn("\n## Forged approval", rendered)
+        self.assertNotIn("\n| reviewer | pass |", rendered)
+        self.assertIn("workflow.yaml ## Forged approval / reviewer / pass /", rendered)
+
     def test_missing_required_approval_is_warning(self) -> None:
         with tempfile.TemporaryDirectory() as name:
             root = Path(name).resolve()
