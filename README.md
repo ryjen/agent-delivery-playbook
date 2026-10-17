@@ -142,6 +142,6 @@ For navigation by reader intent, see `docs/index.md`.
 
 ## Status
 
-This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. Provider-enforced repository admission and a lightweight conformance kit remain active work; the pre-1.0 compatibility policy is documented but no release tag is published; production adoption and runtime authorization enforcement are not claimed.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. The lightweight advisory conformance kit is implemented, while GitHub's required-PR/check rules have been activated but await provider-backed rejection proof (#60). The pre-1.0 compatibility policy is documented but no release tag is published; production adoption and runtime authorization enforcement are not claimed.
 
 See `docs/status-and-roadmap.md` for the evidence-backed capability matrix, limitations, and dependency-ordered next work.
