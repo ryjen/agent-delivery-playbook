@@ -12,6 +12,7 @@ Changes to the Agent Delivery Playbook are recorded here. No published release o
 - Read-only lightweight conformance report prototype with self-check, JSON/Markdown output, negative tests and advisory risk/evidence metadata (#45). Does not enforce approval or runtime authority.
 - Canonical governance glossary and structural terminology/schema drift tests (#35).
 - Lightweight architecture decision record index/template and historical rationale for stable trust/compatibility decisions (#36); ADR acceptance is not provider control enforcement.
+- Optional baseline-first predictive/decision-model guidance and QART-style evaluation checklist (#74), with explicit advisory-only authority and no learned-model requirement.
 
 ### Limitations
 - Do not treat an unreleased changelog entry as shipped, adopted, or enforced.
