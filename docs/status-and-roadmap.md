@@ -22,7 +22,7 @@ It is **not** an agent runtime, authorization service, policy engine, evidence a
 | Lightweight task-envelope validator | validated | unit-tested repository tooling |
 | Standards-based YAML/JSON-Schema validation | validated | independent standards-based path |
 | Repository integrity validation | validated | local-link, JSON, and Mermaid/document checks |
-| GitHub Actions validation | validated; admission not enforced | current workflow passes; #60 tracks required admission. The proposed provider ruleset and guarded operator activation/negative-test runbook exist under `examples/provider-admission/` and `docs/operations/main-admission.md` but are not GitHub-enforced until separately activated and verified |
+| GitHub Actions validation | provider-enforced PR/status admission qualified for failing checks | GitHub ruleset `17832277` requires PRs and both source-pinned checks, strict current-base validation, no ambient bypass. Live structural preflight passes and disposable PR #87 demonstrated failing required checks with `mergeable_state: blocked`. Direct-push and missing-check paths remain untested; administrator control-plane privilege persists. See #60 |
 | Reproducible CI environment | validated | `flake.nix` + committed `flake.lock`; CI runs flake-owned checks and no longer installs repository Python dependencies with pip |
 | Evidence trust/binding model | implemented guidance | `docs/delivery-evidence-standard.md`; coverage is separated from producer/binding/integrity/independence |
 | Identity/delegation/capability model | implemented guidance | `docs/identity-delegation-and-capability-grants.md`; runtime enforcement remains outside current implementation |
@@ -59,7 +59,7 @@ Exit: adopters can run a small, versioned conformance path that reports what is 
 
 ## Follow-on maturity work
 
-The core guidance now has executable self-conformance, adversarial fixtures, and one standalone representative adoption. Remaining work should focus on provider admission (#60) and a proportionate conformance kit (#45); the compatibility policy is now documented, while actual release-tag qualification remains gated, while preserving the documented limits around runtime enforcement and production evidence.
+The core guidance now has executable self-conformance, adversarial fixtures, a lightweight advisory conformance kit (#45), and one standalone representative adoption. The GitHub provider ruleset for #60 has been activated and failing-check rejection was observed on a disposable PR; separate first-release/tag qualification remains gated. No production runtime enforcement is claimed.
 
 ## Distribution and maturity work
 

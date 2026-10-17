@@ -102,6 +102,45 @@ class AdmissionRulesetTests(unittest.TestCase):
             item, proposal(), require_original_timestamp=False
         ), [])
 
+    def test_live_github_extra_copilot_approval_default_is_inert_at_zero_reviews(self) -> None:
+        item = observed(proposal(), "2026-10-17T15:17:05.207-07:00")
+        pr = next(x for x in item["rules"] if x["type"] == "pull_request")
+        pr["parameters"]["required_reviewers"] = []
+        pr["parameters"]["require_extra_approval_for_unattributed_changes"] = True
+        checks = next(x for x in item["rules"] if x["type"] == "required_status_checks")
+        checks["parameters"]["do_not_enforce_on_create"] = False
+        self.assertEqual(
+            checker.validate_observed(item, proposal(), require_original_timestamp=False), []
+        )
+
+    def test_nondefault_copilot_setting_is_still_policy_drift(self) -> None:
+        item = observed(proposal())
+        pr = next(x for x in item["rules"] if x["type"] == "pull_request")
+        pr["parameters"]["require_extra_approval_for_unattributed_changes"] = False
+        self.assertIn(
+            "observed provider ruleset differs from expected policy",
+            checker.validate_observed(item, proposal(), require_original_timestamp=False),
+        )
+
+    def test_additional_approval_cannot_mask_approval_count_change(self) -> None:
+        item = observed(proposal())
+        pr = next(x for x in item["rules"] if x["type"] == "pull_request")
+        pr["parameters"]["required_approving_review_count"] = 1
+        pr["parameters"]["require_extra_approval_for_unattributed_changes"] = True
+        self.assertIn(
+            "observed provider ruleset differs from expected policy",
+            checker.validate_observed(item, proposal(), require_original_timestamp=False),
+        )
+
+    def test_existing_baseline_stays_invalid_after_provider_activation(self) -> None:
+        item = observed(proposal(), "2026-10-17T15:17:05.207-07:00")
+        self.assertTrue(any(
+            "updated since" in x
+            for x in checker.validate_observed(
+                item, checker.BASELINE, require_original_timestamp=True
+            )
+        ))
+
     def test_semantically_material_provider_default_is_not_ignored(self) -> None:
         item = observed(proposal())
         checks = next(x for x in item["rules"] if x["type"] == "required_status_checks")

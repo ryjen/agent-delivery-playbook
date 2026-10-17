@@ -16,7 +16,7 @@ Changes to the Agent Delivery Playbook are recorded here. No published release o
 
 ### Limitations
 - Do not treat an unreleased changelog entry as shipped, adopted, or enforced.
-- Actual GitHub admission enforcement requires live #60 completion.
+- GitHub required-PR/status admission is active, and disposable PR #87 demonstrated provider-blocked failing checks; missing-check/direct-push behaviors remain unverified. Issue #60 records evidence and residual administrator control-plane limits.
 - An independently proven production end-to-end governance/release implementation is not claimed.
 
 > The first tagged release will receive its own dated entry with tag, commit, evidence, migration and compatibility notes. Do not backdate this file or infer release history from PR merges.

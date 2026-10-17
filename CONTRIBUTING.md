@@ -92,7 +92,7 @@ Draft pull requests are appropriate for incomplete work. Mark a pull request rea
 
 ## Provider admission (current status)
 
-The repository validation workflow and its two stable jobs do **not** become mandatory merge gates simply because they pass. Until the external GitHub ruleset change and a blocked negative merge are independently observed, provider-enforced pull-request admission remains **pending**. The operator procedure and exact check names are in [`docs/operations/main-admission.md`](docs/operations/main-admission.md); contributor permissions do not authorize bypassing that runbook. Treat model review as evidence, not provider approval.
+The GitHub default-branch ruleset now **configures** required pull requests and the two stable jobs (`Repository integrity` and `Task envelopes`) as strict admission gates with no bypass actors. This is verified by a live ruleset readback and deliberately failing [PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87), which GitHub blocked with `mergeable_state: blocked`. Missing-check/direct-push paths were not independently tested; administrative ruleset changes remain a separate high-trust boundary. See [`docs/operations/main-admission.md`](docs/operations/main-admission.md). Do not weaken checks, treat a model review as provider approval, or use administrator authority to bypass the proof.
 
 ## Validation Expectations
 
