@@ -4,6 +4,8 @@ This document defines the canonical architecture of the agent-delivery playbook:
 
 The playbook is a standalone governance reference. It provides portable policy, schemas, templates, examples, and validation tooling. It does not provide an agent runtime, identity provider, authorization service, CI platform, evidence store, merge service, or release system.
 
+The [ADR index](adr/README.md) records rationales and alternatives for stable security and compatibility decisions. ADRs do not supersede the normative sources mapped below or certify that provider controls are active.
+
 ## Architectural invariant
 
 Agent-assisted delivery remains safe only when intent, authority, execution, evidence, and approval are independently visible and bounded.

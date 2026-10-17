@@ -10,6 +10,8 @@ Changes to the Agent Delivery Playbook are recorded here. No published release o
 - Prepared main-branch admission provider ruleset and read-only activation/negative-proof runbook (PR #80). **GitHub provider activation is not established by merging documentation.**
 - Pre-1.0 versioning, migration and release qualification guidance (#43).
 - Read-only lightweight conformance report prototype with self-check, JSON/Markdown output, negative tests and advisory risk/evidence metadata (#45). Does not enforce approval or runtime authority.
+- Canonical governance glossary and structural terminology/schema drift tests (#35).
+- Lightweight architecture decision record index/template and historical rationale for stable trust/compatibility decisions (#36); ADR acceptance is not provider control enforcement.
 
 ### Limitations
 - Do not treat an unreleased changelog entry as shipped, adopted, or enforced.
