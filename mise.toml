@@ -18,6 +18,10 @@ run = "nix develop --command python3 scripts/validate-repository.py"
 description = "Run adversarial bypass-resistance fixture validation"
 run = "nix develop --command python3 scripts/validate-adversarial-fixtures.py"
 
+[tasks.conformance]
+description = "Read-only structural conformance report through the repository flake"
+run = "nix develop --command python3 scripts/conformance-kit.py --root . --integrity --format markdown"
+
 [tasks.validate]
 description = "Run all repository validation through the authoritative Nix flake"
 run = "nix flake check --print-build-logs"
