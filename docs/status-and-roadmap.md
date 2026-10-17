@@ -51,13 +51,7 @@ Make this repository obey the governance model it describes:
 
 Exit: a failing or missing required check cannot silently admit a normal change to `main`.
 
-### 2. #43 — define release/version compatibility
-
-Turn the now-demonstrated adoption contract into an explicit pre-1.0 versioning/release policy without implying runtime conformance that the repository cannot enforce.
-
-Exit: normative/schema/template compatibility and release expectations are documented and testable where objective.
-
-### 3. #45 — build the lightweight conformance kit
+### 2. #45 — build the lightweight conformance kit
 
 Package the minimal validated pieces needed to evaluate an adopting repository without copying the whole playbook.
 
@@ -65,14 +59,14 @@ Exit: adopters can run a small, versioned conformance path that reports what is 
 
 ## Follow-on maturity work
 
-The core guidance now has executable self-conformance, adversarial fixtures, and one standalone representative adoption. Remaining work should focus on provider admission (#60), release/compatibility (#43), and a proportionate conformance kit (#45), while preserving the documented limits around runtime enforcement and production evidence.
+The core guidance now has executable self-conformance, adversarial fixtures, and one standalone representative adoption. Remaining work should focus on provider admission (#60) and a proportionate conformance kit (#45); the compatibility policy is now documented, while actual release-tag qualification remains gated, while preserving the documented limits around runtime enforcement and production evidence.
 
 ## Distribution and maturity work
 
 After the core model is demonstrated:
 
-- #43 — versioning, releases, and compatibility policy;
 - #45 — lightweight governed-delivery conformance kit.
+- First release/tag qualification per `docs/versioning-and-compatibility.md`, **after** #60 produces provider-backed admission evidence; no tag has been published.
 
 A pre-1.0 release should represent a coherent, demonstrated adoption contract rather than simply a documentation milestone.
 
