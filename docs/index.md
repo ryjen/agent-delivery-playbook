@@ -92,6 +92,7 @@ flowchart LR
 | Document | Type | Purpose |
 | --- | --- | --- |
 | `docs/governance-lifecycle.md` | guidance | Lifecycle and drift-prevention rules for docs, schemas, templates, and examples |
+| `docs/versioning-and-compatibility.md` | release policy (pre-1.0) | Version and contract compatibility, tagged release gates, migration expectations; #43 |
 
 ## Reading Paths
 
