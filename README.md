@@ -83,6 +83,8 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/threat-model.md` | Threat model for agent-assisted delivery |
 | `docs/task-risk-matrix.md` | Risk tiers and required controls |
 | `docs/governance-lifecycle.md` | Lifecycle rules for policies, templates, schemas, and examples |
+| `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility and release gate; **no published release yet** |
+| `CHANGELOG.md` | Unreleased changes; dated entries only after qualified tags |
 | `docs/mobile-agent-safe-checklist.md` | Mobile/client-specific guardrails |
 | `policy/` | Machine-readable policy artifacts for future validation |
 | `templates/` | Drop-in repo templates for agent instructions and review controls |
