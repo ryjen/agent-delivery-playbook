@@ -87,6 +87,7 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/adr/README.md` | Recorded architecture decisions, trade-offs, statuses, and supersession process |
 | `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility and release gate; **no published release yet** |
 | `docs/conformance-kit.md` | Read-only conformance report prototype and limitations; structural checks do not authorize changes |
+| `docs/governed-predictive-models.md` | Optional ML/JEPA decision-model evaluation and safety checklist; advisory only |
 | `CHANGELOG.md` | Unreleased changes; dated entries only after qualified tags |
 | `docs/mobile-agent-safe-checklist.md` | Mobile/client-specific guardrails |
 | `policy/` | Machine-readable policy artifacts for future validation |

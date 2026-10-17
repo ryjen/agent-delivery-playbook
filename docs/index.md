@@ -57,6 +57,7 @@ flowchart LR
 | `docs/task-risk-matrix.md` | normative policy | Risk tier definitions and required controls |
 | `docs/delivery-evidence-standard.md` | normative policy | Evidence levels and evidence quality rules |
 | `docs/agent-regression-evaluation.md` | illustrative guidance + checked fixtures | Configuration-change evaluation profile, before/after failure dispositions, and evidence-qualified delivery measures; #77 |
+| `docs/governed-predictive-models.md` | optional advisory guidance | QART-style baseline-first ML decision checklist, typed uncertainty, OOD/abstention, staged promotion, rollback, and deterministic policy boundaries; #74 |
 | `docs/conformance-kit.md` | guidance + executable prototype | Read-only structural conformance report, status/exit contracts, and adopting-repository limitations; #45 |
 | `docs/replayable-evidence-envelope.md` | guidance | Replayable PR evidence envelope for audit and review |
 | `docs/policy/minimum-controls.md` | normative policy | Minimum controls by risk tier |
