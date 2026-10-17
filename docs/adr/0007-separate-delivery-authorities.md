@@ -21,4 +21,4 @@ Separate the principal/runtime that **generates** changes from accountable **ver
 
 ## Consequences and verification
 
-Identity and scope must be enforced by the owning control planes; a green workflow or ADR alone does not activate branch protection, authorizations or release gates. Repository GitHub admission remains pending [issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60). The solo-maintainer case may require explicitly documented bounded fallback review; never claim independent human review from a local model result.
+Identity and scope must be enforced by the owning control planes; a green workflow or ADR alone does not activate branch protection, authorizations or release gates. GitHub admission was later activated for this repository and a failed-check PR was blocked ([issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60)); this does not grant merge approval, tag/release authority or downstream enforcement. The solo-maintainer case may require a documented bounded fallback review; never claim independent human review from a local model result.
