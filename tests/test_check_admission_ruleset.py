@@ -127,6 +127,19 @@ class AdmissionRulesetTests(unittest.TestCase):
         self.assertGreaterEqual(runbook.count("```bash"), 3)
         self.assertNotIn("\\```bash", runbook)
 
+    def test_operator_mutation_is_conditioned_on_successful_baseline(self) -> None:
+        runbook = (ROOT / "docs" / "operations" / "main-admission.md").read_text(
+            encoding="utf-8"
+        )
+        block = runbook.split("### 2. Apply through", 1)[1].split(
+            "### 3. Observe", 1
+        )[0]
+        self.assertIn("if gh api repos/", block)
+        self.assertIn("&& python3 scripts/check-admission-ruleset.py", block)
+        self.assertIn("then\n  gh api --method PUT", block)
+        self.assertIn("else\n  printf", block)
+        self.assertLess(block.index("if gh api"), block.index("gh api --method PUT"))
+
     def test_read_only_cli_active_fixture(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / "ruleset.json"
