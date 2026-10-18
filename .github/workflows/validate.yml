@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   repository-integrity:
+    # cleanup: no-local-outputs — Nix --no-link check builds write immutable store paths only.
     name: Repository integrity
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -32,6 +33,7 @@ jobs:
         run: nix build .#checks.x86_64-linux.repository-integrity --no-link --print-build-logs
 
   task-envelopes:
+    # cleanup: no-local-outputs — Nix --no-link check builds write immutable store paths only.
     name: Task envelopes
     runs-on: ubuntu-latest
     timeout-minutes: 10
