@@ -142,6 +142,18 @@ For navigation by reader intent, see `docs/index.md`.
 - Make rollback boring
 - Keep humans accountable for merge and release decisions
 
+## Build/test cleanup boundary
+
+The two repository-validation jobs use `nix build ... --no-link` for
+Nix derivation checks and therefore leave **no task-worktree build output**
+(such as `result` or an application bundle) that needs deletion.
+The appropriate final cleanup stage is a documented **no-op**. The Nix
+store, shared substituter caches, evidence, and unrelated worktrees must
+not be garbage-collected to simulate task-local cleanup. If future jobs
+generate ordinary worktree-owned artifacts, introduce a bounded native
+cleanup finalizer only after required evidence and artifact consumers
+have completed.
+
 ## Status
 
 This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. The lightweight advisory conformance kit is implemented, and GitHub's required-PR/check rules are activated with a provider-blocked failing-check PR (#60). The missing-check/direct-push cases and administrator control-plane limits remain explicitly unverified. The pre-1.0 compatibility policy is documented but no release tag is published; production adoption and runtime authorization enforcement are not claimed.
