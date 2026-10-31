@@ -1,66 +1,53 @@
 # Project Status and Roadmap
 
-_Last reconciled: 2026-10-17 against `main` commit `56ab8b343200914ad286e04893ea9ce3f2a31d25` and GitHub's live ruleset. This is an evidence snapshot, not a release authorization._
+_Last reconciled: 2026-10-30 against Git `main` at `8a6b4ab341aa1e25fff8aeafc97a09f0dba1d50f`, the immutable `v0.1.0` tag and the recorded GitHub provider/adopter evidence. This is an evidence snapshot, not authority to merge or release._
 
 ## Current state
 
-The project is an **incubating public governed-delivery playbook with validated structural conformance tooling and one representative standalone adoption**. It is more than a starter template, but it is not an agent runtime, policy authorization service, independent attestation service, or production deployment system.
+The project is an **incubating public governance playbook with executable structural validation, a qualified tag-only `v0.1.0` distribution, and a read-only pilot against one independently maintained adopter**. It is not an agent runtime, authorization service, protected attestation service, CI provider, or production deployment system.
 
-The next milestone is a carefully qualified first **`v0.1.0` release**, not a new governance engine. No release or tag has been published. See [the first-release readiness dossier](releases/v0.1.0-readiness.md) and [draft release notes](releases/v0.1.0-notes.md).
+**Distribution:** [issue #89](https://github.com/ryjen/agent-delivery-playbook/issues/89) completed the explicitly approved **annotated Git tag only** milestone. `v0.1.0` tag object `023e8f543a341a2df5e0bc714eb44277074e0aba` resolves to commit `033ae363d1ce3c838b8e910c2f0ab75b08f7240e`. The tag is **unsigned**; no separate GitHub Release object, release binaries, security certification, or production enforcement was published. Do not move the tag.
+
+**Adoption:** [issue #90](https://github.com/ryjen/agent-delivery-playbook/issues/90#issuecomment-6244296926) completed a source-pinned, read-only evaluation of [config-drift-guard](https://github.com/ryjen/config-drift-guard) at `36286b4e489b3ac424fb3d2ab85f1925e8f47206`. The kit detected an actual gap only after separate authenticated provider verification. The adopter-owned [issue #43](https://github.com/ryjen/config-drift-guard/issues/43#issuecomment-6244815987) subsequently closed with strict PR/check rules activated and a failed required-check PR blocked by GitHub. A second adopter, broad portability, and runtime authority mediation are **not** qualified by these results.
 
 ## Capability and evidence status
 
 | Capability | Qualified state | Evidence and boundary |
 | --- | --- | --- |
-| Canonical architecture, governance lifecycle and trust model | documented | [Architecture](architecture.md), [trust model](trust-model.md), [governance lifecycle](governance-lifecycle.md); implementation-independent |
-| Normative task risk, evidence and minimum controls | documented | [Task risk matrix](task-risk-matrix.md), [evidence standard](delivery-evidence-standard.md), [minimum controls](policy/minimum-controls.md) |
-| Task-envelope JSON Schema and lightweight/standards-based validation | validated structural checks | `schemas/task-envelope.schema.json`, `scripts/validate-task-envelopes.py` and `scripts/validate-task-envelopes-standard.py`; schema success does not validate intent or grant authority |
-| Context/memory provenance, identity and delegation | documented with structure checks | `docs/context-budget-and-provenance.md`, `docs/identity-delegation-and-capability-grants.md`; **not** runtime authorization |
-| Glossary and ADR history | implemented and checked where structural | [Glossary](glossary.md), [ADR index](adr/README.md); issues [#35](https://github.com/ryjen/agent-delivery-playbook/issues/35) and [#36](https://github.com/ryjen/agent-delivery-playbook/issues/36) closed |
-| Adversarial fixtures and agent-configuration regression profile | validated synthetic contracts | `examples/adversarial/`, `examples/agent-regression/`; deterministic fixture results are not empirical benchmarks or production security proof |
-| Reproducible repository validation | validated on `main` | `flake.nix` + `flake.lock`; [Validate run 39075352393](https://github.com/ryjen/agent-delivery-playbook/actions/runs/39075352393) at `56ab8b3` passed `Repository integrity` and `Task envelopes` |
-| Default-branch PR/status admission | provider-enforced, failing-check path demonstrated | GitHub ruleset `17832277` active: PR and strict two-check requirement, no ruleset bypass actors; [disposable failed-check PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) reported `mergeable_state: blocked`; issue [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) closed. Missing-check and direct-push cases not independently exercised; administrators can still edit provider settings |
-| Lightweight read-only conformance kit | implemented and self-validated pilot | `scripts/conformance-kit.py`, [kit contract](conformance-kit.md) and negative tests; issue [#45](https://github.com/ryjen/agent-delivery-playbook/issues/45) closed. **Adopter portability and independent provenance/approval validation are not demonstrated** |
-| Minimal adoption kernel and standalone case study | documented and one example demonstrated | [Minimal kernel](adoption/minimal-adoption-kernel.md), [reference adoption](../examples/reference-adoption/case-study.md), candidate PRs [#71](https://github.com/ryjen/agent-delivery-playbook/pull/71) and [#72](https://github.com/ryjen/agent-delivery-playbook/pull/72); synthetic/tiny project, not production adoption |
-| Version/compatibility and draft first-release process | documented, release not qualified | [Compatibility policy](versioning-and-compatibility.md), `CHANGELOG.md`, [release dossier](releases/v0.1.0-readiness.md); no tag/release or accountable exact-commit release approval |
-| Runtime capability enforcement, protected attestations, production adoption | not demonstrated or out of playbook scope | Requires implementing systems, authenticated independent evidence, and a separate risk-qualified decision |
+| Governance architecture, risk and evidence tiers, identity/delegation, context provenance | documented, with structural checks where applicable | [Architecture](architecture.md), [risk matrix](task-risk-matrix.md), [trust model](trust-model.md); intent and schema validity are not authority |
+| Task-envelope schema, validators, glossary and policy integrity checks | implemented and tested | `schemas/task-envelope.schema.json`, `scripts/`, `flake.nix`; validation does not determine semantic correctness |
+| Adversarial and agent-configuration fixtures | synthetic regression checks | `examples/adversarial/`, `examples/agent-regression/`; not a production containment benchmark |
+| Reproducible repository validation | flake-first and CI-checked | [tagged-commit CI run 39080109844](https://github.com/ryjen/agent-delivery-playbook/actions/runs/39080109844) passed both checks and 96 unit tests; this run does not cover later `main` commits |
+| Default-branch PR/status admission | provider-enforced for tested path | Playbook [issue #60](https://github.com/ryjen/agent-delivery-playbook/issues/60) and [negative PR #87](https://github.com/ryjen/agent-delivery-playbook/pull/87) establish failing-check rejection. Missing-check and direct-push rejections were not separately tested; admins retain ruleset control-plane powers |
+| Read-only conformance kit | implemented, pilot exercised | [Conformance contract](conformance-kit.md) and [adopter pilot #90](https://github.com/ryjen/agent-delivery-playbook/issues/90); `effect_authorized=false` regardless of report or exit status; evidence/approval is not independently attested |
+| Minimal adoption kernel and standalone reference example | documented and demonstrated | [Minimal kernel](adoption/minimal-adoption-kernel.md), [reference case](../examples/reference-adoption/case-study.md); risk-triggered controls avoid unnecessary files |
+| `v0.1.0` distribution | annotated tag qualified, no GitHub Release | [Tag/CI/clean checkout evidence #89](https://github.com/ryjen/agent-delivery-playbook/issues/89); unsigned immutable-by-convention tag, x86_64-linux evidence only |
+| Independent consumer portability | one external repository evaluated read-only | [config-drift-guard pilot #90](https://github.com/ryjen/agent-delivery-playbook/issues/90#issuecomment-6244296926); source pinned, separate Python venv, not the Nix closure; parser-subset limitation observed |
+| Runtime grants, effect-time authorization, approval verification, protected attestations | outside playbook implementation | Requires separately governed implementation and exact-subject independent evidence; not inferred from conformance |
 
-**Evidence rule:** “implemented,” “validated,” “demonstrated,” and “provider-enforced” are distinct. A structural validator returning green neither authorizes a tool effect nor verifies a signed approval or evidence producer.
+## Immediate queue — after tag and first adoption
 
-## Immediate queue — first release qualification
+1. **Reconcile publication facts.** Keep README, status, index, and the historical [pre-tag qualification dossier](releases/v0.1.0-readiness.md) consistent with issue #89 and #90. No schema, normative control or release action is required for documentation repair.
+2. **Evaluate a second distinct adopter, read-only.** Pin `v0.1.0` source and a separate target commit; inventory existing controls, run reproducible structural checks where tooling permits, exercise a bounded and an unauthorized synthetic case, and report real friction, skips, limitations, and independently verified provider facts. Make no adopter changes as part of the assessment.
+3. **Integrate only supported findings.** Record follow-up work in the actual owning repository for material gaps. Anthesis owns evidence/provenance and effect-time authority semantics; Dubnium owns executor, runner and verification mechanics; GitHub/provider controls remain local to each adopter. No new playbook runtime or policy engine is implied.
+4. **Decide on later versioned changes only after evidence.** Do not overwrite `v0.1.0`, publish an unapproved GitHub Release, or make portability/security claims beyond the observations.
 
-1. **Reconcile the candidate package.** Confirm the policy/schema/validator/example compatibility contract and publishable, version-neutral guidance remain coherent. This is a documentation and evidence check; do not change the normative schema merely to improve release wording.
-2. **Qualify the real subjects.** Record PR head/base identities **and** the synthetic merge-ref actually checked by `pull_request` CI; it is not the PR head commit. Require a separate passing `push` run and reproducible Nix validation on the **exact final `main` commit** after merge. The preparatory baseline above is not the release commit.
-3. **Review operational and distribution boundaries.** Inspect the reference adoption and adversarial fixture results, document untested portability, pinning, provenance and negative-admission limits, and prepare release notes. Avoid claims of broad production rollout.
-4. **Require accountable release authorization.** Only after explicit approval of the **exact final commit and draft notes** may an authorized operator create and independently verify the annotated `v0.1.0` tag. **Do not publish the GitHub release yet.**
-5. **Test before publication.** Perform and record a clean tagged-checkout/consumer smoke test, preserve tag-to-commit and flake-lock binding, and finish approval of the notes. Only after it passes may an authorized operator publish the matching GitHub release and verify its contents. Do not fetch moving `main` or silently retarget a failed tag.
+## Completed milestones, retained as evidence
 
-The [release dossier](releases/v0.1.0-readiness.md) contains the proof matrix and remaining tag checks. A release must not be marked done merely because this readiness PR merges.
+- [#89](https://github.com/ryjen/agent-delivery-playbook/issues/89) — tag-only `v0.1.0` distribution, post-merge CI and clean tagged checkout.
+- [#90](https://github.com/ryjen/agent-delivery-playbook/issues/90) — independent read-only Config Drift Guard pilot; adopter gap tracked and resolved separately.
+- [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) — playbook provider-enforced required PR/check admission for tested failing-check case.
+- [#45](https://github.com/ryjen/agent-delivery-playbook/issues/45), [#35](https://github.com/ryjen/agent-delivery-playbook/issues/35), [#36](https://github.com/ryjen/agent-delivery-playbook/issues/36), [#43](https://github.com/ryjen/agent-delivery-playbook/issues/43) — conformance, glossary, ADR and versioning foundations.
 
-## Completed issues, retained as history
+## Scope and qualification rules
 
-- [#45](https://github.com/ryjen/agent-delivery-playbook/issues/45) — read-only conformance kit merged in PR #82; portability beyond the self-test remains unverified.
-- [#60](https://github.com/ryjen/agent-delivery-playbook/issues/60) — activated GitHub rules and blocked negative PR demonstrated; administrative-control-plane and untested negative-path limits retained.
-- [#35](https://github.com/ryjen/agent-delivery-playbook/issues/35) — canonical glossary with identifier check in PR #83.
-- [#36](https://github.com/ryjen/agent-delivery-playbook/issues/36) — ADR template, history and contribution conventions in PR #84.
-- [#74](https://github.com/ryjen/agent-delivery-playbook/issues/74) — optional, non-authoritative decision/prediction guidance in PR #85.
-- [#43](https://github.com/ryjen/agent-delivery-playbook/issues/43) — versioning and compatibility policy; publishing the first tag is **separate** from closing the policy issue.
+This playbook owns portable governed-delivery guidance, normative policy, schemas, templates, synthetic tests and advisory conformance. It does **not** own runtime effects, CI administration, attestations, production adoption, personal automation, or domain-specific reporting. Consumers retain their own policy and provider admission authority.
 
-## Deferred maturity work
+- **Documented** means described, not implemented.
+- **Validated** means a repeatable check supports a specific claim and subject.
+- **Demonstrated** means an attributable bounded use case was exercised.
+- **Provider-enforced** means live provider configuration and a material negative admission path were observed.
+- **Distributed** means the approved tagged source tree was independently read back and smoke tested. This repo's `v0.1.0` is distributed as a tag; **no GitHub Release object** exists.
+- **Authorized** means a current, independent, appropriate authority decided a particular effect; neither an envelope nor a conformance report supplies this.
 
-Actual cross-repository consumer portability tests, richer evidence provenance/independence, published compatibility migrations, and production adoption may warrant later scoped issues **after** the first candidate review. Do not re-open closed implementation issues merely because a future maturity goal is unproven. No new policy engine, learned-model runtime, generic attestation platform, or new CI provider is required for `v0.1.0`.
-
-## Scope boundary
-
-The playbook owns portable governed-delivery methodology, contracts, templates, examples and deterministic conformance guidance. It does **not** own personal automation, CareerOps, scheduled reporting infrastructure, or domain-specific n8n workflows. Domain-specific work remains with its respective repositories (Anthesis, Dubnium, ops-cadence, career-workflows).
-
-## Completion standard
-
-- **Documented:** a rule or architecture is described.
-- **Implemented:** code or an artifact exists.
-- **Validated:** repeatable, appropriately bound evidence supports the implemented behavior.
-- **Demonstrated:** a bounded real or representative use case was exercised with attributable results.
-- **Provider-enforced:** the external service's active configuration and material admission behavior were observed.
-- **Released:** an explicitly approved immutable tag and published notes are verified against the accepted commit; **not yet achieved**.
-
-Update this page when evidence changes, not on a ceremonial schedule.
+The [release-readiness dossier](releases/v0.1.0-readiness.md) is a **historical October 17 pre-tag assessment**, not the live release checklist. Preserve its original evidence and limitations; use #89 for the actual tag disposition.

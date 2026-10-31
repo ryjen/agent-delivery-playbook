@@ -85,9 +85,9 @@ For navigation by reader intent, see `docs/index.md`.
 | `docs/governance-lifecycle.md` | Lifecycle rules for policies, templates, schemas, and examples |
 | `docs/glossary.md` | Canonical agent-delivery governance terms and risk/evidence identifiers |
 | `docs/adr/README.md` | Recorded architecture decisions, trade-offs, statuses, and supersession process |
-| `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility and release gate; **no published release yet** |
-| `docs/releases/v0.1.0-readiness.md` | Draft first-release evidence and exact-commit qualification checklist; no tag or approval yet |
-| `docs/releases/v0.1.0-notes.md` | Draft first-release notes, compatibility and limits; not published |
+| `docs/versioning-and-compatibility.md` | Pre-1.0 compatibility; annotated `v0.1.0` tag distributed, separate GitHub Release intentionally skipped |
+| `docs/releases/v0.1.0-readiness.md` | Historical pre-tag qualification dossier (2026-10-17); actual tag evidence in issue #89 |
+| `docs/releases/v0.1.0-notes.md` | Historical draft notes; no separate GitHub Release was published |
 | `docs/conformance-kit.md` | Read-only conformance report prototype and limitations; structural checks do not authorize changes |
 | `docs/governed-predictive-models.md` | Optional ML/JEPA decision-model evaluation and safety checklist; advisory only |
 | `CHANGELOG.md` | Unreleased changes; dated entries only after qualified tags |
@@ -156,6 +156,6 @@ have completed.
 
 ## Status
 
-This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. The lightweight advisory conformance kit is implemented, and GitHub's required-PR/check rules are activated with a provider-blocked failing-check PR (#60). The missing-check/direct-push cases and administrator control-plane limits remain explicitly unverified. The pre-1.0 compatibility policy is documented but no release tag is published; production adoption and runtime authorization enforcement are not claimed.
+This project is an **incubating governance playbook/specification with executable conformance pieces**. Core architecture, risk-shaped adoption, evidence trust/binding, identity/delegation, context/memory hardening, adversarial conformance fixtures, task-envelope validation, repository integrity checks, flake-first CI, and one standalone representative adoption are implemented. The lightweight advisory conformance kit is implemented, and GitHub's required-PR/check rules are activated with a provider-blocked failing-check PR (#60). The missing-check/direct-push cases and administrator control-plane limits remain explicitly unverified. The pre-1.0 compatibility policy is documented and the annotated `v0.1.0` tag has been qualified as source-only distribution (issue #89); no separate GitHub Release, production adoption, or runtime authorization enforcement is claimed. One independent read-only adopter pilot (issue #90) was completed.
 
-See `docs/status-and-roadmap.md` for the evidence-backed capability matrix and `docs/releases/v0.1.0-readiness.md` for the proposed first-release gates. **No release is published or authorized by this documentation.**
+See `docs/status-and-roadmap.md` for current evidence, `docs/releases/v0.1.0-readiness.md` for the historical pre-tag qualification dossier, and [issue #89](https://github.com/ryjen/agent-delivery-playbook/issues/89) for the actual approved tag-only milestone. **No GitHub Release object or production authorization is claimed.**
